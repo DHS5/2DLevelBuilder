@@ -11,8 +11,17 @@ namespace LevelBuilder2D
         [Header("Level Assets List")]
         [SerializeField] private LevelListSO levelList;
 
+        [Header("Menu Contents List")]
+        [SerializeField] private ItemsMenuContent menuContent; // --> list
+
+        [Header("Items Menu")]
+        [SerializeField] private ItemsMenu itemsMenu;
+
         [Header("UI components")]
+        [SerializeField] private GameObject levelMenu;
+        [Space, Space]
         [SerializeField] private GameObject environmentChoiceWindow;
+        [Space]
         // Disk
         [SerializeField] private GameObject diskWindow;
         [SerializeField] private Button diskBackButton;
@@ -22,7 +31,7 @@ namespace LevelBuilder2D
         [SerializeField] private Button diskCreateButton;
         [SerializeField] private TMP_Dropdown diskChoiceDropdown;
         [SerializeField] private TMP_InputField diskNewLevelInput;
-
+        [Space]
         // Asset
         [SerializeField] private GameObject assetWindow;
         [SerializeField] private Button assetBackButton;
@@ -34,53 +43,64 @@ namespace LevelBuilder2D
         [SerializeField] private TMP_InputField assetNewLevelInput;
 
 
-        // Readonly
-
-
         // Variables
         private string[] diskLevelList;
-
 
         private LevelBuilderEnvironment environment;
 
 
-        /// <summary>
-        /// Index of the levelSO in the levels list
-        /// </summary>
-        public int LevelSO { get; set; }
 
-
-        private void Awake()
+        private void OnEnable()
         {
-            ItemsMenu.OnQuit += InitUI;
+            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnQuitBuilder);
+        }
+        private void OnDisable()
+        {
+            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnQuitBuilder);
+        }
+
+        private void OnQuitBuilder()
+        {
+            InitUI();
         }
 
 
 
-        // ### Functions ###
+        // ### Main Function ###
 
         private void SendInformation(StartAction startAction)
         {
+            string name = "";
+            LevelSO levelSO = null;
             if (startAction == StartAction.CREATE)
             {
-                string name = environment == LevelBuilderEnvironment.DISK ? diskNewLevelInput.text : assetNewLevelInput.text;
-                ItemsMenu.GetStartInfos.Invoke(startAction, environment, name, null);
+                name = environment == LevelBuilderEnvironment.DISK ? diskNewLevelInput.text : assetNewLevelInput.text;
+                
             }
             else if (startAction == StartAction.LOAD)
             {
                 if (environment == LevelBuilderEnvironment.DISK)
                 {
-                    ItemsMenu.GetStartInfos.Invoke(startAction, environment, diskLevelList[diskChoiceDropdown.value], null);
+                    name = diskLevelList[diskChoiceDropdown.value];
                 }
                 else if (environment == LevelBuilderEnvironment.ASSET)
                 {
-                    LevelSO levelSO = levelList.levels[assetChoiceDropdown.value];
-                    ItemsMenu.GetStartInfos.Invoke(startAction, environment, levelSO.level.name, levelSO);
+                    levelSO = levelList.levels[assetChoiceDropdown.value];
+                    name = levelSO.level.name;
                 }
             }
+            itemsMenu.GetStartInfos(menuContent, startAction, environment, name, levelSO);
 
-            gameObject.SetActive(false);
+            levelMenu.SetActive(false);
+
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.OPEN_BUILDER);
         }
+
+
+        // ### Listeners ###
+
         private void SendInfoCreate() { SendInformation(StartAction.CREATE); }
         private void SendInfoLoad() { SendInformation(StartAction.LOAD); }
 
@@ -131,7 +151,7 @@ namespace LevelBuilder2D
 
         private void InitUI()
         {
-            gameObject.SetActive(true);
+            levelMenu.SetActive(true);
 
 #if UNITY_EDITOR
             FullEnvironment();

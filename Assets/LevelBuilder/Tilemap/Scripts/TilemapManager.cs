@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
+using System;
 
 namespace LevelBuilder2D
 {
@@ -94,17 +94,17 @@ namespace LevelBuilder2D
 
 
         // Static Actions
-        public static UnityAction<Item> SetTileAction;
+        public static Action<Item> SetTileAction;
 
-        public static UnityAction<Brush> SetBrushAction;
+        public static Action<Brush> SetBrushAction;
 
         // Private Actions
-        private UnityAction LeftMouse;
-        private UnityAction LeftMouseUp;
-        private UnityAction LeftMouseDown;
-        private UnityAction RightMouse;
-        private UnityAction RightMouseUp;
-        private UnityAction RightMouseDown;
+        private event Action LeftMouse;
+        private event Action LeftMouseUp;
+        private event Action LeftMouseDown;
+        private event Action RightMouse;
+        private event Action RightMouseUp;
+        private event Action RightMouseDown;
 
 
 
@@ -112,15 +112,26 @@ namespace LevelBuilder2D
         {
             inputActions = new LevelBuilder_InputActions();
             PreviewHandler = new PreviewHandler();
+        }
+
+        private void OnEnable()
+        {
+            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, Open);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, Close);
 
             SetTileAction += GetCurrentTile;
             SetBrushAction += GetCurrentBrush;
+        }
+        private void OnDisable()
+        {
+            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, Open);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, Close);
 
-            ItemsMenu.OnStart += Enable;
-            ItemsMenu.OnQuit += Disable;
+            SetTileAction -= GetCurrentTile;
+            SetBrushAction -= GetCurrentBrush;
         }
 
-        private void Enable()
+        private void Open()
         {
             inputActions.Enable();
 
@@ -135,9 +146,11 @@ namespace LevelBuilder2D
             inputActions.LevelBuilder.Redo.performed += Redo;
 
             MapBrushActions();
+
+            PreviewHandler.Enable();
         }
 
-        private void Disable()
+        private void Close()
         {
             inputActions.Disable();
 
@@ -152,6 +165,8 @@ namespace LevelBuilder2D
             inputActions.LevelBuilder.Redo.performed -= Redo;
 
             ClearTilemaps();
+
+            PreviewHandler.Disable();
         }
 
 

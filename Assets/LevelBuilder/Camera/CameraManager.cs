@@ -37,11 +37,20 @@ namespace LevelBuilder2D
         {
             inputActions = new LevelBuilder_InputActions();
 
-            ItemsMenu.OnStart += EnableInputs;
-            ItemsMenu.OnQuit += DisableInputs;
-
             bounds = new Vector2(32, 16); // to replace
         }
+
+        private void OnEnable()
+        {
+            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
+        }
+        private void OnDisable()
+        {
+            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
+        }
+
 
         private void Update()
         {

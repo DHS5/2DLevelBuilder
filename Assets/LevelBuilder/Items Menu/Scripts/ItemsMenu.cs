@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
-using UnityEngine.Events;
+using System;
 using UnityEngine.InputSystem;
 
 namespace LevelBuilder2D
@@ -25,10 +25,12 @@ namespace LevelBuilder2D
         [Header("Managers")]
         [SerializeField] private TilemapManager tilemapManager;
 
-        [Header("Content")]
-        [SerializeField] private ItemsMenuContent menuContent;
+        [Header("Menu Template")]
+        [SerializeField] private ItemsMenuTemplate menuTemplate;
 
         [Header("UI components")]
+        [SerializeField] private GameObject itemMenu;
+        [Space, Space]
         // Brushes
         [SerializeField] private Toggle paintBrushToggle;
         [SerializeField] private Toggle boxBrushToggle;
@@ -53,7 +55,9 @@ namespace LevelBuilder2D
         private List<CategoryButton> categoryButtons = new();
 
 
-        // Variables
+        // ### Start Informations ###
+
+        public ItemsMenuContent MenuContent { get; private set; }
 
         private LevelBuilderEnvironment env;
         public LevelBuilderEnvironment Environment
@@ -64,85 +68,110 @@ namespace LevelBuilder2D
                 env = value;
                 if (value == LevelBuilderEnvironment.DISK)
                 {
-                    OnSave = SaveLevelOnDisk;
-                    OnLoad = LoadFromDisk;
-                    OnCreate = CreateLevelOnDisk;
+                    OnSaveLevel = SaveLevelOnDisk;
+                    OnLoadLevel = LoadFromDisk;
+                    OnCreateLevel = CreateLevelOnDisk;
                 }
                 else if (value == LevelBuilderEnvironment.ASSET)
                 {
-                    OnSave = ModifyLevelSO;
-                    OnLoad = LoadLevelSO;
-                    OnCreate = CreateLevelSO;
+                    OnSaveLevel = ModifyLevelSO;
+                    OnLoadLevel = LoadLevelSO;
+                    OnCreateLevel = CreateLevelSO;
                 }
             }
         }
-
         private StartAction StartAction { get; set; }
-
         private LevelSO LevelSO { get; set; }
-
         private string LevelName { get; set; }
+
+        public void GetStartInfos(ItemsMenuContent menuContent, StartAction sa, LevelBuilderEnvironment env, string levelName, LevelSO level)
+        {
+            MenuContent = menuContent;
+            StartAction = sa;
+            Environment = env;
+            LevelName = levelName;
+            LevelSO = level;
+        }
+
 
 
         // Actions
         private LevelBuilder_InputActions inputActions;
 
-        private UnityAction OnSave;
-        private UnityAction OnLoad;
-        private UnityAction OnCreate;
-
-        public static UnityAction OnStart { get; set; }
-        public static UnityAction<StartAction, LevelBuilderEnvironment, string, LevelSO> GetStartInfos { get; set; }
-        public static UnityAction OnQuit { get; set; }
+        private event Action OnSaveLevel;
+        private event Action OnLoadLevel;
+        private event Action OnCreateLevel;
 
 
         private void Awake()
         {
-            OnStart += Enable;
-            GetStartInfos += GetStartInformations;
-            OnQuit += Disable;
-
-            CreateUI();
-
             inputActions = new LevelBuilder_InputActions();
-            inputActions.LevelBuilder.Save.performed += OnControlS;
         }
 
         private void Start()
         {
-            OnQuit.Invoke();
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.CREATE_BUILDER);
         }
 
-        private void GetStartInformations(StartAction sa, LevelBuilderEnvironment env, string levelName, LevelSO level)
+        private void OnEnable()
         {
-            StartAction = sa;
-            Environment = env;
-            LevelName = levelName;
-            LevelSO = level;
+            inputActions.LevelBuilder.Save.performed += OnControlS;
 
-            OnStart.Invoke();
+            EventManager.StartListening(EventManager.LevelBuilderEvent.CREATE_BUILDER, OnCreate);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnCreated);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
+        }
+        private void OnDisable()
+        {
+            inputActions.LevelBuilder.Save.performed -= OnControlS;
+
+            EventManager.StopListening(EventManager.LevelBuilderEvent.CREATE_BUILDER, OnCreate);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnCreated);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
         }
 
-        private void Enable()
+        private void OnCreate()
         {
-            gameObject.SetActive(true);
+            CreateCategories();
 
-            InitUI();
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.BUILDER_CREATED);
+        }
+        private void OnCreated()
+        {
+            itemMenu.SetActive(false);
+        }
+        private void OnOpen()
+        {
+            itemMenu.SetActive(true);
 
-            if (StartAction == StartAction.CREATE) OnCreate.Invoke();
-            else if (StartAction == StartAction.LOAD) OnLoad.Invoke();
+            ActuMenu();
+            InitBrushes();
+
+            AddListeners();
 
             inputActions.Enable();
-        }
 
-        private void Disable()
+            if (StartAction == StartAction.CREATE) OnCreateLevel.Invoke();
+            else if (StartAction == StartAction.LOAD) OnLoadLevel.Invoke();
+        }
+        private void OnQuit()
         {
-            gameObject.SetActive(false);
+            RemoveListeners();
 
             inputActions.Disable();
+
+            itemMenu.SetActive(false);
+        }
+        private void OnSave()
+        {
+            OnSaveLevel();
         }
 
-
+        #region --- Menu Creation ---
         // ### Menu Creation ###
 
         /// <summary>
@@ -151,28 +180,20 @@ namespace LevelBuilder2D
         private void CreateCategories()
         {
             CategoryButton categoryButton;
-            GameObject categoryItemsContainer;
 
-            foreach (ItemsMenuContentCategory c in menuContent.categories)
+            foreach (ItemsMenuCategory c in menuTemplate.categories)
             {
                 // Create button
                 categoryButton = Instantiate(categoryButtonPrefab, categoryButtonsContainer.transform).GetComponent<CategoryButton>();
-                // Create toggles container
-                categoryItemsContainer = Instantiate(categoryItemsPrefab, categoryButtonsContainer.transform);
-            
-                categoryButton.GetInfos(c.name, c.tilemapLayer, categoryItemsContainer, rootLayout);
-            
-                CreateItems(c, categoryButton, categoryItemsContainer.transform);
+                categoryButton.Set(c.categoryName, c.categoryNumber, c.categoryTilemapLayer,
+                    Instantiate(categoryItemsPrefab, categoryButtonsContainer.transform), rootLayout);
+
+                CreateItems(c, categoryButton);
 
                 categoryButtons.Add(categoryButton);
             }
 
             LayoutRebuilder.ForceRebuildLayoutImmediate(rootLayout);
-        }
-        private void CloseCategories()
-        {
-            foreach (CategoryButton categoryButton in categoryButtons)
-                categoryButton.SetContainer(false);
         }
 
         /// <summary>
@@ -180,63 +201,76 @@ namespace LevelBuilder2D
         /// </summary>
         /// <param name="category">Category of the item toggles</param>
         /// <param name="parent">Parent of the toggles</param>
-        private void CreateItems(ItemsMenuContentCategory category, CategoryButton categoryButton, Transform parent)
+        private void CreateItems(ItemsMenuCategory category, CategoryButton categoryButton)
         {
             ItemToggle itemToggle;
 
-            foreach (TileBase t in category.tiles)
+            foreach (ItemTemplate i in category.items)
             {
-                if (t != null)
+                itemToggle = Instantiate(itemTogglePrefab, categoryButton.CategoryItemsContainer.transform).GetComponent<ItemToggle>();
+                itemToggle.Create(i.number, toggleGroup, categoryButton);
+                categoryButton.items.Add(itemToggle);
+            }
+        }
+        #endregion
+
+        // ### Menu Actualization ###
+
+        private void ActuMenu()
+        {
+            foreach (CategoryButton c in categoryButtons)
+            {
+                foreach (ItemToggle i in c.items)
                 {
-                    itemToggle = Instantiate(itemTogglePrefab, parent).GetComponent<ItemToggle>();
-                    itemToggle.GetInfos(toggleGroup, categoryButton, new Item { tile = t, layer = category.tilemapLayer });
+                    i.Set(MenuContent);
                 }
+                c.SetContainer(false);
             }
         }
 
         private void InitBrushes()
         {
             paintBrushToggle.isOn = true;
-            Item item = new Item { tile = menuContent.categories[0].tiles[0], layer = menuContent.categories[0].tilemapLayer };
+            Item item = new Item { tile = MenuContent.categories[0].tiles[0], layer = MenuContent.categories[0].tilemapLayer };
             TilemapManager.SetTileAction.Invoke(item);
             ItemToggle.OnPickTile.Invoke(item);
         }
 
 
-        // ### UI ###
-
-        private void CreateUI()
-        {
-            CreateCategories();
-
-            InitUI();
-        }
-
-        private void InitUI()
-        {
-            CloseCategories();
-            InitBrushes();
-
-            AddListeners();
-        }
-
+        // ### Listeners ###
 
         private void AddListeners()
         {
-            saveButton.onClick.RemoveAllListeners();
-            saveButton.onClick.AddListener(OnSave);
-            quitButton.onClick.RemoveAllListeners();
-            quitButton.onClick.AddListener(OnQuit);
+            saveButton.onClick.AddListener(TriggerSave);
+            quitButton.onClick.AddListener(TriggerQuit);
 
-            paintBrushToggle.onValueChanged.RemoveAllListeners();
             paintBrushToggle.onValueChanged.AddListener(SetPaintBrush);
-            boxBrushToggle.onValueChanged.RemoveAllListeners();
             boxBrushToggle.onValueChanged.AddListener(SetBoxBrush);
-            fillBrushToggle.onValueChanged.RemoveAllListeners();
             fillBrushToggle.onValueChanged.AddListener(SetFillBrush);
-            pickBrushToggle.onValueChanged.RemoveAllListeners();
             pickBrushToggle.onValueChanged.AddListener(SetPickBrush);
 
+        }
+        private void RemoveListeners()
+        {
+            saveButton.onClick.RemoveAllListeners();
+            quitButton.onClick.RemoveAllListeners();
+
+            paintBrushToggle.onValueChanged.RemoveAllListeners();
+            boxBrushToggle.onValueChanged.RemoveAllListeners();
+            fillBrushToggle.onValueChanged.RemoveAllListeners();
+            pickBrushToggle.onValueChanged.RemoveAllListeners();
+        }
+
+        // # Triggers #
+
+        private void TriggerQuit() { EventManager.TriggerEvent(EventManager.LevelBuilderEvent.QUIT_BUILDER); }
+        private void TriggerSave() { Debug.Log("trigger save"); EventManager.TriggerEvent(EventManager.LevelBuilderEvent.SAVE_LEVEL); }
+
+        // # Inputs #
+
+        private void OnControlS(InputAction.CallbackContext ctx)
+        {
+            TriggerSave();
         }
 
 
@@ -253,40 +287,31 @@ namespace LevelBuilder2D
         // Save
         private void SaveLevelOnDisk()
         {
-            LevelManager.SaveLevelToDisk(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, menuContent, LevelName));
+            LevelManager.SaveLevelToDisk(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelName));
         }
         private void ModifyLevelSO()
         {
-            LevelManager.ModifyLevelSO(LevelSO, LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, menuContent, LevelSO.level.name));
+            LevelManager.ModifyLevelSO(LevelSO, LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelSO.level.name));
         }
 
         // Load
         private void LoadFromDisk()
         {
-            LevelManager.LevelToTilemaps(LevelManager.LoadLevelFromDisk(LevelName), tilemapManager.Tilemaps, menuContent);
+            LevelManager.LevelToTilemaps(LevelManager.LoadLevelFromDisk(LevelName), tilemapManager.Tilemaps, MenuContent);
         }
         private void LoadLevelSO()
         {
-            LevelManager.LevelToTilemaps(LevelSO.level, tilemapManager.Tilemaps, menuContent);
+            LevelManager.LevelToTilemaps(LevelSO.level, tilemapManager.Tilemaps, MenuContent);
         }
 
         // Create
         private void CreateLevelOnDisk()
         {
-            LevelManager.CreateLevelOnDisk(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, menuContent, LevelName));
+            LevelManager.CreateLevelOnDisk(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelName));
         }
         private void CreateLevelSO()
         {
-            LevelSO = LevelManager.InstanciateLevelSO(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, menuContent, LevelName));
-        }
-
-
-        // ### Inputs ###
-
-        private void OnControlS(InputAction.CallbackContext ctx)
-        {
-            tilemapManager.PreviewHandler.HidePreview();
-            OnSave();
+            LevelSO = LevelManager.InstanciateLevelSO(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelName));
         }
     }
 }

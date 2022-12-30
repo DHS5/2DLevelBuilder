@@ -9,50 +9,59 @@ namespace LevelBuilder2D
 {
     public class CategoryButton : MonoBehaviour
     {
-        private int categoryTilemapLayer = 0;
-
         [Header("UI components")]
         [SerializeField] private Button button;
         [SerializeField] private TextMeshProUGUI text;
 
-        private GameObject itemsContainer;
+        [Header("Items container prefab")]
+        [SerializeField] private GameObject containerPrefab;
+
         private RectTransform rootLayout;
 
-        private string CategoryName { set { text.text = value; } }
+        [HideInInspector] public List<ItemToggle> items = new();
 
-
-
-        private void Start()
+        public string CategoryName 
         {
-            // change tilemap layer
+            get { return text.text; }
+            set { text.text = value; } 
+        }
+        public int CategoryNumber { get; private set; }
+        public int CategoryTilemapLayer { get; private set; }
+        public GameObject CategoryItemsContainer { get; private set; }
 
+
+        private void OnEnable()
+        {
             button.onClick.AddListener(ChangeContainerState);
         }
+        private void OnDisable()
+        {
+            button.onClick.RemoveListener(ChangeContainerState);
+        }
 
 
-        /// <summary>
-        /// Get button useful infos
-        /// </summary>
-        /// <param name="name">Category name</param>
-        /// <param name="layer">Tilemap layer</param>
-        /// <param name="container">Item toggles container</param>
-        public void GetInfos(string name, int layer, GameObject container, RectTransform layout)
+        public void Set(string name, int number, int layer, GameObject container, RectTransform layout)
         {
             CategoryName = name;
-            categoryTilemapLayer = layer;
-            itemsContainer = container;
+            CategoryNumber = number;
+            CategoryTilemapLayer = layer;
+
             rootLayout = layout;
+            CategoryItemsContainer = container;
         }
+
+        
+
 
         public void SetContainer(bool state) 
         { 
-            itemsContainer.SetActive(state);
+            CategoryItemsContainer.SetActive(state);
             LayoutRebuilder.ForceRebuildLayoutImmediate(rootLayout);
         }
 
         private void ChangeContainerState()
         {
-            SetContainer(!itemsContainer.activeSelf);
+            SetContainer(!CategoryItemsContainer.activeSelf);
         }
     }
 }

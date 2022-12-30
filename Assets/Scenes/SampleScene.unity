@@ -1532,7 +1532,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 265767669}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4702,6 +4702,99 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 533801802}
   m_CullTransparentMesh: 1
+--- !u!1 &547591638
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 547591639}
+  - component: {fileID: 547591640}
+  - component: {fileID: 547591641}
+  m_Layer: 0
+  m_Name: Menus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &547591639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547591638}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &547591640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547591638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdac3ee9379720c458d7551a4e5c265c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemapManager: {fileID: 1286457936}
+  menuTemplate: {fileID: 11400000, guid: a4b1692d9e6a41d4180ab669a4eda2ec, type: 2}
+  itemMenu: {fileID: 2115807733}
+  paintBrushToggle: {fileID: 582217705}
+  boxBrushToggle: {fileID: 230810581}
+  fillBrushToggle: {fileID: 1852838351}
+  pickBrushToggle: {fileID: 1791497052}
+  saveButton: {fileID: 1048397123}
+  quitButton: {fileID: 160502138}
+  categoryButtonsContainer: {fileID: 221176775}
+  toggleGroup: {fileID: 2115807736}
+  rootLayout: {fileID: 221176776}
+  categoryButtonPrefab: {fileID: 2985055506566445772, guid: 99c180641ca61dc429161e10372d3aaa, type: 3}
+  categoryItemsPrefab: {fileID: 2876145974724053511, guid: d5a03edbf457c7b49b132943bad40977, type: 3}
+  itemTogglePrefab: {fileID: 6239484143043119632, guid: 9775e4f01860429489c49716e7442131, type: 3}
+--- !u!114 &547591641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547591638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c314671b895f3314ba6c887dc08d6cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelList: {fileID: 11400000, guid: 0631bdc567080e54291d30d82c394ce2, type: 2}
+  menuContent: {fileID: 11400000, guid: 0abea47e0e82a684c9a7d86e2c1825d0, type: 2}
+  itemsMenu: {fileID: 547591640}
+  levelMenu: {fileID: 1707381490}
+  environmentChoiceWindow: {fileID: 899237835}
+  diskWindow: {fileID: 920783035}
+  diskBackButton: {fileID: 1536226885}
+  diskChoiceButton: {fileID: 978117837}
+  diskDeleteButton: {fileID: 2080719910}
+  diskLoadButton: {fileID: 1064440510}
+  diskCreateButton: {fileID: 1355250408}
+  diskChoiceDropdown: {fileID: 1066188037}
+  diskNewLevelInput: {fileID: 1406768825}
+  assetWindow: {fileID: 718557036}
+  assetBackButton: {fileID: 2132662897}
+  assetChoiceButton: {fileID: 1681238881}
+  assetDeleteButton: {fileID: 2109953750}
+  assetLoadButton: {fileID: 6303888}
+  assetCreateButton: {fileID: 22651320}
+  assetChoiceDropdown: {fileID: 1734230184}
+  assetNewLevelInput: {fileID: 706055061}
 --- !u!1 &548999067
 GameObject:
   m_ObjectHideFlags: 0
@@ -8889,7 +8982,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1316066199}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10259,7 +10352,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624002083}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10884,7 +10977,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1707381491}
-  - component: {fileID: 1707381492}
   m_Layer: 5
   m_Name: Level Menu
   m_TagString: Untagged
@@ -10914,36 +11006,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1707381492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1707381490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c314671b895f3314ba6c887dc08d6cea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelList: {fileID: 11400000, guid: 0631bdc567080e54291d30d82c394ce2, type: 2}
-  environmentChoiceWindow: {fileID: 899237835}
-  diskWindow: {fileID: 920783035}
-  diskBackButton: {fileID: 1536226885}
-  diskChoiceButton: {fileID: 978117837}
-  diskDeleteButton: {fileID: 2080719910}
-  diskLoadButton: {fileID: 1064440510}
-  diskCreateButton: {fileID: 1355250408}
-  diskChoiceDropdown: {fileID: 1066188037}
-  diskNewLevelInput: {fileID: 1406768825}
-  assetWindow: {fileID: 718557036}
-  assetBackButton: {fileID: 2132662897}
-  assetChoiceButton: {fileID: 1681238881}
-  assetDeleteButton: {fileID: 2109953750}
-  assetLoadButton: {fileID: 6303888}
-  assetCreateButton: {fileID: 22651320}
-  assetChoiceDropdown: {fileID: 1734230184}
-  assetNewLevelInput: {fileID: 706055061}
 --- !u!1 &1734230182
 GameObject:
   m_ObjectHideFlags: 0
@@ -12061,7 +12123,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962420533}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -13365,7 +13427,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2115807734}
-  - component: {fileID: 2115807735}
   - component: {fileID: 2115807736}
   m_Layer: 5
   m_Name: Item Menu
@@ -13398,32 +13459,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0, y: 0.5}
---- !u!114 &2115807735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115807733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdac3ee9379720c458d7551a4e5c265c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemapManager: {fileID: 1286457936}
-  menuContent: {fileID: 11400000, guid: 0abea47e0e82a684c9a7d86e2c1825d0, type: 2}
-  paintBrushToggle: {fileID: 582217705}
-  boxBrushToggle: {fileID: 230810581}
-  fillBrushToggle: {fileID: 1852838351}
-  pickBrushToggle: {fileID: 1791497052}
-  saveButton: {fileID: 1048397123}
-  quitButton: {fileID: 160502138}
-  categoryButtonsContainer: {fileID: 221176775}
-  toggleGroup: {fileID: 2115807736}
-  rootLayout: {fileID: 221176776}
-  categoryButtonPrefab: {fileID: 2985055506566445772, guid: 99c180641ca61dc429161e10372d3aaa, type: 3}
-  categoryItemsPrefab: {fileID: 2876145974724053511, guid: d5a03edbf457c7b49b132943bad40977, type: 3}
-  itemTogglePrefab: {fileID: 6239484143043119632, guid: 9775e4f01860429489c49716e7442131, type: 3}
 --- !u!114 &2115807736
 MonoBehaviour:
   m_ObjectHideFlags: 0

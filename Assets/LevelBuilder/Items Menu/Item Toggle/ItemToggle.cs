@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
-using UnityEngine.Events;
+using System;
 
 namespace LevelBuilder2D
 {
     public struct Item
     {
+        public Item(TileBase _tile, int _layer)
+        {
+            tile = _tile;
+            layer = _layer;
+        }
+
         public TileBase tile;
         public int layer;
 
@@ -30,9 +36,10 @@ namespace LevelBuilder2D
 
 
         // Static Action
-        public static UnityAction<Item> OnPickTile;
+        public static Action<Item> OnPickTile;
 
         public ToggleGroup Group { set { toggle.group = value; } }
+        public int ItemNumber { get; private set; }
 
         public Item Item
         {
@@ -44,19 +51,31 @@ namespace LevelBuilder2D
             }
         }
 
-        private void Start()
+        private void OnEnable()
         {
             toggle.onValueChanged.AddListener(AssignTile);
         }
-
-
-        public void GetInfos(ToggleGroup group, CategoryButton button, Item tile)
+        private void OnDisable()
         {
+            toggle.onValueChanged.RemoveListener(AssignTile);
+        }
+        private void OnDestroy()
+        {
+            OnPickTile -= IsPickedTile;
+        }
+
+
+        public void Create(int number, ToggleGroup group, CategoryButton button)
+        {
+            ItemNumber = number;
             Group = group;
-            Item = tile;
             categoryButton = button;
 
             OnPickTile += IsPickedTile;
+        }
+        public void Set(ItemsMenuContent menuContent)
+        {
+            Item = new(menuContent.categories[categoryButton.CategoryNumber].tiles[ItemNumber], categoryButton.CategoryTilemapLayer);
         }
 
 
