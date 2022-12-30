@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2e0199df58b9cb48901097814077bb8, type: 3}
+  m_Name: Items Menu Content
+  m_EditorClassIdentifier: 
+  template: {fileID: 11400000, guid: a4b1692d9e6a41d4180ab669a4eda2ec, type: 2}
+  categories:
+  - name: Ground
+    number: 0
+    tilemapLayer: 0
+    tiles:
+    - {fileID: 11400000, guid: 039ad6fff6c5aea4b90641a562874783, type: 2}
+    - {fileID: 11400000, guid: ea6d64c6f4c782848b5accf20303b374, type: 2}
+    - {fileID: 11400000, guid: d2866b5f032ff204798f34167b458ee7, type: 2}
+    - {fileID: 11400000, guid: 434b27069f9143f40a87faa70068f501, type: 2}
+  - name: Walls
+    number: 1
+    tilemapLayer: 0
+    tiles:
+    - {fileID: 11400000, guid: 3cf1575f6d035944382663729777e4be, type: 2}
+    - {fileID: 11400000, guid: eb58d1803ac8cb84abbaafdcc69e6918, type: 2}
+    - {fileID: 11400000, guid: ef701187d1163534abc56a98c06c3276, type: 2}
+    - {fileID: 11400000, guid: f3edc0fcd98f05e4cb348c01b3467f16, type: 2}
+  - name: Obstacles
+    number: 2
+    tilemapLayer: 1
+    tiles:
+    - {fileID: 11400000, guid: 039ad6fff6c5aea4b90641a562874783, type: 2}
+    - {fileID: 11400000, guid: 3cf1575f6d035944382663729777e4be, type: 2}
+    - {fileID: 11400000, guid: 90632c2c8f4b4c143b9a63a13a9904bd, type: 2}
+    - {fileID: 11400000, guid: 2becb24f52f9a2f4da4027deacab1fc5, type: 2}
+  - name: Special
+    number: 3
+    tilemapLayer: 1
+    tiles:
+    - {fileID: 11400000, guid: ab9832c98219c6d45aa49032c4ba48f1, type: 2}
+    - {fileID: 11400000, guid: cfb228629636f924aaa53a4fe86eb92b, type: 2}
+    - {fileID: 11400000, guid: 1572792fd6662fd45be010427c74c85e, type: 2}
+    - {fileID: 11400000, guid: 16186016b218823469a2349c4823fb27, type: 2}

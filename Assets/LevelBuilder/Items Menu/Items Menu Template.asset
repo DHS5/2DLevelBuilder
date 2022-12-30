@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0a3280a4347a8b439bff3aadcfb7033, type: 3}
+  m_Name: Items Menu Template
+  m_EditorClassIdentifier: 
+  categories:
+  - categoryName: Ground
+    categoryNumber: 0
+    categoryTilemapLayer: 0
+    items:
+    - number: 0
+      name: Dirt
+    - number: 1
+      name: Rock
+    - number: 2
+      name: Grass
+    - number: 3
+      name: Ice
+  - categoryName: Walls
+    categoryNumber: 1
+    categoryTilemapLayer: 0
+    items:
+    - number: 0
+      name: Dirt
+    - number: 1
+      name: Rock
+    - number: 2
+      name: Grass
+    - number: 3
+      name: Ice
+  - categoryName: Obstacles
+    categoryNumber: 2
+    categoryTilemapLayer: 1
+    items:
+    - number: 0
+      name: Dirt
+    - number: 1
+      name: Rock
+    - number: 2
+      name: Grass
+    - number: 3
+      name: Ice
+  - categoryName: Special
+    categoryNumber: 3
+    categoryTilemapLayer: 1
+    items:
+    - number: 0
+      name: Dirt
+    - number: 1
+      name: Rock
+    - number: 2
+      name: Grass
+    - number: 3
+      name: Ice
