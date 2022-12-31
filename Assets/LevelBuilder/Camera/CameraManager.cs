@@ -37,7 +37,7 @@ namespace LevelBuilder2D
         {
             inputActions = new LevelBuilder_InputActions();
 
-            bounds = new Vector2(32, 16); // to replace
+            bounds = RoomManager.roomSize / 2;
         }
 
         private void OnEnable()

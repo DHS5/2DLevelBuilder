@@ -34,7 +34,7 @@ MonoBehaviour:
     number: 2
     tilemapLayer: 1
     tiles:
-    - {fileID: 11400000, guid: 039ad6fff6c5aea4b90641a562874783, type: 2}
+    - {fileID: 11400000, guid: b5693af456532194c87dde10637a0d0b, type: 2}
     - {fileID: 11400000, guid: 3cf1575f6d035944382663729777e4be, type: 2}
     - {fileID: 11400000, guid: 90632c2c8f4b4c143b9a63a13a9904bd, type: 2}
     - {fileID: 11400000, guid: 2becb24f52f9a2f4da4027deacab1fc5, type: 2}

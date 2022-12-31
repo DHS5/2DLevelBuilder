@@ -61,9 +61,9 @@ namespace LevelBuilder2D
 
         // ### Commands ###
 
-        public void SetTile(Vector3Int _pos, Tilemap _tilemap, TileBase _tile)
+        public void SetTile(Vector3Int _pos, Tilemap _tilemap, TileBase _tile, TileBase _formerTile)
         {
-            Execute(new SetTileCommand(_pos, _tilemap, _tile));
+            Execute(new SetTileCommand(_pos, _tilemap, _tile, _formerTile));
         }
 
         public void BoxFill(Vector3Int _startPos, Vector3Int _endPos, Tilemap _tilemap, TileBase _tile)

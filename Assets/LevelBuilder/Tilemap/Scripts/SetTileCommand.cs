@@ -13,18 +13,17 @@ namespace LevelBuilder2D
         private TileBase formerTile;
         private TileBase newTile;
 
-        public SetTileCommand(Vector3Int _pos, Tilemap _tilemap, TileBase _tile)
+        public SetTileCommand(Vector3Int _pos, Tilemap _tilemap, TileBase _tile, TileBase _formerTile)
         {
             pos = _pos;
             tilemap = _tilemap;
             newTile = _tile;
-
-            formerTile = tilemap.GetTile(pos);
+            formerTile = _formerTile;
         }
 
         public bool Execute()
         {
-            if (tilemap.GetTile(pos.x, pos.y) == newTile) return false;
+            if (formerTile == newTile) return false;
 
             tilemap.SetTile(pos, newTile);
             return true;

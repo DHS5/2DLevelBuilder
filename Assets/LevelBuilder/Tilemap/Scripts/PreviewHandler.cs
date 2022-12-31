@@ -37,6 +37,13 @@ namespace LevelBuilder2D
         readonly Color fadeColor = new Color(1, 1, 1, 0.5f);
 
 
+        public TileBase RealTile
+        {
+            get { return currentPreview.realTile; }
+            set { currentPreview.ActuRealTile(value); }
+        }
+
+
         public void Enable() { EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, HidePreview); }
         public void Disable() { EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, HidePreview); }
 
@@ -66,10 +73,6 @@ namespace LevelBuilder2D
                 ActuPreview(_pos, _tile, _tilemap.GetTile(_pos));
                 return;
             }
-        }
-        public void UpdateRealTile(TileBase _realTile)
-        {
-            currentPreview.ActuRealTile(_realTile);
         }
 
 

@@ -37,14 +37,9 @@ namespace LevelBuilder2D
         public PreviewHandler PreviewHandler { get; private set; }
 
 
-        readonly int hLimit = 32;
-        private int HLimit { get { return hLimit / (CurrentTilemapLayer + 1); } }
-
-        readonly int vLimit = 16;
-        private int VLimit { get { return vLimit / (CurrentTilemapLayer + 1); } }
-
 
         // Private variables
+
         private Vector2 mousePos;
         private Vector2 MousePos
         {
@@ -195,17 +190,16 @@ namespace LevelBuilder2D
         private void SetTile(Vector3 pos, Tilemap tilemap, TileBase tile)
         {
             Vector3Int tilemapPos = GetTilemapPosition(pos, tilemap);
-            if (IsInCurrentRoom(tilemapPos))
+            if (RoomManager.IsInCurrentRoom(WorldPos(pos), CurrentTilemapLayer))
             {
-                //tilemap.SetTile(tilemapPos, tile);
-                TilemapCommandManager.Instance.SetTile(tilemapPos, tilemap, tile);
-                PreviewHandler.UpdateRealTile(tile);
+                TilemapCommandManager.Instance.SetTile(tilemapPos, tilemap, tile, PreviewHandler.RealTile);
+                PreviewHandler.RealTile = tile;
             }
         }
         private void FillTile(Vector3 pos, Tilemap tilemap, TileBase tile)
         {
             Vector3Int tilemapPos = GetTilemapPosition(pos, tilemap);
-            if (IsInCurrentRoom(tilemapPos))
+            if (RoomManager.IsInCurrentRoom(WorldPos(pos), CurrentTilemapLayer))
             {
                 //tilemap.FloodFill(tilemapPos, tile);
                 TilemapCommandManager.Instance.Fill(tilemapPos, tilemap, tile);
@@ -215,7 +209,7 @@ namespace LevelBuilder2D
         {
             Vector3Int startTilemapPos = GetTilemapPosition(startPos, tilemap);
             Vector3Int endTilemapPos = GetTilemapPosition(endPos, tilemap);
-            if (IsInCurrentRoom(startTilemapPos) && IsInCurrentRoom(endTilemapPos))
+            if (RoomManager.AreInCurrentRoom(startPos, endPos, CurrentTilemapLayer))
             {
                 //tilemap.BoxFill(tile, startTilemapPos, endTilemapPos);
                 TilemapCommandManager.Instance.BoxFill(startTilemapPos, endTilemapPos, tilemap, tile);
@@ -240,11 +234,9 @@ namespace LevelBuilder2D
         {
             return tilemap.WorldToCell(mainCamera.ScreenToWorldPoint(pos));
         }
-
-        private bool IsInCurrentRoom(Vector3Int pos)
-        {
-            if (pos.x < -HLimit || pos.x > HLimit - 1 || pos.y < -VLimit || pos.y > VLimit - 1) return false;
-            return true;
+        private Vector3 WorldPos(Vector3 pos) 
+        { 
+            return mainCamera.ScreenToWorldPoint(pos); 
         }
 
         // ### Inputs ###
@@ -396,7 +388,7 @@ namespace LevelBuilder2D
         {
             Vector3Int tilemapPos = GetTilemapPosition(MousePos, CurrentTilemap);
             PreviewHandler.UpdatePreview(CurrentTilemap, new Vector2Int(tilemapPos.x, tilemapPos.y), CurrentTile,
-                !isPointerOnUI && CurrentBrush == Brush.PAINT && IsInCurrentRoom(tilemapPos));
+                !isPointerOnUI && CurrentBrush == Brush.PAINT && RoomManager.IsInCurrentRoom(WorldPos(MousePos), CurrentTilemapLayer));
         }
 
 
