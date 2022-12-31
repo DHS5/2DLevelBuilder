@@ -218,11 +218,20 @@ namespace LevelBuilder2D
 
         private void ActuMenu()
         {
+            bool first = true;
             foreach (CategoryButton c in categoryButtons)
             {
+                c.SetContainer(true);
                 foreach (ItemToggle i in c.items)
                 {
                     i.Set(MenuContent);
+                    if (first)
+                    {
+                        first = false;
+                        i.Toggle.isOn = true;
+                        TilemapManager.SetTileAction.Invoke(i.Item);
+                    }
+                    else i.Toggle.isOn = false;
                 }
                 c.SetContainer(false);
             }
@@ -231,9 +240,6 @@ namespace LevelBuilder2D
         private void InitBrushes()
         {
             paintBrushToggle.isOn = true;
-            Item item = new Item { tile = MenuContent.categories[0].tiles[0], layer = MenuContent.categories[0].tilemapLayer };
-            TilemapManager.SetTileAction.Invoke(item);
-            ItemToggle.OnPickTile.Invoke(item);
         }
 
 
@@ -264,7 +270,7 @@ namespace LevelBuilder2D
         // # Triggers #
 
         private void TriggerQuit() { EventManager.TriggerEvent(EventManager.LevelBuilderEvent.QUIT_BUILDER); }
-        private void TriggerSave() { Debug.Log("trigger save"); EventManager.TriggerEvent(EventManager.LevelBuilderEvent.SAVE_LEVEL); }
+        private void TriggerSave() { EventManager.TriggerEvent(EventManager.LevelBuilderEvent.SAVE_LEVEL); }
 
         // # Inputs #
 

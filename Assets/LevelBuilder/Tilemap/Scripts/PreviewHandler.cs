@@ -34,6 +34,8 @@ namespace LevelBuilder2D
         private PreviewItem currentPreview;
 
 
+        readonly Color fadeColor = new Color(1, 1, 1, 0.5f);
+
 
         public void Enable() { EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, HidePreview); }
         public void Disable() { EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, HidePreview); }
@@ -74,12 +76,18 @@ namespace LevelBuilder2D
         public void HidePreview()
         {
             if (!currentPreview.SameTile())
+            {
                 tilemap.SetTile(currentPreview.pos, currentPreview.realTile);
+            }
+            FadeColor(new Vector3Int(currentPreview.pos.x, currentPreview.pos.y, 0), false);
         }
         private void ShowPreview()
         {
             if (!currentPreview.SameTile())
+            {
                 tilemap.SetTile(currentPreview.pos, currentPreview.previewTile);
+            }
+            FadeColor(new Vector3Int(currentPreview.pos.x, currentPreview.pos.y, 0), true);
         }
 
         private void ActuPreview(Vector2Int _pos, TileBase _previewTile, TileBase _relaTile)
@@ -87,6 +95,13 @@ namespace LevelBuilder2D
             HidePreview();
             currentPreview.Set(_pos, _previewTile, _relaTile);
             ShowPreview();
+        }
+
+        private void FadeColor(Vector3Int pos, bool state)
+        {
+            if (state) tilemap.SetTileFlags(pos, TileFlags.None);
+            tilemap.SetColor(pos, state ? fadeColor : Color.white);
+            if (!state) tilemap.SetTileFlags(pos, TileFlags.LockColor);
         }
     }
 }

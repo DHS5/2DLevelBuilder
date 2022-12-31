@@ -20,7 +20,7 @@ MonoBehaviour:
     tiles:
     - {fileID: 11400000, guid: 039ad6fff6c5aea4b90641a562874783, type: 2}
     - {fileID: 11400000, guid: ea6d64c6f4c782848b5accf20303b374, type: 2}
-    - {fileID: 11400000, guid: d2866b5f032ff204798f34167b458ee7, type: 2}
+    - {fileID: 11400000, guid: b5693af456532194c87dde10637a0d0b, type: 2}
     - {fileID: 11400000, guid: 434b27069f9143f40a87faa70068f501, type: 2}
   - name: Walls
     number: 1

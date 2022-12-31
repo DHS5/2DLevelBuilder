@@ -38,7 +38,18 @@ namespace LevelBuilder2D
         // Static Action
         public static Action<Item> OnPickTile;
 
-        public ToggleGroup Group { set { toggle.group = value; } }
+        public Toggle Toggle { get { return toggle; } }
+
+        private ToggleGroup toggleGroup;
+        public ToggleGroup Group 
+        { 
+            get { return toggleGroup; }
+            set 
+            { 
+                toggle.group = value;
+                toggleGroup = value;
+            } 
+        }
         public int ItemNumber { get; private set; }
 
         public Item Item
