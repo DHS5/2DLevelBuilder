@@ -18,6 +18,7 @@ public class RuleTileGenerator : EditorWindow
         new Vector3Int(0, 1, 0),
         new Vector3Int(1, 1, 0),
         new Vector3Int(-1, 0, 0),
+        new Vector3Int(0, 0, 0),
         new Vector3Int(1, 0, 0),
         new Vector3Int(-1, -1, 0),
         new Vector3Int(0, -1, 0),
@@ -131,6 +132,7 @@ public class RuleTileGenerator : EditorWindow
     public Sprite[] templateSprites = new Sprite[0];
 
     public List<List<int>> templ_neighbors = new List<List<int>>();
+    public List<RuleTile.TilingRule.Transform> templ_transforms = new();
 
     int defaultIndex = 0;
     bool setDefaultIndex = false;
@@ -139,6 +141,7 @@ public class RuleTileGenerator : EditorWindow
     {
         //reset lists
         templ_neighbors = new List<List<int>>();
+        templ_transforms = new();
 
         //loop through the template sprites
         int i = 0;
@@ -161,6 +164,7 @@ public class RuleTileGenerator : EditorWindow
             Vector2Int size = new Vector2Int(tex.width, tex.height);
 
             bool def = true;
+            bool rotated = false;
 
             //set rules based on the color of the pixels
             foreach (var neighbor in NeighborPositions)
@@ -198,6 +202,10 @@ public class RuleTileGenerator : EditorWindow
                 {
                     neighborRules.Add(0);
                 }
+                else if (c == Color.blue)
+                {
+                    rotated = true;
+                }
                 else if (c == Color.green)
                 {
                     neighborRules.Add(RuleTile.TilingRule.Neighbor.This);
@@ -218,6 +226,7 @@ public class RuleTileGenerator : EditorWindow
 
             //add the list to the list of lists
             templ_neighbors.Add(neighborRules);
+            templ_transforms.Add(rotated ? RuleTile.TilingRuleOutput.Transform.Rotated : RuleTile.TilingRuleOutput.Transform.Fixed);
 
             i++;
         }
@@ -279,7 +288,7 @@ public class RuleTileGenerator : EditorWindow
     public Sprite[] tileSprites;
 
     public Sprite defaultSprite;
-    public Tile.ColliderType colliderType = Tile.ColliderType.Sprite;
+    public Tile.ColliderType colliderType = Tile.ColliderType.Grid;
     public GameObject defaultGameobject;
     public bool addGameobjectsToRules;
 
@@ -299,6 +308,7 @@ public class RuleTileGenerator : EditorWindow
             rule.m_Sprites[0] = tileSprites[i];
             rule.m_Neighbors = templ_neighbors[i];
             rule.m_ColliderType = colliderType;
+            rule.m_RuleTransform = templ_transforms[i];
             if (addGameobjectsToRules) rule.m_GameObject = defaultGameobject;
 
             tile.m_TilingRules.Add(rule);
@@ -309,7 +319,7 @@ public class RuleTileGenerator : EditorWindow
 
     public static void SaveTile(RuleTile tile, string name)
     {
-        AssetDatabase.CreateAsset(tile, $"Assets/{name}.asset");
+        AssetDatabase.CreateAsset(tile, $"Assets/Tiles/Palettes/{name}.asset");
         AssetDatabase.SaveAssets();
 
         EditorUtility.FocusProjectWindow();

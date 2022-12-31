@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ff1e140892cc85a48a3e9204a5b577f7
+guid: 08b5d63660107504ca6c35f1f6c02a5a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -44,12 +44,12 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
+  spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 4
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -102,7 +102,7 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: Android
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -113,23 +113,11 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 32
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TerrainTiles_0
+      name: 15Tiles_Template_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,20 +125,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f866f6c1838597340acbbe28b17509f4
-      internalID: 1136206216
+      spriteID: b7744020f908f8e478ba9674bd106de4
+      internalID: -147606368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_1
+      name: 15Tiles_Template_1
       rect:
         serializedVersion: 2
         x: 4
@@ -158,20 +146,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99bb9ed8a0ffc0a48964c48ca3e4d432
-      internalID: -869877019
+      spriteID: 65fb9c3fed88ed34b80817684183b46c
+      internalID: 1007318811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_2
+      name: 15Tiles_Template_2
       rect:
         serializedVersion: 2
         x: 8
@@ -179,20 +167,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e73eb78fe1b13c4db3f22d4e04e3475
-      internalID: -464612588
+      spriteID: 1152f91e94ff10b408d7eee63247d8ac
+      internalID: -593439081
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_3
+      name: 15Tiles_Template_3
       rect:
         serializedVersion: 2
         x: 12
@@ -200,20 +188,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d332d31ca3bfdd48801ae121efdc973
-      internalID: 1401071
+      spriteID: e896d74fc88c3a84b871604ce40116fb
+      internalID: -958579605
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_4
+      name: 15Tiles_Template_4
       rect:
         serializedVersion: 2
         x: 0
@@ -221,20 +209,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d16d626ae900674db719015c55f2f8e
-      internalID: 520342937
+      spriteID: 4c9e1e0da8ad8a945a8b31bdf0320f14
+      internalID: -1885665176
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_5
+      name: 15Tiles_Template_5
       rect:
         serializedVersion: 2
         x: 4
@@ -242,20 +230,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94cfff9a9569c43439ddf67bca3565bb
-      internalID: 1129107983
+      spriteID: 4ec4f2614b6d45e47ad4e46749a6481b
+      internalID: 191887695
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_6
+      name: 15Tiles_Template_6
       rect:
         serializedVersion: 2
         x: 8
@@ -263,20 +251,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28f017980828961409dd783122aba67f
-      internalID: -1031411208
+      spriteID: dd8e7b87a1db03545adac97fe319dc84
+      internalID: 70892740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_7
+      name: 15Tiles_Template_7
       rect:
         serializedVersion: 2
         x: 12
@@ -284,20 +272,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9385ae2b10207f1419831a6f71fd7088
-      internalID: 1297053782
+      spriteID: e7725b3009763b94baa0d7ea887b80c2
+      internalID: 330401241
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_8
+      name: 15Tiles_Template_8
       rect:
         serializedVersion: 2
         x: 0
@@ -305,20 +293,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 087e77df3c0a0054b8a3ebe530f60bf6
-      internalID: 1934201471
+      spriteID: 18b9b1c9811437949bd1e9ccddf97536
+      internalID: 317221589
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_9
+      name: 15Tiles_Template_9
       rect:
         serializedVersion: 2
         x: 4
@@ -326,20 +314,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4380a664687b2374690b58ac90c6d423
-      internalID: -1399868619
+      spriteID: 078dd312dabef594792b0be63fc45a50
+      internalID: 1474737765
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_10
+      name: 15Tiles_Template_10
       rect:
         serializedVersion: 2
         x: 8
@@ -347,20 +335,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc86e58263489e7458e64f2a28f2022c
-      internalID: 142575545
+      spriteID: 356729bcfdfbe7c44844c574d01d13f8
+      internalID: 1106448209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_11
+      name: 15Tiles_Template_11
       rect:
         serializedVersion: 2
         x: 12
@@ -368,20 +356,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bba093c106d925443a6b564314990d76
-      internalID: 1614574897
+      spriteID: f9575c896d378ba4c9db5044cc60bafd
+      internalID: -1825924171
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_12
+      name: 15Tiles_Template_12
       rect:
         serializedVersion: 2
         x: 0
@@ -389,20 +377,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cc47130a15793254380f0c2a73983615
-      internalID: 1245864853
+      spriteID: 707805221b61df745b4845f70b30b216
+      internalID: -257735717
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_13
+      name: 15Tiles_Template_13
       rect:
         serializedVersion: 2
         x: 4
@@ -410,20 +398,20 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b712049821b4094096028a1c275063a
-      internalID: -1431558044
+      spriteID: 52c56597036b40743ab934116762c82c
+      internalID: 840820048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TerrainTiles_14
+      name: 15Tiles_Template_14
       rect:
         serializedVersion: 2
         x: 8
@@ -431,14 +419,14 @@ TextureImporter:
         width: 4
         height: 4
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c91afc442720b34d8ba85be538e597c
-      internalID: 1642306121
+      spriteID: 46b6dc9415785b74bb8ace8d84665fe2
+      internalID: 2008369722
       vertices: []
       indices: 
       edges: []
@@ -454,22 +442,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TerrainTiles_1: -869877019
-      TerrainTiles_4: 520342937
-      TerrainTiles_12: 1245864853
-      TerrainTiles_5: 1129107983
-      TerrainTiles_13: -1431558044
-      TerrainTiles_15: -245186238
-      TerrainTiles_2: -464612588
-      TerrainTiles_6: -1031411208
-      TerrainTiles_3: 1401071
-      TerrainTiles_11: 1614574897
-      TerrainTiles_10: 142575545
-      TerrainTiles_0: 1136206216
-      TerrainTiles_9: -1399868619
-      TerrainTiles_8: 1934201471
-      TerrainTiles_7: 1297053782
-      TerrainTiles_14: 1642306121
+      15Tiles_Template_7: 330401241
+      15Tiles_Template_0: -147606368
+      15Tiles_Template_1: 1007318811
+      15Tiles_Template_9: 1474737765
+      15Tiles_Template_4: -1885665176
+      15Tiles_Template_5: 191887695
+      15Tiles_Template_8: 317221589
+      15Tiles_Template_11: -1825924171
+      15Tiles_Template_6: 70892740
+      15Tiles_Template_10: 1106448209
+      15Tiles_Template_2: -593439081
+      15Tiles_Template_12: -257735717
+      15Tiles_Template_14: 2008369722
+      15Tiles_Template_3: -958579605
+      15Tiles_Template_13: 840820048
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
