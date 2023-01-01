@@ -14,6 +14,7 @@ namespace LevelBuilder2D
             OPEN_BUILDER = 2,
             QUIT_BUILDER = 3,
             SAVE_LEVEL = 4,
+            BEFORE_SAVE = 5,
         }
 
         private static Dictionary<LevelBuilderEvent, Action> eventDico = new();

@@ -75,5 +75,10 @@ namespace LevelBuilder2D
         {
             Execute(new FillCommand(_pos, _tilemap, _tile));
         }
+
+        public void Clear(Tilemap[] tilemaps)
+        {
+            Execute(new ClearCommand(tilemaps));
+        }
     }
 }

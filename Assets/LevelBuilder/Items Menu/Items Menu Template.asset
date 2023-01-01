@@ -17,10 +17,10 @@ MonoBehaviour:
     categoryNumber: 0
     categoryTilemapLayer: 0
     items:
-    - number: 0
-      name: Dirt
     - number: 1
       name: Rock
+    - number: 0
+      name: Dirt
     - number: 2
       name: Grass
     - number: 3
@@ -49,9 +49,9 @@ MonoBehaviour:
       name: Grass
     - number: 3
       name: Ice
-  - categoryName: Special
+  - categoryName: Double Sized
     categoryNumber: 3
-    categoryTilemapLayer: 1
+    categoryTilemapLayer: 2
     items:
     - number: 0
       name: Dirt

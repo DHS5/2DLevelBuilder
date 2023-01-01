@@ -44,8 +44,8 @@ namespace LevelBuilder2D
         }
 
 
-        public void Enable() { EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, HidePreview); }
-        public void Disable() { EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, HidePreview); }
+        public void Enable() { EventManager.StartListening(EventManager.LevelBuilderEvent.BEFORE_SAVE, HidePreview); }
+        public void Disable() { EventManager.StopListening(EventManager.LevelBuilderEvent.BEFORE_SAVE, HidePreview); }
 
 
         public void UpdatePreview(Tilemap _tilemap, Vector2Int _pos, TileBase _tile, bool _show)

@@ -109,7 +109,7 @@ namespace LevelBuilder2D
         private void ZoomInOut(Vector2 scroll)
         {
             if (scroll.y > 0 && levelBuilderCamera.orthographicSize > 1) levelBuilderCamera.orthographicSize--;
-            else if (scroll.y < 0 && levelBuilderCamera.orthographicSize < 40) levelBuilderCamera.orthographicSize++;
+            else if (scroll.y < 0 && levelBuilderCamera.orthographicSize < 30) levelBuilderCamera.orthographicSize++;
         }
     }
 }

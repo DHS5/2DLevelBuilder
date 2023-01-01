@@ -30,6 +30,7 @@ namespace LevelBuilder2D
 
         [Header("UI components")]
         [SerializeField] private GameObject itemMenu;
+        [SerializeField] private GameObject worldSpaceButtons;
         [Space, Space]
         // Brushes
         [SerializeField] private Toggle paintBrushToggle;
@@ -39,7 +40,14 @@ namespace LevelBuilder2D
         [Space]
         // Level
         [SerializeField] private Button saveButton;
+        [SerializeField] private Button clearButton;
         [SerializeField] private Button quitButton;
+        [Space]
+        // World space
+        [SerializeField] private Button rightRoomButton;
+        [SerializeField] private Button leftRoomButton;
+        [SerializeField] private Button upRoomButton;
+        [SerializeField] private Button downRoomButton;
 
         [Header("Containers")]
         [SerializeField] private GameObject categoryButtonsContainer;
@@ -143,10 +151,12 @@ namespace LevelBuilder2D
         private void OnCreated()
         {
             itemMenu.SetActive(false);
+            worldSpaceButtons.SetActive(false);
         }
         private void OnOpen()
         {
             itemMenu.SetActive(true);
+            worldSpaceButtons.SetActive(true);
 
             ActuMenu();
             InitBrushes();
@@ -165,6 +175,7 @@ namespace LevelBuilder2D
             inputActions.Disable();
 
             itemMenu.SetActive(false);
+            worldSpaceButtons.SetActive(false);
         }
         private void OnSave()
         {
@@ -248,6 +259,7 @@ namespace LevelBuilder2D
         private void AddListeners()
         {
             saveButton.onClick.AddListener(TriggerSave);
+            clearButton.onClick.AddListener(ClearTilemaps);
             quitButton.onClick.AddListener(TriggerQuit);
 
             paintBrushToggle.onValueChanged.AddListener(SetPaintBrush);
@@ -255,22 +267,37 @@ namespace LevelBuilder2D
             fillBrushToggle.onValueChanged.AddListener(SetFillBrush);
             pickBrushToggle.onValueChanged.AddListener(SetPickBrush);
 
+            rightRoomButton.onClick.AddListener(RightRoom);
+            leftRoomButton.onClick.AddListener(LeftRoom);
+            upRoomButton.onClick.AddListener(UpRoom);
+            downRoomButton.onClick.AddListener(DownRoom);
+
         }
         private void RemoveListeners()
         {
             saveButton.onClick.RemoveAllListeners();
+            clearButton.onClick.RemoveAllListeners();
             quitButton.onClick.RemoveAllListeners();
 
             paintBrushToggle.onValueChanged.RemoveAllListeners();
             boxBrushToggle.onValueChanged.RemoveAllListeners();
             fillBrushToggle.onValueChanged.RemoveAllListeners();
             pickBrushToggle.onValueChanged.RemoveAllListeners();
+
+            rightRoomButton.onClick.RemoveAllListeners();
+            leftRoomButton.onClick.RemoveAllListeners();
+            upRoomButton.onClick.RemoveAllListeners();
+            downRoomButton.onClick.RemoveAllListeners();
         }
 
         // # Triggers #
 
         private void TriggerQuit() { EventManager.TriggerEvent(EventManager.LevelBuilderEvent.QUIT_BUILDER); }
-        private void TriggerSave() { EventManager.TriggerEvent(EventManager.LevelBuilderEvent.SAVE_LEVEL); }
+        private void TriggerSave() 
+        { 
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.BEFORE_SAVE);
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.SAVE_LEVEL);
+        }
 
         // # Inputs #
 
@@ -286,6 +313,13 @@ namespace LevelBuilder2D
         private void SetBoxBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.BOX); }
         private void SetFillBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.FILL); }
         private void SetPickBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.PICK); }
+
+        // ### Room Changes ###
+
+        private void RightRoom() { RoomManager.ChangeRoom(0, 1, tilemapManager.Tilemaps); }
+        private void LeftRoom() { RoomManager.ChangeRoom(0, -1, tilemapManager.Tilemaps); }
+        private void UpRoom() { RoomManager.ChangeRoom(1, 0, tilemapManager.Tilemaps); }
+        private void DownRoom() { RoomManager.ChangeRoom(-1, 0, tilemapManager.Tilemaps); }
 
 
         // ### Menu Functions ###
@@ -318,6 +352,13 @@ namespace LevelBuilder2D
         private void CreateLevelSO()
         {
             LevelSO = LevelManager.InstanciateLevelSO(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelName));
+        }
+
+        // Clear
+        private void ClearTilemaps()
+        {
+            RoomManager.BackToFirstRoom(tilemapManager.Tilemaps);
+            TilemapCommandManager.Instance.Clear(tilemapManager.Tilemaps);
         }
     }
 }

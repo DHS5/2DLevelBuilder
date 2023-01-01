@@ -26,21 +26,21 @@ MonoBehaviour:
     number: 1
     tilemapLayer: 0
     tiles:
-    - {fileID: 11400000, guid: 3cf1575f6d035944382663729777e4be, type: 2}
+    - {fileID: 11400000, guid: 97a61332533c46e4597f181a161b5762, type: 2}
     - {fileID: 11400000, guid: eb58d1803ac8cb84abbaafdcc69e6918, type: 2}
-    - {fileID: 11400000, guid: ef701187d1163534abc56a98c06c3276, type: 2}
-    - {fileID: 11400000, guid: f3edc0fcd98f05e4cb348c01b3467f16, type: 2}
+    - {fileID: 11400000, guid: 95e638133f19a4a4bb822db5a4b9ddb3, type: 2}
+    - {fileID: 11400000, guid: 9a613e6fa038fbb4f8c8fece1bfb9c9e, type: 2}
   - name: Obstacles
     number: 2
     tilemapLayer: 1
     tiles:
     - {fileID: 11400000, guid: b5693af456532194c87dde10637a0d0b, type: 2}
-    - {fileID: 11400000, guid: 3cf1575f6d035944382663729777e4be, type: 2}
-    - {fileID: 11400000, guid: 90632c2c8f4b4c143b9a63a13a9904bd, type: 2}
+    - {fileID: 11400000, guid: 9a613e6fa038fbb4f8c8fece1bfb9c9e, type: 2}
+    - {fileID: 11400000, guid: 95e638133f19a4a4bb822db5a4b9ddb3, type: 2}
     - {fileID: 11400000, guid: 2becb24f52f9a2f4da4027deacab1fc5, type: 2}
-  - name: Special
+  - name: Double Sized
     number: 3
-    tilemapLayer: 1
+    tilemapLayer: 2
     tiles:
     - {fileID: 11400000, guid: ab9832c98219c6d45aa49032c4ba48f1, type: 2}
     - {fileID: 11400000, guid: cfb228629636f924aaa53a4fe86eb92b, type: 2}

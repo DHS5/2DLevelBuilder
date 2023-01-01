@@ -259,7 +259,6 @@ namespace LevelBuilder2D
         {
             if (tileBase is Tile) return (tileBase as Tile).sprite;
             if (tileBase is RuleTile) return (tileBase as RuleTile).m_DefaultSprite;
-            if (tileBase is PrefabTile) return (tileBase as PrefabTile).defaultSprite;
             return null;
         }
 
