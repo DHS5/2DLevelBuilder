@@ -8,6 +8,10 @@ namespace LevelBuilder2D
     [CreateAssetMenu(fileName = "Items Menu Content", menuName = "Items Menu/Content")]
     public class ItemsMenuContent : ScriptableObject
     {
+        public string styleName;
+
+        public Sprite stylePreview;
+
         public ItemsMenuTemplate template;
 
         public ItemsMenuContentCategory[] categories;

@@ -12,7 +12,7 @@ namespace LevelBuilder2D
         [SerializeField] private LevelListSO levelList;
 
         [Header("Menu Contents List")]
-        [SerializeField] private ItemsMenuContent menuContent; // --> list
+        [SerializeField] private LevelStyleList styleList; // --> list
 
         [Header("Items Menu")]
         [SerializeField] private ItemsMenu itemsMenu;
@@ -91,7 +91,7 @@ namespace LevelBuilder2D
                     name = levelSO.level.name;
                 }
             }
-            itemsMenu.GetStartInfos(menuContent, startAction, environment, name, levelSO);
+            itemsMenu.GetStartInfos(styleList.menuContents[0], startAction, environment, name, levelSO);
 
             levelMenu.SetActive(false);
 
