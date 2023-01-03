@@ -49,6 +49,9 @@ namespace LevelBuilder2D
         [SerializeField] private Button upRoomButton;
         [SerializeField] private Button downRoomButton;
 
+        [Header("Builder Environment")]
+        [SerializeField] private SpriteRenderer builderBackground;
+
         [Header("Containers")]
         [SerializeField] private GameObject categoryButtonsContainer;
         [SerializeField] private ToggleGroup toggleGroup;
@@ -160,6 +163,7 @@ namespace LevelBuilder2D
 
             ActuMenu();
             InitBrushes();
+            ActuEnvironment();
 
             AddListeners();
 
@@ -253,6 +257,10 @@ namespace LevelBuilder2D
             paintBrushToggle.isOn = true;
         }
 
+        private void ActuEnvironment()
+        {
+            builderBackground.sprite = MenuContent.styleBackground;
+        }
 
         // ### Listeners ###
 

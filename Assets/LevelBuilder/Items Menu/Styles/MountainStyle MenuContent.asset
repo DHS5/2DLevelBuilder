@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: MountainStyle MenuContent
   m_EditorClassIdentifier: 
   styleName: Mountain
-  stylePreview: {fileID: -147606368, guid: 08b5d63660107504ca6c35f1f6c02a5a, type: 3}
+  styleIndex: 1
+  stylePreview: {fileID: 1007318811, guid: 08b5d63660107504ca6c35f1f6c02a5a, type: 3}
+  styleBackground: {fileID: 1007318811, guid: 08b5d63660107504ca6c35f1f6c02a5a, type: 3}
   template: {fileID: 11400000, guid: a4b1692d9e6a41d4180ab669a4eda2ec, type: 2}
   categories:
   - name: Ground

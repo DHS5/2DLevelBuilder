@@ -15,3 +15,5 @@ MonoBehaviour:
   menuContents:
   - {fileID: 11400000, guid: 0abea47e0e82a684c9a7d86e2c1825d0, type: 2}
   - {fileID: 11400000, guid: 480b2ecb861267942a01c69587b89e8f, type: 2}
+  - {fileID: 11400000, guid: 5d9eb8417afe78b4f94edab365869ffc, type: 2}
+  - {fileID: 11400000, guid: 8fc7470cf29fe334f8d3f7f0611a2b5e, type: 2}

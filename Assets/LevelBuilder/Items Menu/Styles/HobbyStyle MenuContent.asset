@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a2e0199df58b9cb48901097814077bb8, type: 3}
-  m_Name: MountainStyle MenuContent 2
+  m_Name: HobbyStyle MenuContent
   m_EditorClassIdentifier: 
-  styleName: 3
-  stylePreview: {fileID: -958579605, guid: 08b5d63660107504ca6c35f1f6c02a5a, type: 3}
+  styleName: Lobby
+  styleIndex: 0
+  stylePreview: {fileID: -147606368, guid: 08b5d63660107504ca6c35f1f6c02a5a, type: 3}
+  styleBackground: {fileID: -98688353, guid: 0597c855b44d8a9499dfde6b5f47f303, type: 3}
   template: {fileID: 11400000, guid: a4b1692d9e6a41d4180ab669a4eda2ec, type: 2}
   categories:
   - name: Ground

@@ -54,7 +54,7 @@ namespace LevelBuilder2D
                 levelTilemaps[t] = new(bounds, tiles.ToArray());
             }
 
-            level = new(levelTilemaps, levelName);
+            level = new(levelTilemaps, levelName, menuContent.styleIndex);
 
             return level;
         }
@@ -102,17 +102,17 @@ namespace LevelBuilder2D
         {
             SaveLevelToDisk(level);
 
-            List<string> nameList;
-            string[] currentList = GetLevelList();
+            List<LevelData> levelList;
+            LevelData[] currentList = GetLevelList();
 
             if (currentList != null)
-                nameList = new(currentList);
+                levelList = new(currentList);
             else
-                nameList = new();
+                levelList = new();
 
-            nameList.Add(level.name);
+            levelList.Add(new LevelData(level.name, level.style));
 
-            SetLevelList(nameList.ToArray());
+            SetLevelList(levelList.ToArray());
         }
 
         // ### Load ###
@@ -134,11 +134,11 @@ namespace LevelBuilder2D
 
         // ### Delete ###
 
-        public static void DeleteLevelFromDisk(string levelName)
+        public static void DeleteLevelFromDisk(LevelData levelData)
         {
-            DeleteLevelInList(levelName);
+            DeleteLevelInList(levelData);
 
-            string path = diskSavePath + levelName + ".txt";
+            string path = diskSavePath + levelData.levelName + ".txt";
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -170,7 +170,7 @@ namespace LevelBuilder2D
 
         public static void ModifyLevelSO(LevelSO levelToModify, Level newLevel)
         {
-            levelToModify.level = new(newLevel.levelTilemaps, newLevel.name);
+            levelToModify.level = new(newLevel.levelTilemaps, newLevel.name, newLevel.style);
             EditorUtility.SetDirty(levelToModify);
         }
 
@@ -196,30 +196,44 @@ namespace LevelBuilder2D
         }
 #endif
 
-        
+
 
 
         // ### Level List ###
 
         [System.Serializable]
+        public struct LevelData
+        {
+            public LevelData(string name, int style)
+            {
+                levelName = name;
+                levelStyleIndex = style;
+            }
+
+            public string levelName;
+            public int levelStyleIndex;
+        }
+
+        [System.Serializable]
         private class LevelList
         {
-            public LevelList(string[] _list) { list = _list; }
+            public LevelList(LevelData[] _list) { list = _list; }
 
-            public string[] list;
+            public LevelData[] list;
         }
 
         /// <summary>
         /// Get an array of levels name
         /// </summary>
         /// <returns>Array of levels name OR null</returns>
-        public static string[] GetLevelList()
+        public static LevelData[] GetLevelList()
         {
             if (File.Exists(listSavePath))
             {
                 string json = File.ReadAllText(listSavePath);
                 LevelList levelList = JsonUtility.FromJson<LevelList>(json);
 
+                if (levelList.list.Length == 0) return null;
                 return levelList.list;
             }
 
@@ -230,7 +244,7 @@ namespace LevelBuilder2D
         /// Sets the array of levels name
         /// </summary>
         /// <param name="levels">Array of levels name</param>
-        private static void SetLevelList(string[] levels)
+        private static void SetLevelList(LevelData[] levels)
         {
             LevelList levelList = new(levels);
 
@@ -240,13 +254,13 @@ namespace LevelBuilder2D
         }
 
 
-        private static void DeleteLevelInList(string levelToDelete)
+        private static void DeleteLevelInList(LevelData levelToDelete)
         {
-            string[] array = GetLevelList();
+            LevelData[] array = GetLevelList();
 
             if (array == null) return;
 
-            List<string> list = new(array);
+            List<LevelData> list = new(array);
             list.Remove(levelToDelete);
 
             SetLevelList(list.ToArray());

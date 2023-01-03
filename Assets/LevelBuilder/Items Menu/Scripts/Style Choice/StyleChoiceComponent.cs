@@ -31,6 +31,9 @@ namespace LevelBuilder2D
         private Vector3 translation;
         private Vector3 completeTranslation;
 
+        private int highHalf;
+        private int lowHalf;
+
         private int currentStyleNumber = 0;
         private int CurrentStyleNumber
         {
@@ -47,6 +50,9 @@ namespace LevelBuilder2D
         {
             translation = new Vector3(moveDistance / moveSteps, 0, 0);
             completeTranslation = new Vector3(moveDistance * previews.Count, 0, 0);
+
+            highHalf = previews.Count / 2 + 1;
+            lowHalf = highHalf - 1;
 
             SetUpPreviews();
         }
@@ -66,12 +72,12 @@ namespace LevelBuilder2D
         private void SetUpPreviews()
         {
             styleNameText.text = CurrentStyle.styleName;
-            for (int i = 0; i < previews.Count / 2 + 1; i++)
+            for (int i = 0; i < highHalf; i++)
             {
                 previews[i].previewSprite = levelStyles.menuContents[GetIndex(i)].stylePreview;
             }
             int j = -1;
-            for (int i = previews.Count / 2 + 1; i < previews.Count; i++)
+            for (int i = highHalf; i < previews.Count; i++)
             {
                 previews[i].previewSprite = levelStyles.menuContents[GetIndex(j)].stylePreview;
                 j--;
@@ -90,8 +96,8 @@ namespace LevelBuilder2D
             previews.Remove(preview);
             previews.Add(preview);
 
-            previews[2].previewSprite =
-                levelStyles.menuContents[GetIndex(CurrentStyleNumber + 2)].stylePreview;
+            previews[highHalf - 1].previewSprite =
+                levelStyles.menuContents[GetIndex(CurrentStyleNumber + lowHalf)].stylePreview;
 
             StartCoroutine(MoveCR(MoveDirection.LEFT));
         }
@@ -106,8 +112,8 @@ namespace LevelBuilder2D
             previews.Remove(preview);
             previews.Insert(0, preview);
 
-            previews[3].previewSprite =
-                levelStyles.menuContents[GetIndex(CurrentStyleNumber - 2)].stylePreview;
+            previews[highHalf].previewSprite =
+                levelStyles.menuContents[GetIndex(CurrentStyleNumber - lowHalf)].stylePreview;
 
             StartCoroutine(MoveCR(MoveDirection.RIGHT));
         }
@@ -130,7 +136,7 @@ namespace LevelBuilder2D
                 yield return new WaitForSeconds(moveTime / moveSteps);
             }
 
-            int index = direction == MoveDirection.LEFT ? 2 : 3;
+            int index = direction == MoveDirection.LEFT ? highHalf - 1 : highHalf;
             previews[index].transform.Translate(-(int)direction * completeTranslation);
 
             OnEnable();
@@ -138,9 +144,9 @@ namespace LevelBuilder2D
 
         private int GetIndex(int index)
         {
-            while (index < 0) index += levelStyles.menuContents.Length;
+            while (index < 0) index += levelStyles.menuContents.Count;
 
-            return index % levelStyles.menuContents.Length;
+            return index % levelStyles.menuContents.Count;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace LevelBuilder2D
         [SerializeField] private Button diskCreateButton;
         [SerializeField] private TMP_Dropdown diskChoiceDropdown;
         [SerializeField] private TMP_InputField diskNewLevelInput;
+        [SerializeField] private StyleChoiceComponent diskStyleChoiceComponent;
         [Space]
         // Asset
         [SerializeField] private GameObject assetWindow;
@@ -41,10 +42,12 @@ namespace LevelBuilder2D
         [SerializeField] private Button assetCreateButton;
         [SerializeField] private TMP_Dropdown assetChoiceDropdown;
         [SerializeField] private TMP_InputField assetNewLevelInput;
+        [SerializeField] private StyleChoiceComponent assetStyleChoiceComponent;
 
 
         // Variables
-        private string[] diskLevelList;
+        private LevelManager.LevelData[] diskLevelList;
+        private List<string> levelNames = new();
 
         private LevelBuilderEnvironment environment;
 
@@ -74,24 +77,28 @@ namespace LevelBuilder2D
         {
             string name = "";
             LevelSO levelSO = null;
+            ItemsMenuContent menuContent = null;
             if (startAction == StartAction.CREATE)
             {
                 name = environment == LevelBuilderEnvironment.DISK ? diskNewLevelInput.text : assetNewLevelInput.text;
-                
+                menuContent = environment == LevelBuilderEnvironment.DISK ? 
+                    diskStyleChoiceComponent.CurrentStyle : assetStyleChoiceComponent.CurrentStyle;
             }
             else if (startAction == StartAction.LOAD)
             {
                 if (environment == LevelBuilderEnvironment.DISK)
                 {
-                    name = diskLevelList[diskChoiceDropdown.value];
+                    name = diskLevelList[diskChoiceDropdown.value].levelName;
+                    menuContent = styleList.GetByIndex(diskLevelList[diskChoiceDropdown.value].levelStyleIndex);
                 }
                 else if (environment == LevelBuilderEnvironment.ASSET)
                 {
                     levelSO = levelList.levels[assetChoiceDropdown.value];
                     name = levelSO.level.name;
+                    menuContent = assetStyleChoiceComponent.CurrentStyle;
                 }
             }
-            itemsMenu.GetStartInfos(styleList.menuContents[0], startAction, environment, name, levelSO);
+            itemsMenu.GetStartInfos(menuContent, startAction, environment, name, levelSO);
 
             levelMenu.SetActive(false);
 
@@ -138,6 +145,7 @@ namespace LevelBuilder2D
         private void DeleteFromDisk()
         {
             LevelManager.DeleteLevelFromDisk(diskLevelList[diskChoiceDropdown.value]);
+            FillDiskLevelList();
             FillDiskDropdown();
         }
         private void DeleteFromAsset()
@@ -153,6 +161,7 @@ namespace LevelBuilder2D
         {
             levelMenu.SetActive(true);
 
+            FillDiskLevelList();
 #if UNITY_EDITOR
             FullEnvironment();
             FillAssetDropdown();
@@ -182,13 +191,25 @@ namespace LevelBuilder2D
             diskWindow.SetActive(true);
         }
 
-        private void FillDiskDropdown()
+        private void FillDiskLevelList()
         {
             diskLevelList = LevelManager.GetLevelList();
+            levelNames.Clear();
+            if (diskLevelList == null) return;
+            foreach (LevelManager.LevelData ld in diskLevelList)
+                levelNames.Add(ld.levelName);
+        }
+        private void FillDiskDropdown()
+        {
             diskChoiceDropdown.ClearOptions();
 
             if (diskLevelList != null)
-                diskChoiceDropdown.AddOptions(new List<string>(diskLevelList));
+            {
+                diskChoiceDropdown.AddOptions(new List<string>(levelNames));
+                diskChoiceDropdown.interactable = true;
+                diskLoadButton.interactable = true;
+                diskDeleteButton.interactable = true;
+            }
             else
             {
                 diskChoiceDropdown.interactable = false;
@@ -210,6 +231,10 @@ namespace LevelBuilder2D
                 }
 
                 assetChoiceDropdown.AddOptions(new List<string>(assetNamesList));
+
+                assetChoiceDropdown.interactable = true;
+                assetLoadButton.interactable = true;
+                assetDeleteButton.interactable = true;
             }
             else
             {
@@ -269,7 +294,7 @@ namespace LevelBuilder2D
 
             if (environment == LevelBuilderEnvironment.DISK && diskLevelList != null)
             {
-                foreach (string str in diskLevelList)
+                foreach (string str in levelNames)
                 {
                     if (str == name) return false;
                 }

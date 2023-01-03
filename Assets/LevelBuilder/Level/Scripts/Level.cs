@@ -10,13 +10,16 @@ namespace LevelBuilder2D
     {
         [Tooltip("Name of the level")]
         public string name;
+        [Tooltip("Style index of the level")]
+        public int style;
         [Tooltip("Array of the level tilemaps")]
         public LevelTilemap[] levelTilemaps;
 
-        public Level(LevelTilemap[] _levelTilemaps, string _name)
+        public Level(LevelTilemap[] _levelTilemaps, string _name, int _style)
         {
             levelTilemaps = _levelTilemaps;
             name = _name;
+            style = _style;
         }
         public Level(string str)
         {
@@ -28,6 +31,8 @@ namespace LevelBuilder2D
             StringBuilder builder = new();
 
             builder.Append(name);
+            builder.Append(";");
+            builder.Append(style);
             foreach (var levelTilemap in levelTilemaps)
             {
                 builder.Append(";");
@@ -42,11 +47,12 @@ namespace LevelBuilder2D
             string[] parts = str.Split(";", System.StringSplitOptions.RemoveEmptyEntries);
 
             name = parts[0];
+            style = int.Parse(parts[1]);
 
-            levelTilemaps = new LevelTilemap[parts.Length - 1];
-            for (int i = 1; i < parts.Length; i++)
+            levelTilemaps = new LevelTilemap[parts.Length - 2];
+            for (int i = 2; i < parts.Length; i++)
             {
-                levelTilemaps[i-1] = new LevelTilemap(parts[i]);
+                levelTilemaps[i-2] = new LevelTilemap(parts[i]);
             }
         }
     }

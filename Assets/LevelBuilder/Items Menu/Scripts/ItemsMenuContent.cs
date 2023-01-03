@@ -9,8 +9,10 @@ namespace LevelBuilder2D
     public class ItemsMenuContent : ScriptableObject
     {
         public string styleName;
+        public int styleIndex;
 
         public Sprite stylePreview;
+        public Sprite styleBackground;
 
         public ItemsMenuTemplate template;
 
