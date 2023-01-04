@@ -21,10 +21,20 @@ namespace LevelBuilder2D
 
         List<TileSave> tiles;
         Tilemap tilemap;
+        BoundsInt bounds;
+        bool getOnlyBounds = false;
 
         public TilemapSave(Tilemap _tilemap)
         {
             tilemap = _tilemap;
+            bounds = _tilemap.cellBounds;
+            Save(_tilemap);
+        }
+        public TilemapSave(Tilemap _tilemap, BoundsInt _bounds)
+        {
+            tilemap = _tilemap;
+            bounds = _bounds;
+            getOnlyBounds = true;
             Save(_tilemap);
         }
 
@@ -33,14 +43,13 @@ namespace LevelBuilder2D
             tiles = new();
 
             TileBase tile;
-            BoundsInt bounds = tilemap.cellBounds;
 
             for (int x = bounds.min.x; x < bounds.max.x; x++)
             {
                 for (int y = bounds.min.y; y < bounds.max.y; y++)
                 {
                     tile = tilemap.GetTile(x, y);
-                    if (tile != null)
+                    if (getOnlyBounds || tile != null)
                     {
                         tiles.Add(new TileSave(x, y, tile));
                     }
@@ -50,7 +59,8 @@ namespace LevelBuilder2D
 
         public void Get()
         {
-            tilemap.ClearAllTiles();
+            if (!getOnlyBounds)
+                tilemap.ClearAllTiles();
 
             foreach (TileSave tileSave in tiles)
             {

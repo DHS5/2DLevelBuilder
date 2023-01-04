@@ -21,7 +21,7 @@ namespace LevelBuilder2D
             tilemap = _tilemap;
             tile = _tile;
 
-            formerLevelTilemap = new TilemapSave(_tilemap);
+            formerLevelTilemap = new TilemapSave(_tilemap, GetBoundsFromBox(_startPos, _endPos));
         }
 
         public bool Execute()
@@ -33,6 +33,15 @@ namespace LevelBuilder2D
         public void Undo()
         {
             formerLevelTilemap.Get();
+        }
+
+
+        private BoundsInt GetBoundsFromBox(Vector3Int _startPos, Vector3Int _endPos)
+        {
+            Vector3Int min = new Vector3Int(Mathf.Min(_startPos.x, _endPos.x), Mathf.Min(_startPos.y, _endPos.y), 0);
+            Vector3Int max = new Vector3Int(Mathf.Max(_startPos.x, _endPos.x), Mathf.Max(_startPos.y, _endPos.y), 0);
+
+            return new BoundsInt(min, max - min + Vector3Int.one);
         }
     }
 }

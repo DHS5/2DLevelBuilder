@@ -32,6 +32,13 @@ namespace LevelBuilder2D
             return IsInCurrentRoom(pos1) && IsInCurrentRoom(pos2);
         }
 
+        public static BoundsInt RoomBounds(Tilemap tilemap)
+        {
+            return new BoundsInt(
+                tilemap.WorldToCell(new Vector3(-HLimit, -VLimit, 0)),
+                new Vector3Int(roomSize.x - 1, roomSize.y - 1, 0));
+        }
+
         /// <summary>
         /// Change room in the selected direction
         /// </summary>
