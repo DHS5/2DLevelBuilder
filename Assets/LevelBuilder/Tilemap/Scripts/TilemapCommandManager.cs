@@ -49,6 +49,8 @@ namespace LevelBuilder2D
             {
                 undoCommands.Push(command);
                 redoCommands.Clear();
+
+                EventManager.TriggerEvent(EventManager.LevelBuilderEvent.DO_ACTION);
             }
         }
 

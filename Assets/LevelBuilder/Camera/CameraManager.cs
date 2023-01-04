@@ -44,11 +44,15 @@ namespace LevelBuilder2D
         {
             EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
             EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_HELP, EnableInputs);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_HELP, DisableInputs);
         }
         private void OnDisable()
         {
             EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
             EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_HELP, EnableInputs);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_HELP, DisableInputs);
         }
 
 

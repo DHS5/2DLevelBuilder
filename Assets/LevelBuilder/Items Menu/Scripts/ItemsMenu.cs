@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using System;
 using UnityEngine.InputSystem;
+using TMPro;
 
 namespace LevelBuilder2D
 {
@@ -39,6 +40,7 @@ namespace LevelBuilder2D
         [SerializeField] private Toggle pickBrushToggle;
         [Space]
         // Level
+        [SerializeField] private GameObject saveButtonAsteriskText;
         [SerializeField] private Button saveButton;
         [SerializeField] private Button clearButton;
         [SerializeField] private Button quitButton;
@@ -133,6 +135,7 @@ namespace LevelBuilder2D
             EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
             EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
             EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.DO_ACTION, OnTilemapAction);
         }
         private void OnDisable()
         {
@@ -143,6 +146,7 @@ namespace LevelBuilder2D
             EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
             EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
             EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.DO_ACTION, OnTilemapAction);
         }
 
         private void OnCreate()
@@ -160,6 +164,7 @@ namespace LevelBuilder2D
         {
             itemMenu.SetActive(true);
             worldSpaceButtons.SetActive(true);
+            saveButtonAsteriskText.SetActive(false);
 
             ActuMenu();
             InitBrushes();
@@ -184,6 +189,11 @@ namespace LevelBuilder2D
         private void OnSave()
         {
             OnSaveLevel();
+            saveButtonAsteriskText.SetActive(false);
+        }
+        private void OnTilemapAction()
+        {
+            saveButtonAsteriskText.SetActive(true);
         }
 
         #region --- Menu Creation ---
