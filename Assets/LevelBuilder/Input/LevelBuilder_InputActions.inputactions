@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MouseRightClick",
+                    "name": "Delete",
                     "type": "Value",
                     "id": "e0170499-ca39-44fc-acc2-381b603ce28c",
                     "expectedControlType": "",
@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MouseLeftClick",
+                    "name": "Build",
                     "type": "Value",
                     "id": "adc5b017-daf6-4a23-9df3-31a66b830158",
                     "expectedControlType": "",
@@ -42,7 +42,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MouseWheelClick",
+                    "name": "Move",
                     "type": "Value",
                     "id": "1f1eeb88-5755-4dad-a409-d1bdec0ba9c0",
                     "expectedControlType": "",
@@ -76,6 +76,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Test",
+                    "type": "Button",
+                    "id": "5596464f-4739-4144-a42f-92fbe151cabe",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -97,7 +106,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseRightClick",
+                    "action": "Delete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -108,7 +117,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseLeftClick",
+                    "action": "Build",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -130,7 +139,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseWheelClick",
+                    "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -232,6 +241,17 @@
                     "action": "Redo",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "828937c8-c150-4056-a5c5-1c46445e6477",
+                    "path": "<Keyboard>/#(F)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

@@ -58,7 +58,7 @@ namespace LevelBuilder2D
 
         private void Update()
         {
-            if (inputActions.LevelBuilder.MouseWheelClick.ReadValue<float>() > 0)
+            if (inputActions.LevelBuilder.Move.ReadValue<float>() > 0)
             {
                 OnMouseWheel();
             }
@@ -72,7 +72,7 @@ namespace LevelBuilder2D
 
             inputActions.LevelBuilder.MouseWheelScroll.performed += OnMouseWheelScroll;
             inputActions.LevelBuilder.MousePosition.performed += OnMouseMove;
-            inputActions.LevelBuilder.MouseWheelClick.performed += OnMouseWheelDown;
+            inputActions.LevelBuilder.Move.performed += OnMouseWheelDown;
         }
 
         private void DisableInputs()
@@ -81,7 +81,7 @@ namespace LevelBuilder2D
 
             inputActions.LevelBuilder.MouseWheelScroll.performed -= OnMouseWheelScroll;
             inputActions.LevelBuilder.MousePosition.performed -= OnMouseMove;
-            inputActions.LevelBuilder.MouseWheelClick.performed -= OnMouseWheelDown;
+            inputActions.LevelBuilder.Move.performed -= OnMouseWheelDown;
         }
 
         private void OnMouseMove(InputAction.CallbackContext ctx)

@@ -37,7 +37,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""MouseRightClick"",
+                    ""name"": ""Delete"",
                     ""type"": ""Value"",
                     ""id"": ""e0170499-ca39-44fc-acc2-381b603ce28c"",
                     ""expectedControlType"": """",
@@ -46,7 +46,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""MouseLeftClick"",
+                    ""name"": ""Build"",
                     ""type"": ""Value"",
                     ""id"": ""adc5b017-daf6-4a23-9df3-31a66b830158"",
                     ""expectedControlType"": """",
@@ -64,7 +64,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""MouseWheelClick"",
+                    ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""1f1eeb88-5755-4dad-a409-d1bdec0ba9c0"",
                     ""expectedControlType"": """",
@@ -98,6 +98,15 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Test"",
+                    ""type"": ""Button"",
+                    ""id"": ""5596464f-4739-4144-a42f-92fbe151cabe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -119,7 +128,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseRightClick"",
+                    ""action"": ""Delete"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -130,7 +139,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseLeftClick"",
+                    ""action"": ""Build"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -152,7 +161,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseWheelClick"",
+                    ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -254,6 +263,17 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""action"": ""Redo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""828937c8-c150-4056-a5c5-1c46445e6477"",
+                    ""path"": ""<Keyboard>/#(F)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -263,13 +283,14 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
         // LevelBuilder
         m_LevelBuilder = asset.FindActionMap("LevelBuilder", throwIfNotFound: true);
         m_LevelBuilder_MousePosition = m_LevelBuilder.FindAction("MousePosition", throwIfNotFound: true);
-        m_LevelBuilder_MouseRightClick = m_LevelBuilder.FindAction("MouseRightClick", throwIfNotFound: true);
-        m_LevelBuilder_MouseLeftClick = m_LevelBuilder.FindAction("MouseLeftClick", throwIfNotFound: true);
+        m_LevelBuilder_Delete = m_LevelBuilder.FindAction("Delete", throwIfNotFound: true);
+        m_LevelBuilder_Build = m_LevelBuilder.FindAction("Build", throwIfNotFound: true);
         m_LevelBuilder_MouseWheelScroll = m_LevelBuilder.FindAction("MouseWheelScroll", throwIfNotFound: true);
-        m_LevelBuilder_MouseWheelClick = m_LevelBuilder.FindAction("MouseWheelClick", throwIfNotFound: true);
+        m_LevelBuilder_Move = m_LevelBuilder.FindAction("Move", throwIfNotFound: true);
         m_LevelBuilder_Save = m_LevelBuilder.FindAction("Save", throwIfNotFound: true);
         m_LevelBuilder_Undo = m_LevelBuilder.FindAction("Undo", throwIfNotFound: true);
         m_LevelBuilder_Redo = m_LevelBuilder.FindAction("Redo", throwIfNotFound: true);
+        m_LevelBuilder_Test = m_LevelBuilder.FindAction("Test", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -330,25 +351,27 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
     private readonly InputActionMap m_LevelBuilder;
     private ILevelBuilderActions m_LevelBuilderActionsCallbackInterface;
     private readonly InputAction m_LevelBuilder_MousePosition;
-    private readonly InputAction m_LevelBuilder_MouseRightClick;
-    private readonly InputAction m_LevelBuilder_MouseLeftClick;
+    private readonly InputAction m_LevelBuilder_Delete;
+    private readonly InputAction m_LevelBuilder_Build;
     private readonly InputAction m_LevelBuilder_MouseWheelScroll;
-    private readonly InputAction m_LevelBuilder_MouseWheelClick;
+    private readonly InputAction m_LevelBuilder_Move;
     private readonly InputAction m_LevelBuilder_Save;
     private readonly InputAction m_LevelBuilder_Undo;
     private readonly InputAction m_LevelBuilder_Redo;
+    private readonly InputAction m_LevelBuilder_Test;
     public struct LevelBuilderActions
     {
         private @LevelBuilder_InputActions m_Wrapper;
         public LevelBuilderActions(@LevelBuilder_InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @MousePosition => m_Wrapper.m_LevelBuilder_MousePosition;
-        public InputAction @MouseRightClick => m_Wrapper.m_LevelBuilder_MouseRightClick;
-        public InputAction @MouseLeftClick => m_Wrapper.m_LevelBuilder_MouseLeftClick;
+        public InputAction @Delete => m_Wrapper.m_LevelBuilder_Delete;
+        public InputAction @Build => m_Wrapper.m_LevelBuilder_Build;
         public InputAction @MouseWheelScroll => m_Wrapper.m_LevelBuilder_MouseWheelScroll;
-        public InputAction @MouseWheelClick => m_Wrapper.m_LevelBuilder_MouseWheelClick;
+        public InputAction @Move => m_Wrapper.m_LevelBuilder_Move;
         public InputAction @Save => m_Wrapper.m_LevelBuilder_Save;
         public InputAction @Undo => m_Wrapper.m_LevelBuilder_Undo;
         public InputAction @Redo => m_Wrapper.m_LevelBuilder_Redo;
+        public InputAction @Test => m_Wrapper.m_LevelBuilder_Test;
         public InputActionMap Get() { return m_Wrapper.m_LevelBuilder; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -361,18 +384,18 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 @MousePosition.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMousePosition;
-                @MouseRightClick.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseRightClick;
-                @MouseRightClick.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseRightClick;
-                @MouseRightClick.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseRightClick;
-                @MouseLeftClick.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseLeftClick;
-                @MouseLeftClick.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseLeftClick;
-                @MouseLeftClick.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseLeftClick;
+                @Delete.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnDelete;
+                @Delete.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnDelete;
+                @Delete.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnDelete;
+                @Build.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnBuild;
+                @Build.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnBuild;
+                @Build.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnBuild;
                 @MouseWheelScroll.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelScroll;
                 @MouseWheelScroll.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelScroll;
                 @MouseWheelScroll.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelScroll;
-                @MouseWheelClick.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelClick;
-                @MouseWheelClick.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelClick;
-                @MouseWheelClick.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelClick;
+                @Move.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMove;
                 @Save.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnSave;
                 @Save.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnSave;
                 @Save.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnSave;
@@ -382,6 +405,9 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 @Redo.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnRedo;
                 @Redo.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnRedo;
                 @Redo.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnRedo;
+                @Test.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnTest;
+                @Test.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnTest;
+                @Test.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnTest;
             }
             m_Wrapper.m_LevelBuilderActionsCallbackInterface = instance;
             if (instance != null)
@@ -389,18 +415,18 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
-                @MouseRightClick.started += instance.OnMouseRightClick;
-                @MouseRightClick.performed += instance.OnMouseRightClick;
-                @MouseRightClick.canceled += instance.OnMouseRightClick;
-                @MouseLeftClick.started += instance.OnMouseLeftClick;
-                @MouseLeftClick.performed += instance.OnMouseLeftClick;
-                @MouseLeftClick.canceled += instance.OnMouseLeftClick;
+                @Delete.started += instance.OnDelete;
+                @Delete.performed += instance.OnDelete;
+                @Delete.canceled += instance.OnDelete;
+                @Build.started += instance.OnBuild;
+                @Build.performed += instance.OnBuild;
+                @Build.canceled += instance.OnBuild;
                 @MouseWheelScroll.started += instance.OnMouseWheelScroll;
                 @MouseWheelScroll.performed += instance.OnMouseWheelScroll;
                 @MouseWheelScroll.canceled += instance.OnMouseWheelScroll;
-                @MouseWheelClick.started += instance.OnMouseWheelClick;
-                @MouseWheelClick.performed += instance.OnMouseWheelClick;
-                @MouseWheelClick.canceled += instance.OnMouseWheelClick;
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
                 @Save.started += instance.OnSave;
                 @Save.performed += instance.OnSave;
                 @Save.canceled += instance.OnSave;
@@ -410,6 +436,9 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 @Redo.started += instance.OnRedo;
                 @Redo.performed += instance.OnRedo;
                 @Redo.canceled += instance.OnRedo;
+                @Test.started += instance.OnTest;
+                @Test.performed += instance.OnTest;
+                @Test.canceled += instance.OnTest;
             }
         }
     }
@@ -417,12 +446,13 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
     public interface ILevelBuilderActions
     {
         void OnMousePosition(InputAction.CallbackContext context);
-        void OnMouseRightClick(InputAction.CallbackContext context);
-        void OnMouseLeftClick(InputAction.CallbackContext context);
+        void OnDelete(InputAction.CallbackContext context);
+        void OnBuild(InputAction.CallbackContext context);
         void OnMouseWheelScroll(InputAction.CallbackContext context);
-        void OnMouseWheelClick(InputAction.CallbackContext context);
+        void OnMove(InputAction.CallbackContext context);
         void OnSave(InputAction.CallbackContext context);
         void OnUndo(InputAction.CallbackContext context);
         void OnRedo(InputAction.CallbackContext context);
+        void OnTest(InputAction.CallbackContext context);
     }
 }

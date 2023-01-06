@@ -135,10 +135,10 @@ namespace LevelBuilder2D
 
             inputActions.LevelBuilder.MousePosition.performed += OnMouseMove;
 
-            inputActions.LevelBuilder.MouseLeftClick.performed += OnLeftMouseDown;
-            inputActions.LevelBuilder.MouseLeftClick.canceled += OnLeftMouseUp;
-            inputActions.LevelBuilder.MouseRightClick.performed += OnRightMouseDown;
-            inputActions.LevelBuilder.MouseRightClick.canceled += OnRightMouseUp;
+            inputActions.LevelBuilder.Build.performed += OnLeftMouseDown;
+            inputActions.LevelBuilder.Build.canceled += OnLeftMouseUp;
+            inputActions.LevelBuilder.Delete.performed += OnRightMouseDown;
+            inputActions.LevelBuilder.Delete.canceled += OnRightMouseUp;
 
             inputActions.LevelBuilder.Undo.performed += Undo;
             inputActions.LevelBuilder.Redo.performed += Redo;
@@ -155,10 +155,10 @@ namespace LevelBuilder2D
 
             inputActions.LevelBuilder.MousePosition.performed -= OnMouseMove;
 
-            inputActions.LevelBuilder.MouseLeftClick.performed -= OnLeftMouseDown;
-            inputActions.LevelBuilder.MouseLeftClick.canceled -= OnLeftMouseUp;
-            inputActions.LevelBuilder.MouseRightClick.performed -= OnRightMouseDown;
-            inputActions.LevelBuilder.MouseRightClick.canceled -= OnRightMouseUp;
+            inputActions.LevelBuilder.Build.performed -= OnLeftMouseDown;
+            inputActions.LevelBuilder.Build.canceled -= OnLeftMouseUp;
+            inputActions.LevelBuilder.Delete.performed -= OnRightMouseDown;
+            inputActions.LevelBuilder.Delete.canceled -= OnRightMouseUp;
 
             inputActions.LevelBuilder.Undo.performed -= Undo;
             inputActions.LevelBuilder.Redo.performed -= Redo;
@@ -258,8 +258,8 @@ namespace LevelBuilder2D
             if (!isPointerOnUI)
             {
                 // Actions on the Tilemap
-                if (inputActions.LevelBuilder.MouseLeftClick.ReadValue<float>() > 0 && LeftMouse != null) { LeftMouse(); }
-                if (inputActions.LevelBuilder.MouseRightClick.ReadValue<float>() > 0 && RightMouse != null) { RightMouse(); }
+                if (inputActions.LevelBuilder.Build.ReadValue<float>() > 0 && LeftMouse != null) { LeftMouse(); }
+                if (inputActions.LevelBuilder.Delete.ReadValue<float>() > 0 && RightMouse != null) { RightMouse(); }
             }
         }
 
