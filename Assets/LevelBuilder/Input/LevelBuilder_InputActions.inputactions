@@ -33,7 +33,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "MouseWheelScroll",
+                    "name": "Zoom",
                     "type": "Value",
                     "id": "bdf14dc2-e5fa-4420-a8e9-d7f06c288dc3",
                     "expectedControlType": "",
@@ -128,7 +128,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseWheelScroll",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -168,7 +168,7 @@
                 {
                     "name": "binding",
                     "id": "14f088b8-8eae-479e-b9f6-956105f2d876",
-                    "path": "<Keyboard>/#(S)",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -201,7 +201,7 @@
                 {
                     "name": "binding",
                     "id": "c5f64533-5e25-43eb-9572-bf5c52f88dad",
-                    "path": "<Keyboard>/#(Z)",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -234,7 +234,7 @@
                 {
                     "name": "binding",
                     "id": "720cc2ca-7985-4858-b217-6f673d574e9e",
-                    "path": "<Keyboard>/#(Y)",
+                    "path": "<Keyboard>/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -244,8 +244,8 @@
                 },
                 {
                     "name": "",
-                    "id": "828937c8-c150-4056-a5c5-1c46445e6477",
-                    "path": "<Keyboard>/#(F)",
+                    "id": "c24eee4b-b767-4cb3-9e08-9f21fb5c91e3",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

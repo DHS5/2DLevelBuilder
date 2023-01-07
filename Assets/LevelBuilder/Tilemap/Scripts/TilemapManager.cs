@@ -20,6 +20,7 @@ namespace LevelBuilder2D
     {
         [Header("Event System")]
         [SerializeField] private EventSystem eventSystem;
+        [SerializeField] private PlayerInput playerInput;
 
         [Header("Tilemaps")]
         [SerializeField] private Tilemap roomLimitTilemap;
@@ -140,7 +141,7 @@ namespace LevelBuilder2D
             inputActions.LevelBuilder.Delete.performed += OnRightMouseDown;
             inputActions.LevelBuilder.Delete.canceled += OnRightMouseUp;
 
-            inputActions.LevelBuilder.Undo.performed += Undo;
+            playerInput.actions["Undo"].performed += Undo;
             inputActions.LevelBuilder.Redo.performed += Redo;
 
             CreateRoomLimit();
@@ -160,7 +161,7 @@ namespace LevelBuilder2D
             inputActions.LevelBuilder.Delete.performed -= OnRightMouseDown;
             inputActions.LevelBuilder.Delete.canceled -= OnRightMouseUp;
 
-            inputActions.LevelBuilder.Undo.performed -= Undo;
+            playerInput.actions["Undo"].performed -= Undo;
             inputActions.LevelBuilder.Redo.performed -= Redo;
 
             CreateTilemaps();

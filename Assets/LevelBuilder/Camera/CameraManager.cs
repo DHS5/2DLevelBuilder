@@ -70,7 +70,7 @@ namespace LevelBuilder2D
         {
             inputActions.Enable();
 
-            inputActions.LevelBuilder.MouseWheelScroll.performed += OnMouseWheelScroll;
+            inputActions.LevelBuilder.Zoom.performed += OnMouseWheelScroll;
             inputActions.LevelBuilder.MousePosition.performed += OnMouseMove;
             inputActions.LevelBuilder.Move.performed += OnMouseWheelDown;
         }
@@ -79,7 +79,7 @@ namespace LevelBuilder2D
         {
             inputActions.Disable();
 
-            inputActions.LevelBuilder.MouseWheelScroll.performed -= OnMouseWheelScroll;
+            inputActions.LevelBuilder.Zoom.performed -= OnMouseWheelScroll;
             inputActions.LevelBuilder.MousePosition.performed -= OnMouseMove;
             inputActions.LevelBuilder.Move.performed -= OnMouseWheelDown;
         }

@@ -136,6 +136,7 @@ namespace LevelBuilder2D
             EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
             EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
             EventManager.StartListening(EventManager.LevelBuilderEvent.DO_ACTION, OnTilemapAction);
+            EventManager.StartListening(EventManager.LevelBuilderEvent.UNDO_ACTION, OnTilemapAction);
         }
         private void OnDisable()
         {
@@ -147,6 +148,7 @@ namespace LevelBuilder2D
             EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
             EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
             EventManager.StopListening(EventManager.LevelBuilderEvent.DO_ACTION, OnTilemapAction);
+            EventManager.StopListening(EventManager.LevelBuilderEvent.UNDO_ACTION, OnTilemapAction);
         }
 
         private void OnCreate()

@@ -55,7 +55,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""MouseWheelScroll"",
+                    ""name"": ""Zoom"",
                     ""type"": ""Value"",
                     ""id"": ""bdf14dc2-e5fa-4420-a8e9-d7f06c288dc3"",
                     ""expectedControlType"": """",
@@ -150,7 +150,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseWheelScroll"",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -190,7 +190,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 {
                     ""name"": ""binding"",
                     ""id"": ""14f088b8-8eae-479e-b9f6-956105f2d876"",
-                    ""path"": ""<Keyboard>/#(S)"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -223,7 +223,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 {
                     ""name"": ""binding"",
                     ""id"": ""c5f64533-5e25-43eb-9572-bf5c52f88dad"",
-                    ""path"": ""<Keyboard>/#(Z)"",
+                    ""path"": ""<Keyboard>/z"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -256,7 +256,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 {
                     ""name"": ""binding"",
                     ""id"": ""720cc2ca-7985-4858-b217-6f673d574e9e"",
-                    ""path"": ""<Keyboard>/#(Y)"",
+                    ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -266,8 +266,8 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 },
                 {
                     ""name"": """",
-                    ""id"": ""828937c8-c150-4056-a5c5-1c46445e6477"",
-                    ""path"": ""<Keyboard>/#(F)"",
+                    ""id"": ""c24eee4b-b767-4cb3-9e08-9f21fb5c91e3"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -285,7 +285,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
         m_LevelBuilder_MousePosition = m_LevelBuilder.FindAction("MousePosition", throwIfNotFound: true);
         m_LevelBuilder_Delete = m_LevelBuilder.FindAction("Delete", throwIfNotFound: true);
         m_LevelBuilder_Build = m_LevelBuilder.FindAction("Build", throwIfNotFound: true);
-        m_LevelBuilder_MouseWheelScroll = m_LevelBuilder.FindAction("MouseWheelScroll", throwIfNotFound: true);
+        m_LevelBuilder_Zoom = m_LevelBuilder.FindAction("Zoom", throwIfNotFound: true);
         m_LevelBuilder_Move = m_LevelBuilder.FindAction("Move", throwIfNotFound: true);
         m_LevelBuilder_Save = m_LevelBuilder.FindAction("Save", throwIfNotFound: true);
         m_LevelBuilder_Undo = m_LevelBuilder.FindAction("Undo", throwIfNotFound: true);
@@ -353,7 +353,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
     private readonly InputAction m_LevelBuilder_MousePosition;
     private readonly InputAction m_LevelBuilder_Delete;
     private readonly InputAction m_LevelBuilder_Build;
-    private readonly InputAction m_LevelBuilder_MouseWheelScroll;
+    private readonly InputAction m_LevelBuilder_Zoom;
     private readonly InputAction m_LevelBuilder_Move;
     private readonly InputAction m_LevelBuilder_Save;
     private readonly InputAction m_LevelBuilder_Undo;
@@ -366,7 +366,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
         public InputAction @MousePosition => m_Wrapper.m_LevelBuilder_MousePosition;
         public InputAction @Delete => m_Wrapper.m_LevelBuilder_Delete;
         public InputAction @Build => m_Wrapper.m_LevelBuilder_Build;
-        public InputAction @MouseWheelScroll => m_Wrapper.m_LevelBuilder_MouseWheelScroll;
+        public InputAction @Zoom => m_Wrapper.m_LevelBuilder_Zoom;
         public InputAction @Move => m_Wrapper.m_LevelBuilder_Move;
         public InputAction @Save => m_Wrapper.m_LevelBuilder_Save;
         public InputAction @Undo => m_Wrapper.m_LevelBuilder_Undo;
@@ -390,9 +390,9 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 @Build.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnBuild;
                 @Build.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnBuild;
                 @Build.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnBuild;
-                @MouseWheelScroll.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelScroll;
-                @MouseWheelScroll.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelScroll;
-                @MouseWheelScroll.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMouseWheelScroll;
+                @Zoom.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnZoom;
+                @Zoom.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnZoom;
+                @Zoom.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnZoom;
                 @Move.started -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_LevelBuilderActionsCallbackInterface.OnMove;
@@ -421,9 +421,9 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
                 @Build.started += instance.OnBuild;
                 @Build.performed += instance.OnBuild;
                 @Build.canceled += instance.OnBuild;
-                @MouseWheelScroll.started += instance.OnMouseWheelScroll;
-                @MouseWheelScroll.performed += instance.OnMouseWheelScroll;
-                @MouseWheelScroll.canceled += instance.OnMouseWheelScroll;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
@@ -448,7 +448,7 @@ public partial class @LevelBuilder_InputActions : IInputActionCollection2, IDisp
         void OnMousePosition(InputAction.CallbackContext context);
         void OnDelete(InputAction.CallbackContext context);
         void OnBuild(InputAction.CallbackContext context);
-        void OnMouseWheelScroll(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnSave(InputAction.CallbackContext context);
         void OnUndo(InputAction.CallbackContext context);

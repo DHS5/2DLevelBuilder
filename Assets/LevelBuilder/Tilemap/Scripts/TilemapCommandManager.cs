@@ -32,6 +32,8 @@ namespace LevelBuilder2D
             ICommand command = undoCommands.Pop();
             command.Undo();
             redoCommands.Push(command);
+
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.UNDO_ACTION);
         }
         public void Redo()
         {
@@ -40,6 +42,8 @@ namespace LevelBuilder2D
             ICommand command = redoCommands.Pop();
             command.Execute();
             undoCommands.Push(command);
+
+            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.DO_ACTION);
         }
 
 
