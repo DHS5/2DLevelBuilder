@@ -11,8 +11,9 @@ namespace LevelBuilder2D
         [SerializeField] private Camera levelBuilderCamera;
         [SerializeField] private Camera refCamera;
 
-        // Inputs
-        private LevelBuilder_InputActions inputActions;
+        [Header("Player Inputs")]
+        [SerializeField] PlayerInput playerInput;
+
 
         private Vector2 startMousePos;
         private Vector2 mousePos;
@@ -35,8 +36,6 @@ namespace LevelBuilder2D
 
         private void Awake()
         {
-            inputActions = new LevelBuilder_InputActions();
-
             bounds = RoomManager.roomSize / 2;
         }
 
@@ -58,7 +57,7 @@ namespace LevelBuilder2D
 
         private void Update()
         {
-            if (inputActions.LevelBuilder.Move.ReadValue<float>() > 0)
+            if (playerInput.actions["Move"].ReadValue<float>() > 0)
             {
                 OnMouseWheel();
             }
@@ -68,20 +67,20 @@ namespace LevelBuilder2D
 
         private void EnableInputs()
         {
-            inputActions.Enable();
+            playerInput.actions.Enable();
 
-            inputActions.LevelBuilder.Zoom.performed += OnMouseWheelScroll;
-            inputActions.LevelBuilder.MousePosition.performed += OnMouseMove;
-            inputActions.LevelBuilder.Move.performed += OnMouseWheelDown;
+            playerInput.actions["Zoom"].performed += OnMouseWheelScroll;
+            playerInput.actions["MousePosition"].performed += OnMouseMove;
+            playerInput.actions["Move"].performed += OnMouseWheelDown;
         }
 
         private void DisableInputs()
         {
-            inputActions.Disable();
+            playerInput.actions.Disable();
 
-            inputActions.LevelBuilder.Zoom.performed -= OnMouseWheelScroll;
-            inputActions.LevelBuilder.MousePosition.performed -= OnMouseMove;
-            inputActions.LevelBuilder.Move.performed -= OnMouseWheelDown;
+            playerInput.actions["Zoom"].performed -= OnMouseWheelScroll;
+            playerInput.actions["MousePosition"].performed -= OnMouseMove;
+            playerInput.actions["Move"].performed -= OnMouseWheelDown;
         }
 
         private void OnMouseMove(InputAction.CallbackContext ctx)

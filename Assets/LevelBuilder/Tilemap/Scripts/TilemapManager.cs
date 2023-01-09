@@ -34,8 +34,6 @@ namespace LevelBuilder2D
         [Header("Line Renderer")]
         [SerializeField] private LineRenderer lineRenderer;
 
-        // Inputs
-        private LevelBuilder_InputActions inputActions;
 
         // Preview
         public PreviewHandler PreviewHandler { get; private set; }
@@ -109,7 +107,6 @@ namespace LevelBuilder2D
 
         private void Awake()
         {
-            inputActions = new LevelBuilder_InputActions();
             PreviewHandler = new PreviewHandler();
         }
 
@@ -132,17 +129,17 @@ namespace LevelBuilder2D
 
         private void Open()
         {
-            inputActions.Enable();
+            playerInput.actions.Enable();
 
-            inputActions.LevelBuilder.MousePosition.performed += OnMouseMove;
+            playerInput.actions["MousePosition"].performed += OnMouseMove;
 
-            inputActions.LevelBuilder.Build.performed += OnLeftMouseDown;
-            inputActions.LevelBuilder.Build.canceled += OnLeftMouseUp;
-            inputActions.LevelBuilder.Delete.performed += OnRightMouseDown;
-            inputActions.LevelBuilder.Delete.canceled += OnRightMouseUp;
+            playerInput.actions["Build"].performed += OnLeftMouseDown;
+            playerInput.actions["Build"].canceled += OnLeftMouseUp;
+            playerInput.actions["Delete"].performed += OnRightMouseDown;
+            playerInput.actions["Delete"].canceled += OnRightMouseUp;
 
             playerInput.actions["Undo"].performed += Undo;
-            inputActions.LevelBuilder.Redo.performed += Redo;
+            playerInput.actions["Redo"].performed += Redo;
 
             CreateRoomLimit();
             MapBrushActions();
@@ -152,17 +149,17 @@ namespace LevelBuilder2D
 
         private void Close()
         {
-            inputActions.Disable();
+            playerInput.actions.Disable();
 
-            inputActions.LevelBuilder.MousePosition.performed -= OnMouseMove;
+            playerInput.actions["MousePosition"].performed -= OnMouseMove;
 
-            inputActions.LevelBuilder.Build.performed -= OnLeftMouseDown;
-            inputActions.LevelBuilder.Build.canceled -= OnLeftMouseUp;
-            inputActions.LevelBuilder.Delete.performed -= OnRightMouseDown;
-            inputActions.LevelBuilder.Delete.canceled -= OnRightMouseUp;
+            playerInput.actions["Build"].performed -= OnLeftMouseDown;
+            playerInput.actions["Build"].canceled -= OnLeftMouseUp;
+            playerInput.actions["Delete"].performed -= OnRightMouseDown;
+            playerInput.actions["Delete"].canceled -= OnRightMouseUp;
 
             playerInput.actions["Undo"].performed -= Undo;
-            inputActions.LevelBuilder.Redo.performed -= Redo;
+            playerInput.actions["Redo"].performed -= Redo;
 
             CreateTilemaps();
 
@@ -259,8 +256,8 @@ namespace LevelBuilder2D
             if (!isPointerOnUI)
             {
                 // Actions on the Tilemap
-                if (inputActions.LevelBuilder.Build.ReadValue<float>() > 0 && LeftMouse != null) { LeftMouse(); }
-                if (inputActions.LevelBuilder.Delete.ReadValue<float>() > 0 && RightMouse != null) { RightMouse(); }
+                if (playerInput.actions["Build"].ReadValue<float>() > 0 && LeftMouse != null) { LeftMouse(); }
+                if (playerInput.actions["Delete"].ReadValue<float>() > 0 && RightMouse != null) { RightMouse(); }
             }
         }
 

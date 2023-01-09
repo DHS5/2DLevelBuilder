@@ -26,6 +26,9 @@ namespace LevelBuilder2D
         [Header("Managers")]
         [SerializeField] private TilemapManager tilemapManager;
 
+        [Header("Player Inputs")]
+        [SerializeField] private PlayerInput playerInput;
+
         [Header("Menu Template")]
         [SerializeField] private ItemsMenuTemplate menuTemplate;
 
@@ -108,18 +111,10 @@ namespace LevelBuilder2D
 
 
 
-        // Actions
-        private LevelBuilder_InputActions inputActions;
-
         private event Action OnSaveLevel;
         private event Action OnLoadLevel;
         private event Action OnCreateLevel;
 
-
-        private void Awake()
-        {
-            inputActions = new LevelBuilder_InputActions();
-        }
 
         private void Start()
         {
@@ -128,8 +123,6 @@ namespace LevelBuilder2D
 
         private void OnEnable()
         {
-            inputActions.LevelBuilder.Save.performed += OnControlS;
-
             EventManager.StartListening(EventManager.LevelBuilderEvent.CREATE_BUILDER, OnCreate);
             EventManager.StartListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnCreated);
             EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
@@ -140,8 +133,6 @@ namespace LevelBuilder2D
         }
         private void OnDisable()
         {
-            inputActions.LevelBuilder.Save.performed -= OnControlS;
-
             EventManager.StopListening(EventManager.LevelBuilderEvent.CREATE_BUILDER, OnCreate);
             EventManager.StopListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnCreated);
             EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
@@ -174,7 +165,8 @@ namespace LevelBuilder2D
 
             AddListeners();
 
-            inputActions.Enable();
+            playerInput.actions.Enable();
+            playerInput.actions["Save"].performed += OnControlS;
 
             if (StartAction == StartAction.CREATE) OnCreateLevel.Invoke();
             else if (StartAction == StartAction.LOAD) OnLoadLevel.Invoke();
@@ -183,7 +175,8 @@ namespace LevelBuilder2D
         {
             RemoveListeners();
 
-            inputActions.Disable();
+            playerInput.actions["Save"].performed -= OnControlS;
+            playerInput.actions.Disable();
 
             itemMenu.SetActive(false);
             worldSpaceButtons.SetActive(false);

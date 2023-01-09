@@ -29,6 +29,7 @@ namespace LevelBuilder2D
         [Header("UI components")]
         [SerializeField] private GameObject rebindOverlay;
         [SerializeField] private TextMeshProUGUI overlayText;
+        [SerializeField] private TextMeshProUGUI cancelText;
         [Space]
         // Mouse
         [SerializeField] private TMP_Dropdown mouseConfigDropdown;
@@ -41,12 +42,13 @@ namespace LevelBuilder2D
         [SerializeField] private TextMeshProUGUI undoRebindText;
         [SerializeField] private Button redoRebindButton;
         [SerializeField] private TextMeshProUGUI redoRebindText;
+        [SerializeField] private Button resetRebindsButton;
 
 
 
-        InputBinding leftClickBinding = new InputBinding("<Mouse>/leftButton");
-        InputBinding rightClickBinding = new InputBinding("<Mouse>/rightButton");
-        InputBinding wheelClickBinding = new InputBinding("<Mouse>/middleButton");
+        readonly string leftClickBindingPath = "<Mouse>/leftButton";
+        readonly string rightClickBindingPath = "<Mouse>/rightButton";
+        readonly string wheelClickBindingPath = "<Mouse>/middleButton";
 
 
         #region Enable / Disable
@@ -65,8 +67,6 @@ namespace LevelBuilder2D
             EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
             EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_HELP, OnOpenHelp);
             EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_HELP, OnCloseHelp);
-
-            SaveRebinds();
         }
 
         #endregion
@@ -91,6 +91,7 @@ namespace LevelBuilder2D
         {
             playerInput.actions.Enable();
             mouseConfigDropdown.onValueChanged.RemoveAllListeners();
+            SaveRebinds();
         }
 
         private void AddListeners()
@@ -98,12 +99,14 @@ namespace LevelBuilder2D
             saveRebindButton.onClick.AddListener(RebindSave);
             undoRebindButton.onClick.AddListener(RebindUndo);
             redoRebindButton.onClick.AddListener(RebindRedo);
+            resetRebindsButton.onClick.AddListener(ResetShortcutsBindings);
         }
         private void RemoveListeners()
         {
             saveRebindButton.onClick.RemoveAllListeners();
             undoRebindButton.onClick.RemoveAllListeners();
             redoRebindButton.onClick.RemoveAllListeners();
+            resetRebindsButton.onClick.RemoveAllListeners();
         }
 
         #endregion
@@ -124,42 +127,55 @@ namespace LevelBuilder2D
             OpenMouseConfig(schemeIndex);
             switch (schemeIndex)
             {
-                case 0:
-                    RebindBuild(leftClickBinding);
-                    RebindDelete(rightClickBinding);
-                    RebindMove(wheelClickBinding);
-                    break;
                 case 1:
-                    RebindBuild(rightClickBinding);
-                    RebindDelete(wheelClickBinding);
-                    RebindMove(leftClickBinding);
+                    RebindBuild(rightClickBindingPath);
+                    RebindDelete(wheelClickBindingPath);
+                    RebindMove(leftClickBindingPath);
+                    break;
+                case 2:
+                    RebindBuild(leftClickBindingPath);
+                    RebindDelete(wheelClickBindingPath);
+                    RebindMove(rightClickBindingPath);
                     break;
                 default:
-                    RebindBuild(leftClickBinding);
-                    RebindDelete(wheelClickBinding);
-                    RebindMove(rightClickBinding);
+                    ResetMouseBindings();
                     break;
             }
         }
+        private void ResetMouseBindings()
+        {
+            buildAction.action.RemoveAllBindingOverrides();
+            deleteAction.action.RemoveAllBindingOverrides();
+            moveAction.action.RemoveAllBindingOverrides();
+        }
 
-        private void RebindBuild(InputBinding newBinding) { buildAction.action.ApplyBindingOverride(newBinding); }
-        private void RebindDelete(InputBinding newBinding) { deleteAction.action.ApplyBindingOverride(newBinding); }
-        private void RebindMove(InputBinding newBinding) { moveAction.action.ApplyBindingOverride(newBinding); }
+        private void RebindBuild(string newBindingPath) { buildAction.ManualRebind(0, newBindingPath); }
+        private void RebindDelete(string newBindingPath) { deleteAction.ManualRebind(0, newBindingPath); }
+        private void RebindMove(string newBindingPath) { moveAction.ManualRebind(0, newBindingPath); }
 
         private void RebindSave()
         {
-            InputUtility.InteractiveRebind(saveAction.action, 1, true, saveRebindText, rebindOverlay, overlayText,
+            InputUtility.InteractiveRebind(saveAction.action, 1, true, saveRebindText, rebindOverlay, overlayText, cancelText,
                 new string[] { "<keyboard>/anyKey" }, "<Keyboard>"); //"<keyboard>/#(A)"
         }
         private void RebindUndo()
         {
-            InputUtility.InteractiveRebind(undoAction.action, 1, true, undoRebindText, rebindOverlay, overlayText,
+            InputUtility.InteractiveRebind(undoAction.action, 1, true, undoRebindText, rebindOverlay, overlayText, cancelText,
                 new string[] { "<keyboard>/anyKey" }, "<Keyboard>");
         }
         private void RebindRedo()
         {
-            InputUtility.InteractiveRebind(redoAction.action, 1, true, redoRebindText, rebindOverlay, overlayText,
+            InputUtility.InteractiveRebind(redoAction.action, 1, true, redoRebindText, rebindOverlay, overlayText, cancelText,
                 new string[] { "<keyboard>/anyKey" }, "<Keyboard>");
+        }
+
+        private void ResetShortcutsBindings()
+        {
+            saveAction.action.RemoveAllBindingOverrides();
+            undoAction.action.RemoveAllBindingOverrides();
+            redoAction.action.RemoveAllBindingOverrides();
+
+            ActuBindingsTexts();
         }
 
         #endregion

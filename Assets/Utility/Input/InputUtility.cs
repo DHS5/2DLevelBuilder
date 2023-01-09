@@ -21,14 +21,14 @@ namespace Dhs5.Utility.Input
             { "Arrow", "Home", "End", "Print Screen", "Delete", "Page" };
 
         public static void InteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts,
-            TextMeshProUGUI actionText, GameObject rebindOverlay, TextMeshProUGUI overlayText,
+            TextMeshProUGUI actionText, GameObject rebindOverlay, TextMeshProUGUI overlayText, TextMeshProUGUI cancelText,
             string[] controlsExcluded, string controlPath = "", string cancelControl = "<Keyboard>/escape")
         {
-            InteractiveRebind(action, bindingIndex, allCompositeParts, false, actionText, rebindOverlay, overlayText, controlsExcluded, controlPath, cancelControl);
+            InteractiveRebind(action, bindingIndex, allCompositeParts, false, actionText, rebindOverlay, overlayText, cancelText, controlsExcluded, controlPath, cancelControl);
         }
 
         private static void InteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts, bool duplicate,
-            TextMeshProUGUI actionText, GameObject rebindOverlay, TextMeshProUGUI overlayText,
+            TextMeshProUGUI actionText, GameObject rebindOverlay, TextMeshProUGUI overlayText, TextMeshProUGUI cancelText,
             string[] controlsExcluded, string controlPath = "", string cancelControl = "<Keyboard>/escape")
         {
             if (action == null) return;
@@ -67,7 +67,7 @@ namespace Dhs5.Utility.Input
                         {
                             action.RemoveBindingOverride(bindingIndex);
                             CleanUp();
-                            InteractiveRebind(action, bindingIndex, allCompositeParts, true, actionText, rebindOverlay, overlayText, controlsExcluded, controlPath, cancelControl);
+                            InteractiveRebind(action, bindingIndex, allCompositeParts, true, actionText, rebindOverlay, overlayText, cancelText, controlsExcluded, controlPath, cancelControl);
                         }
                         else
                         {
@@ -77,13 +77,12 @@ namespace Dhs5.Utility.Input
                             UpdateBindingDisplay();
                             CleanUp();
 
-                            // If there's more composite parts we should bind, initiate a rebind
-                            // for the next part.
+                            // If there's more composite parts we should bind, initiate a rebind for the next part
                             if (allCompositeParts)
                             {
                                 var nextBindingIndex = bindingIndex + 1;
                                 if (nextBindingIndex < action.bindings.Count && action.bindings[nextBindingIndex].isPartOfComposite)
-                                    InteractiveRebind(action, nextBindingIndex, true, actionText, rebindOverlay, overlayText, controlsExcluded);
+                                    InteractiveRebind(action, nextBindingIndex, true, actionText, rebindOverlay, overlayText, cancelText, controlsExcluded, controlPath, cancelControl);
                             }
                         }
                     });
@@ -117,20 +116,28 @@ namespace Dhs5.Utility.Input
                 if (duplicate) text += "\n\n ! This binding is already used !";
                 overlayText.text = text;
             }
+            if (cancelText != null) cancelText.text = "Cancel with " + CleanBindingPath(InputControlPath.ToHumanReadableString(cancelControl, InputControlPath.HumanReadableStringOptions.OmitDevice));
 
             rebindOperation.Start();
         }
 
         // # Helpers #
-
         private static bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool isComposite)
         {
+            return CheckDuplicateBindings(action, bindingIndex, isComposite, out InputAction conflictedAction, out InputBinding conflictedBinding);
+        }
+        private static bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool isComposite, out InputAction conflictedAction, out InputBinding conflictedBinding)
+        {
+            conflictedAction = null;
+            conflictedBinding = new();
             InputBinding newBinding = action.bindings[bindingIndex];
             foreach (InputBinding b in action.actionMap.bindings)
             {
                 if (b.action == newBinding.action) continue;
                 if (b.effectivePath == newBinding.effectivePath && (b.name != "modifier" || newBinding.name != "modifier"))
                 {
+                    conflictedAction = action.actionMap.FindAction(b.action);
+                    conflictedBinding = b;
                     return true;
                 }
             }
@@ -146,20 +153,35 @@ namespace Dhs5.Utility.Input
             }
             return false;
         }
-        public static string GetCorrectBindingString(InputAction action)
+
+        public static void ResetToDefault(InputAction action, int bindingIndex)
         {
-            string Clean(string text)
+            void ResetDuplicate(int currentBindingIndex)
             {
-                foreach (string key in problematicKeys)
+                if (CheckDuplicateBindings(action, currentBindingIndex, false, out InputAction conflictedAction, out InputBinding conflictedBinding))
                 {
-                    if (text.Contains(key))
-                    {
-                        return text.Remove(text.IndexOf('['));
-                    }
+                    ResetToDefault(conflictedAction, conflictedAction.GetBindingIndex(conflictedBinding.id));
                 }
-                return "";
             }
 
+            if (action.bindings[bindingIndex].isComposite)
+            {
+                // It's a composite. Remove overrides from part bindings.
+                for (var i = bindingIndex + 1; i < action.bindings.Count && action.bindings[i].isPartOfComposite; ++i)
+                {
+                    action.RemoveBindingOverride(i);
+                    ResetDuplicate(i);
+                }
+            }
+            else
+            {
+                action.RemoveBindingOverride(bindingIndex);
+                ResetDuplicate(bindingIndex);
+            }
+        }
+
+        public static string GetCorrectBindingString(InputAction action)
+        {
             string cleanText;
             string text = "";//, InputControlPath.HumanReadableStringOptions.UseShortNames);
             if (action.bindings[0].isComposite)
@@ -167,7 +189,7 @@ namespace Dhs5.Utility.Input
                 string[] textParts = action.GetBindingDisplayString().Split('+');
                 for (int i = 0; i < textParts.Length; i++)
                 {
-                    cleanText = Clean(InputControlPath.ToHumanReadableString(action.bindings[i + 1].effectivePath));
+                    cleanText = CleanBindingPath(InputControlPath.ToHumanReadableString(action.bindings[i + 1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice));
                     if (cleanText != "") textParts[i] = cleanText;
                     text += textParts[i] + " + ";
                 }
@@ -175,10 +197,56 @@ namespace Dhs5.Utility.Input
                 return text;
             }
             // Clean
-            text = Clean(InputControlPath.ToHumanReadableString(action.bindings[0].effectivePath));
+            text = CleanBindingPath(InputControlPath.ToHumanReadableString(action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice));
             if (text != "") return text;
 
             return action.GetBindingDisplayString();
+        }
+        private static string CleanBindingPath(string text)
+        {
+            foreach (string key in problematicKeys)
+            {
+                if (text.Contains(key))
+                {
+                    if (text.Contains('['))
+                        text = text.Remove(text.IndexOf('['));
+                    return text;
+                }
+            }
+            return "";
+        }
+
+        // ### Extension Methods ###
+
+        public static int GetBindingIndex(this InputAction action, InputBinding binding)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+
+            for (int i = 0; i < action.bindings.Count; i++)
+            {
+                if (action.bindings[i].id == binding.id)
+                    return i;
+            }
+            return -1;
+        }
+        public static int GetBindingIndex(this InputAction action, Guid bindingId)
+        {
+            if (action == null)
+                throw new ArgumentNullException(nameof(action));
+
+            for (int i = 0; i < action.bindings.Count; i++)
+            {
+                if (action.bindings[i].id == bindingId)
+                    return i;
+            }
+            return -1;
+        }
+        public static void ManualRebind(this InputActionReference actionRef, int bindingIndex, string overridePath)
+        {
+            InputBinding newBinding = actionRef.action.bindings[bindingIndex];
+            newBinding.overridePath = overridePath;
+            actionRef.action.ApplyBindingOverride(bindingIndex, newBinding);
         }
 
         #endregion
