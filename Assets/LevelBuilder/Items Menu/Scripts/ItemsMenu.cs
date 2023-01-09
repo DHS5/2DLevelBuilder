@@ -228,7 +228,7 @@ namespace LevelBuilder2D
             foreach (ItemTemplate i in category.items)
             {
                 itemToggle = Instantiate(itemTogglePrefab, categoryButton.CategoryItemsContainer.transform).GetComponent<ItemToggle>();
-                itemToggle.Create(i.number, toggleGroup, categoryButton);
+                itemToggle.Create(i, toggleGroup, categoryButton);
                 categoryButton.items.Add(itemToggle);
             }
         }
@@ -249,7 +249,7 @@ namespace LevelBuilder2D
                     {
                         first = false;
                         i.Toggle.isOn = true;
-                        TilemapManager.SetTileAction.Invoke(i.Item);
+                        TilemapManager.onSetTile.Invoke(i.Item);
                     }
                     else i.Toggle.isOn = false;
                 }
@@ -322,10 +322,10 @@ namespace LevelBuilder2D
 
         // ### Brushes ###
 
-        private void SetPaintBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.PAINT); }
-        private void SetBoxBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.BOX); }
-        private void SetFillBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.FILL); }
-        private void SetPickBrush(bool b) { TilemapManager.SetBrushAction.Invoke(Brush.PICK); }
+        private void SetPaintBrush(bool b) { TilemapManager.onSetBrush.Invoke(Brush.PAINT); }
+        private void SetBoxBrush(bool b) { TilemapManager.onSetBrush.Invoke(Brush.BOX); }
+        private void SetFillBrush(bool b) { TilemapManager.onSetBrush.Invoke(Brush.FILL); }
+        private void SetPickBrush(bool b) { TilemapManager.onSetBrush.Invoke(Brush.PICK); }
 
         // ### Room Changes ###
 

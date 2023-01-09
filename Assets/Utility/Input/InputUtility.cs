@@ -7,6 +7,9 @@ using TMPro;
 
 namespace Dhs5.Utility.Input
 {
+    /// <summary>
+    /// Utility class for the new Input System
+    /// </summary>
     public static class InputUtility
     {
 
@@ -20,13 +23,42 @@ namespace Dhs5.Utility.Input
         private static string[] problematicKeys = new string[]
             { "Arrow", "Home", "End", "Print Screen", "Delete", "Page" };
 
+        /// <summary>
+        /// Perform an interactive binding, handling UI components update.
+        /// Prevent duplicates in the same action map.
+        /// </summary>
+        /// <param name="action">Action to rebind</param>
+        /// <param name="bindingIndex">Index of the binding to rebind</param>
+        /// <param name="allCompositeParts">Is the action composite ?</param>
+        /// <param name="actionText">UI text displaying the action binding path</param>
+        /// <param name="rebindOverlay">UI panel showing up when waiting for the player rebind</param>
+        /// <param name="overlayText">UI text to display while waiting for the player rebind</param>
+        /// <param name="cancelText">UI text informing the player of how to cancel the rebind</param>
+        /// <param name="controlsExcluded">(OPTIONAL) Array of binding path to exclude from the interactive rebind</param>
+        /// <param name="controlPath">(OPTIONAL) Part of the path required in the new binding path</param>
+        /// <param name="cancelControl">(OPTIONAL) Path of the control to cancel the rebind</param>
         public static void InteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts,
             TextMeshProUGUI actionText, GameObject rebindOverlay, TextMeshProUGUI overlayText, TextMeshProUGUI cancelText,
-            string[] controlsExcluded, string controlPath = "", string cancelControl = "<Keyboard>/escape")
+            string[] controlsExcluded = null, string controlPath = "", string cancelControl = "<Keyboard>/escape")
         {
             InteractiveRebind(action, bindingIndex, allCompositeParts, false, actionText, rebindOverlay, overlayText, cancelText, controlsExcluded, controlPath, cancelControl);
         }
 
+        /// <summary>
+        /// Perform an interactive binding, handling UI components update.
+        /// Prevent duplicates in the same action map.
+        /// </summary>
+        /// <param name="action">Action to rebind</param>
+        /// <param name="bindingIndex">Index of the binding to rebind</param>
+        /// <param name="allCompositeParts">Is the action composite ?</param>
+        /// <param name="duplicate">Is the binding performed after a duplicate was entered ?</param>
+        /// <param name="actionText">UI text displaying the action binding path</param>
+        /// <param name="rebindOverlay">UI panel showing up when waiting for the player rebind</param>
+        /// <param name="overlayText">UI text to display while waiting for the player rebind</param>
+        /// <param name="cancelText">UI text informing the player of how to cancel the rebind</param>
+        /// <param name="controlsExcluded">(OPTIONAL) Array of binding path to exclude from the interactive rebind</param>
+        /// <param name="controlPath">(OPTIONAL) Part of the path required in the new binding path</param>
+        /// <param name="cancelControl">(OPTIONAL) Path of the control to cancel the rebind</param>
         private static void InteractiveRebind(InputAction action, int bindingIndex, bool allCompositeParts, bool duplicate,
             TextMeshProUGUI actionText, GameObject rebindOverlay, TextMeshProUGUI overlayText, TextMeshProUGUI cancelText,
             string[] controlsExcluded, string controlPath = "", string cancelControl = "<Keyboard>/escape")
@@ -44,7 +76,7 @@ namespace Dhs5.Utility.Input
             {
                 if (actionText != null)
                 {
-                    actionText.text = GetCorrectBindingString(action);
+                    actionText.text = GetCorrectBindingString(action, bindingIndex);
                 }
             }
 
@@ -122,10 +154,27 @@ namespace Dhs5.Utility.Input
         }
 
         // # Helpers #
+
+        /// <summary>
+        /// Check if the new binding of action is a duplicate
+        /// </summary>
+        /// <param name="action">Action currently rebinded</param>
+        /// <param name="bindingIndex">Index of the binding to rebind</param>
+        /// <param name="isComposite">Is the action to rebind a composite ?</param>
+        /// <returns>Whether the new binding is a duplicate</returns>
         private static bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool isComposite)
         {
             return CheckDuplicateBindings(action, bindingIndex, isComposite, out InputAction conflictedAction, out InputBinding conflictedBinding);
         }
+        /// <summary>
+        /// Check if the new binding of action is a duplicate
+        /// </summary>
+        /// <param name="action">Action currently rebinded</param>
+        /// <param name="bindingIndex">Index of the binding to rebind</param>
+        /// <param name="isComposite">Is the action to rebind a composite ?</param>
+        /// <param name="conflictedAction">OUT the action that is in conflict with the new binding</param>
+        /// <param name="conflictedBinding">OUT the binding that is in conflict with the new binding</param>
+        /// <returns>Whether the new binding is a duplicate</returns>
         private static bool CheckDuplicateBindings(InputAction action, int bindingIndex, bool isComposite, out InputAction conflictedAction, out InputBinding conflictedBinding)
         {
             conflictedAction = null;
@@ -154,6 +203,11 @@ namespace Dhs5.Utility.Input
             return false;
         }
 
+        /// <summary>
+        /// Resets an action to its default binding
+        /// </summary>
+        /// <param name="action">Action to reset</param>
+        /// <param name="bindingIndex">Index of the binding to reset</param>
         public static void ResetToDefault(InputAction action, int bindingIndex)
         {
             void ResetDuplicate(int currentBindingIndex)
@@ -180,16 +234,22 @@ namespace Dhs5.Utility.Input
             }
         }
 
-        public static string GetCorrectBindingString(InputAction action)
+        /// <summary>
+        /// Returns the correct (human readable) path of an action binding corresponding to his gears
+        /// </summary>
+        /// <param name="action">Action to get the binding path from</param>
+        /// <param name="bindingIndex">Index of the binding to get the path from</param>
+        /// <returns>Human readable binding</returns>
+        public static string GetCorrectBindingString(InputAction action, int bindingIndex)
         {
             string cleanText;
             string text = "";//, InputControlPath.HumanReadableStringOptions.UseShortNames);
-            if (action.bindings[0].isComposite)
+            if (action.bindings[bindingIndex].isComposite)
             {
-                string[] textParts = action.GetBindingDisplayString().Split('+');
+                string[] textParts = action.GetBindingDisplayString(bindingIndex).Split('+');
                 for (int i = 0; i < textParts.Length; i++)
                 {
-                    cleanText = CleanBindingPath(InputControlPath.ToHumanReadableString(action.bindings[i + 1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice));
+                    cleanText = CleanBindingPath(InputControlPath.ToHumanReadableString(action.bindings[bindingIndex + i + 1].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice));
                     if (cleanText != "") textParts[i] = cleanText;
                     text += textParts[i] + " + ";
                 }
@@ -197,11 +257,16 @@ namespace Dhs5.Utility.Input
                 return text;
             }
             // Clean
-            text = CleanBindingPath(InputControlPath.ToHumanReadableString(action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice));
+            text = CleanBindingPath(InputControlPath.ToHumanReadableString(action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice));
             if (text != "") return text;
 
             return action.GetBindingDisplayString();
         }
+        /// <summary>
+        /// Returns the good path of a binding given error keys found by experience
+        /// </summary>
+        /// <param name="text">Path</param>
+        /// <returns>Cleaned of errors path</returns>
         private static string CleanBindingPath(string text)
         {
             foreach (string key in problematicKeys)
@@ -218,6 +283,13 @@ namespace Dhs5.Utility.Input
 
         // ### Extension Methods ###
 
+        /// <summary>
+        /// Get the index of a binding in an action bindings array
+        /// </summary>
+        /// <param name="action">Action to get the bindings array from</param>
+        /// <param name="binding">Binding of which to find the index</param>
+        /// <returns>Binding index (-1 if not found)</returns>
+        /// <exception cref="ArgumentNullException">If action is null</exception>
         public static int GetBindingIndex(this InputAction action, InputBinding binding)
         {
             if (action == null)
@@ -230,6 +302,13 @@ namespace Dhs5.Utility.Input
             }
             return -1;
         }
+        /// <summary>
+        /// Get the index of a binding in an action bindings array given the binding ID
+        /// </summary>
+        /// <param name="action">Action to get the bindings array from</param>
+        /// <param name="bindingId">Binding ID of the searched for binding</param>
+        /// <returns>Binding index (-1 if not found)</returns>
+        /// <exception cref="ArgumentNullException">If action is null</exception>
         public static int GetBindingIndex(this InputAction action, Guid bindingId)
         {
             if (action == null)
@@ -242,11 +321,17 @@ namespace Dhs5.Utility.Input
             }
             return -1;
         }
-        public static void ManualRebind(this InputActionReference actionRef, int bindingIndex, string overridePath)
+        /// <summary>
+        /// Rebind an action manually
+        /// </summary>
+        /// <param name="action">Action to rebind</param>
+        /// <param name="bindingIndex">Index of the binding to rebind</param>
+        /// <param name="overridePath">New binding path</param>
+        public static void ManualRebind(this InputAction action, int bindingIndex, string overridePath)
         {
-            InputBinding newBinding = actionRef.action.bindings[bindingIndex];
+            InputBinding newBinding = action.bindings[bindingIndex];
             newBinding.overridePath = overridePath;
-            actionRef.action.ApplyBindingOverride(bindingIndex, newBinding);
+            action.ApplyBindingOverride(bindingIndex, newBinding);
         }
 
         #endregion

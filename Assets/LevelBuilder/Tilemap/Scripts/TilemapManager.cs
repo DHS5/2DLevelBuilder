@@ -91,9 +91,9 @@ namespace LevelBuilder2D
 
 
         // Static Actions
-        public static Action<Item> SetTileAction;
+        public static Action<Item> onSetTile;
 
-        public static Action<Brush> SetBrushAction;
+        public static Action<Brush> onSetBrush;
 
         // Private Actions
         private event Action LeftMouse;
@@ -115,16 +115,16 @@ namespace LevelBuilder2D
             EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, Open);
             EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, Close);
 
-            SetTileAction += GetCurrentTile;
-            SetBrushAction += GetCurrentBrush;
+            onSetTile += GetCurrentTile;
+            onSetBrush += GetCurrentBrush;
         }
         private void OnDisable()
         {
             EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, Open);
             EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, Close);
 
-            SetTileAction -= GetCurrentTile;
-            SetBrushAction -= GetCurrentBrush;
+            onSetTile -= GetCurrentTile;
+            onSetBrush -= GetCurrentBrush;
         }
 
         private void Open()

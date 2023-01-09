@@ -117,9 +117,9 @@ namespace LevelBuilder2D
 
         private void ActuBindingsTexts()
         {
-            saveRebindText.text = InputUtility.GetCorrectBindingString(saveAction.action);
-            undoRebindText.text = InputUtility.GetCorrectBindingString(undoAction.action);
-            redoRebindText.text = InputUtility.GetCorrectBindingString(redoAction.action);
+            saveRebindText.text = InputUtility.GetCorrectBindingString(saveAction.action, 0);
+            undoRebindText.text = InputUtility.GetCorrectBindingString(undoAction.action, 0);
+            redoRebindText.text = InputUtility.GetCorrectBindingString(redoAction.action, 0);
         }
 
         private void RebindMouse(int schemeIndex)
@@ -149,9 +149,9 @@ namespace LevelBuilder2D
             moveAction.action.RemoveAllBindingOverrides();
         }
 
-        private void RebindBuild(string newBindingPath) { buildAction.ManualRebind(0, newBindingPath); }
-        private void RebindDelete(string newBindingPath) { deleteAction.ManualRebind(0, newBindingPath); }
-        private void RebindMove(string newBindingPath) { moveAction.ManualRebind(0, newBindingPath); }
+        private void RebindBuild(string newBindingPath) { buildAction.action.ManualRebind(0, newBindingPath); }
+        private void RebindDelete(string newBindingPath) { deleteAction.action.ManualRebind(0, newBindingPath); }
+        private void RebindMove(string newBindingPath) { moveAction.action.ManualRebind(0, newBindingPath); }
 
         private void RebindSave()
         {

@@ -19,45 +19,64 @@ MonoBehaviour:
     items:
     - number: 1
       name: Rock
+      description: Simple rock block
     - number: 0
       name: Dirt
+      description: Simple dirt block
     - number: 2
       name: Grass
+      description: Simple grass block
     - number: 3
       name: Ice
+      description: 'Slippery ice block...
+
+        Be careful when landing on these
+        bad boys !'
   - categoryName: Walls
     categoryNumber: 1
     categoryTilemapLayer: 0
     items:
     - number: 0
       name: Dirt
+      description: 
     - number: 1
       name: Rock
+      description: 
     - number: 2
       name: Grass
+      description: 
     - number: 3
       name: Ice
+      description: 
   - categoryName: Obstacles
     categoryNumber: 2
     categoryTilemapLayer: 1
     items:
     - number: 0
       name: Dirt
+      description: 
     - number: 1
       name: Rock
+      description: 
     - number: 2
       name: Grass
+      description: 
     - number: 3
       name: Ice
+      description: 
   - categoryName: Double Sized
     categoryNumber: 3
     categoryTilemapLayer: 2
     items:
     - number: 0
       name: Dirt
+      description: 
     - number: 1
       name: Rock
+      description: 
     - number: 2
       name: Grass
+      description: 
     - number: 3
       name: Ice
+      description: 

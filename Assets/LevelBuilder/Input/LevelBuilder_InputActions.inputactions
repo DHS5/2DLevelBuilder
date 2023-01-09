@@ -190,7 +190,7 @@
                 {
                     "name": "modifier",
                     "id": "f40df433-af39-4317-bb38-b8f15b1e2d29",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -201,7 +201,7 @@
                 {
                     "name": "binding",
                     "id": "c5f64533-5e25-43eb-9572-bf5c52f88dad",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -223,7 +223,7 @@
                 {
                     "name": "modifier",
                     "id": "3c946471-241f-49a5-ae19-cb4f2470d4e2",
-                    "path": "<Keyboard>/shift",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

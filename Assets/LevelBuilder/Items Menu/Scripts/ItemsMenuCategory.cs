@@ -10,6 +10,8 @@ namespace LevelBuilder2D
     {
         public int number;
         public string name;
+        [TextArea]
+        public string description;
     }
 
     [System.Serializable]

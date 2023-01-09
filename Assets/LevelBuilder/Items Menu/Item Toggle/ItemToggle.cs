@@ -32,6 +32,7 @@ namespace LevelBuilder2D
         [SerializeField] private Image image;
 
         private Item item;
+        private ItemTemplate itemTemplate;
         private CategoryButton categoryButton;
 
 
@@ -50,7 +51,7 @@ namespace LevelBuilder2D
                 toggleGroup = value;
             } 
         }
-        public int ItemNumber { get; private set; }
+        public int ItemNumber { get { return itemTemplate.number; } }
 
         public Item Item
         {
@@ -61,6 +62,7 @@ namespace LevelBuilder2D
                 image.sprite = value.tile.GetSprite();
             }
         }
+        
 
         private void OnEnable()
         {
@@ -76,9 +78,9 @@ namespace LevelBuilder2D
         }
 
 
-        public void Create(int number, ToggleGroup group, CategoryButton button)
+        public void Create(ItemTemplate template, ToggleGroup group, CategoryButton button)
         {
-            ItemNumber = number;
+            itemTemplate = template;
             Group = group;
             categoryButton = button;
 
@@ -86,7 +88,10 @@ namespace LevelBuilder2D
         }
         public void Set(ItemsMenuContent menuContent)
         {
-            Item = new(menuContent.categories[categoryButton.CategoryNumber].tiles[ItemNumber], categoryButton.CategoryTilemapLayer);
+            TileBase t = menuContent.categories[categoryButton.CategoryNumber].tiles[ItemNumber];
+            Item = new(t, categoryButton.CategoryTilemapLayer);
+
+            gameObject.SetActive(t != null);
         }
 
 
@@ -94,7 +99,8 @@ namespace LevelBuilder2D
         {
             if (value)
             {
-                TilemapManager.SetTileAction.Invoke(Item);
+                TilemapManager.onSetTile.Invoke(Item);
+                DescriptionWindow.onSelectItem.Invoke(itemTemplate);
             }
         }
 

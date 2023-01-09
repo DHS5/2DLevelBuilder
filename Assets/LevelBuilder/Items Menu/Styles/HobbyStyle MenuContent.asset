@@ -25,7 +25,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e373af0afc11dd54d8a9c8d77596fc5f, type: 2}
     - {fileID: 11400000, guid: ea6d64c6f4c782848b5accf20303b374, type: 2}
     - {fileID: 11400000, guid: b5693af456532194c87dde10637a0d0b, type: 2}
-    - {fileID: 11400000, guid: 4e1cfc5a54eed0c46a6e8f24f3079474, type: 2}
+    - {fileID: 11400000, guid: e80261cd365879d4e8d7b0c1ded262b5, type: 2}
   - name: Walls
     number: 1
     tilemapLayer: 0

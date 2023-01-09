@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace LevelBuilder2D
@@ -11,7 +12,8 @@ namespace LevelBuilder2D
         [SerializeField] private Camera levelBuilderCamera;
         [SerializeField] private Camera refCamera;
 
-        [Header("Player Inputs")]
+        [Header("Event System")]
+        [SerializeField] private EventSystem eventSystem;
         [SerializeField] PlayerInput playerInput;
 
 
@@ -33,6 +35,7 @@ namespace LevelBuilder2D
 
         private float ZoomCoeff { get { return levelBuilderCamera.orthographicSize / 20; } }
 
+        private bool isPointerOnUI;
 
         private void Awake()
         {
@@ -57,6 +60,7 @@ namespace LevelBuilder2D
 
         private void Update()
         {
+            isPointerOnUI = eventSystem.IsPointerOverGameObject();
             if (playerInput.actions["Move"].ReadValue<float>() > 0)
             {
                 OnMouseWheel();
@@ -90,7 +94,8 @@ namespace LevelBuilder2D
 
         private void OnMouseWheelScroll(InputAction.CallbackContext ctx)
         {
-            ZoomInOut(ctx.ReadValue<Vector2>());
+            if (!isPointerOnUI)
+                ZoomInOut(ctx.ReadValue<Vector2>());
         }
 
         private void OnMouseWheel()
