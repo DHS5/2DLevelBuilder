@@ -1,13 +1,10 @@
 {
-    "name": "LevelBuilder2D",
-    "rootNamespace": "LevelBuilder2D",
+    "name": "TilemapUtility",
+    "rootNamespace": "Dhs5.Utility.Tilemap",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:613783dc1674e844b87788ea74ede0f6",
-        "GUID:c53af2e3390de9840959de5847aa5ac7",
         "GUID:022a898c68ffb5b43b96b7a36e864b66",
-        "GUID:14bf369e0b4f8df43b282e3c068805ca"
+        "GUID:613783dc1674e844b87788ea74ede0f6",
+        "GUID:3a9781db4804a9945b9883f3a7c46d45"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

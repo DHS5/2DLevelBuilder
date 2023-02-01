@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using TMPro;
 using Dhs5.Utility.Input;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -54,19 +55,19 @@ namespace LevelBuilder2D
         #region Enable / Disable
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_HELP, OnOpenHelp);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_HELP, OnCloseHelp);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_HELP, OnOpenHelp);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_HELP, OnCloseHelp);
 
             LoadRebinds();
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_HELP, OnOpenHelp);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_HELP, OnCloseHelp);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_HELP, OnOpenHelp);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_HELP, OnCloseHelp);
         }
 
         #endregion

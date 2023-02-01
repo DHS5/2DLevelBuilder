@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -55,13 +56,13 @@ namespace LevelBuilder2D
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.BUILDER_CREATED, OnQuitBuilder);
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.BUILDER_CREATED, OnQuitBuilder);
         }
 
         private void OnQuitBuilder()
@@ -102,7 +103,7 @@ namespace LevelBuilder2D
 
             levelMenu.SetActive(false);
 
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.OPEN_BUILDER);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.OPEN_BUILDER);
         }
 
 

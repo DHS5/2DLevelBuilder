@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using System;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -112,16 +113,16 @@ namespace LevelBuilder2D
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, Open);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, Close);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_BUILDER, Open);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_BUILDER, Close);
 
             onSetTile += GetCurrentTile;
             onSetBrush += GetCurrentBrush;
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, Open);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, Close);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_BUILDER, Open);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_BUILDER, Close);
 
             onSetTile -= GetCurrentTile;
             onSetBrush -= GetCurrentBrush;

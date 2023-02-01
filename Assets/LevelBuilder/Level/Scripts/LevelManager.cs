@@ -10,6 +10,12 @@ using UnityEditor;
 
 namespace LevelBuilder2D
 {
+    /// <summary>
+    /// Static class handling :
+    /// - the conversion of tilemaps into saveable level class (and vice-versa)
+    /// - saving of levels
+    /// - loading of levels
+    /// </summary>
     public static class LevelManager
     {
         public readonly static string assetSavePath = "Assets/LevelBuilder/Level/Level Saves/";

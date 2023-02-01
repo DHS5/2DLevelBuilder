@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -44,17 +45,17 @@ namespace LevelBuilder2D
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_HELP, EnableInputs);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_HELP, DisableInputs);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_HELP, EnableInputs);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_HELP, DisableInputs);
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_HELP, EnableInputs);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_HELP, DisableInputs);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_BUILDER, EnableInputs);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_BUILDER, DisableInputs);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_HELP, EnableInputs);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_HELP, DisableInputs);
         }
 
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -33,7 +34,7 @@ namespace LevelBuilder2D
             command.Undo();
             redoCommands.Push(command);
 
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.UNDO_ACTION);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.UNDO_ACTION);
         }
         public void Redo()
         {
@@ -43,7 +44,7 @@ namespace LevelBuilder2D
             command.Execute();
             undoCommands.Push(command);
 
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.DO_ACTION);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.DO_ACTION);
         }
 
 
@@ -54,7 +55,7 @@ namespace LevelBuilder2D
                 undoCommands.Push(command);
                 redoCommands.Clear();
 
-                EventManager.TriggerEvent(EventManager.LevelBuilderEvent.DO_ACTION);
+                EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.DO_ACTION);
             }
         }
 

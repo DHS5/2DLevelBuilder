@@ -1,9 +1,7 @@
 {
-    "name": "InputUtility",
-    "rootNamespace": "Dhs5.Utility.Input",
+    "name": "EventSystem",
+    "rootNamespace": "Dhs5.Utility.EventSystem",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
         "GUID:022a898c68ffb5b43b96b7a36e864b66"
     ],
     "includePlatforms": [],

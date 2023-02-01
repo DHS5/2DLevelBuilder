@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using TMPro;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -20,13 +21,13 @@ namespace LevelBuilder2D
         #region Enable / Disable
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_BUILDER, OnOpenBuilder);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_BUILDER, OnQuitBuilder);
         }
         #endregion
 
@@ -66,12 +67,12 @@ namespace LevelBuilder2D
         private void OnOpenHelp()
         {
             helpWindow.SetActive(true);
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.OPEN_HELP);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.OPEN_HELP);
         }
         private void OnQuitHelp()
         {
             helpWindow.SetActive(false);
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.QUIT_HELP);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.QUIT_HELP);
         }
 
         #endregion

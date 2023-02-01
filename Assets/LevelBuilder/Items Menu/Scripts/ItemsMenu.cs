@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 using System;
 using UnityEngine.InputSystem;
 using TMPro;
+using Dhs5.Utility.EventSystem;
 
 namespace LevelBuilder2D
 {
@@ -118,35 +119,35 @@ namespace LevelBuilder2D
 
         private void Start()
         {
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.CREATE_BUILDER);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.CREATE_BUILDER);
         }
 
         private void OnEnable()
         {
-            EventManager.StartListening(EventManager.LevelBuilderEvent.CREATE_BUILDER, OnCreate);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnCreated);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.DO_ACTION, OnTilemapAction);
-            EventManager.StartListening(EventManager.LevelBuilderEvent.UNDO_ACTION, OnTilemapAction);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.CREATE_BUILDER, OnCreate);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.BUILDER_CREATED, OnCreated);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.OPEN_BUILDER, OnOpen);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.QUIT_BUILDER, OnQuit);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.SAVE_LEVEL, OnSave);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.DO_ACTION, OnTilemapAction);
+            EventManager<LevelBuilderEvent>.StartListening(LevelBuilderEvent.UNDO_ACTION, OnTilemapAction);
         }
         private void OnDisable()
         {
-            EventManager.StopListening(EventManager.LevelBuilderEvent.CREATE_BUILDER, OnCreate);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.BUILDER_CREATED, OnCreated);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.OPEN_BUILDER, OnOpen);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.QUIT_BUILDER, OnQuit);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.SAVE_LEVEL, OnSave);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.DO_ACTION, OnTilemapAction);
-            EventManager.StopListening(EventManager.LevelBuilderEvent.UNDO_ACTION, OnTilemapAction);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.CREATE_BUILDER, OnCreate);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.BUILDER_CREATED, OnCreated);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.OPEN_BUILDER, OnOpen);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.QUIT_BUILDER, OnQuit);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.SAVE_LEVEL, OnSave);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.DO_ACTION, OnTilemapAction);
+            EventManager<LevelBuilderEvent>.StopListening(LevelBuilderEvent.UNDO_ACTION, OnTilemapAction);
         }
 
         private void OnCreate()
         {
             CreateCategories();
 
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.BUILDER_CREATED);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.BUILDER_CREATED);
         }
         private void OnCreated()
         {
@@ -305,11 +306,11 @@ namespace LevelBuilder2D
 
         // # Triggers #
 
-        private void TriggerQuit() { EventManager.TriggerEvent(EventManager.LevelBuilderEvent.QUIT_BUILDER); }
+        private void TriggerQuit() { EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.QUIT_BUILDER); }
         private void TriggerSave() 
         { 
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.BEFORE_SAVE);
-            EventManager.TriggerEvent(EventManager.LevelBuilderEvent.SAVE_LEVEL);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.BEFORE_SAVE);
+            EventManager<LevelBuilderEvent>.TriggerEvent(LevelBuilderEvent.SAVE_LEVEL);
         }
 
         // # Inputs #
