@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Dhs5.Utility.EventSystem;
+using Dhs5.Utility.Tilemaps;
 
 namespace LevelBuilder2D
 {

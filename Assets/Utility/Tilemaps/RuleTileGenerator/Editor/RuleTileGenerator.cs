@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine.Tilemaps;
 
 #if UNITY_EDITOR
-namespace Dhs5.Utility.Tilemap
+namespace Dhs5.Utility.Tilemaps
 {
     public class RuleTileGenerator : EditorWindow
     {

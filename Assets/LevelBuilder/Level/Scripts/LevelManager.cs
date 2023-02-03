@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.Tilemaps;
+using Dhs5.Utility.SaveSystem;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -90,66 +91,52 @@ namespace LevelBuilder2D
         }
 
 
+        #region Level Saving (Disk)
+
+        private static SavesRepertory<Level, LevelInfo> levelSaves;
+
+        private static SavesRepertory<Level, LevelInfo> LevelSaves
+        {
+            get
+            {
+                if (levelSaves == null) levelSaves = new("LevelSaves", "/Levels/", ".txt");
+                return levelSaves;
+            }
+        }
+
         // ### Save ###
 
         public static void SaveLevelToDisk(Level level)
         {
-            string serializedLevel = level.Serialize();
-
-            if (!Directory.Exists(diskSavePath))
-            {
-                Directory.CreateDirectory(diskSavePath);
-            }
-
-            File.WriteAllText(diskSavePath + level.name + ".txt", serializedLevel);
-        }
-
-        public static void CreateLevelOnDisk(Level level)
-        {
-            SaveLevelToDisk(level);
-
-            List<LevelData> levelList;
-            LevelData[] currentList = GetLevelList();
-
-            if (currentList != null)
-                levelList = new(currentList);
-            else
-                levelList = new();
-
-            levelList.Add(new LevelData(level.name, level.style));
-
-            SetLevelList(levelList.ToArray());
+            LevelSaves.Add(level.name, level);
         }
 
         // ### Load ###
 
         public static Level LoadLevelFromDisk(string filename)
         {
-            Level level = null;
-            string serializedLevel;
-            string path = diskSavePath + filename + ".txt";
-
-            if (File.Exists(path))
-            {
-                serializedLevel = File.ReadAllText(path);
-                level = new Level(serializedLevel);
-            }
-
-            return level;
+            return LevelSaves.GetSave(filename);
         }
 
         // ### Delete ###
 
-        public static void DeleteLevelFromDisk(LevelData levelData)
+        public static void DeleteLevelFromDisk(LevelInfo levelInfo)
         {
-            DeleteLevelInList(levelData);
-
-            string path = diskSavePath + levelData.levelName + ".txt";
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
+            LevelSaves.Remove(levelInfo);
         }
+
+        public static List<LevelInfo> GetLevelList()
+        {
+            return LevelSaves.GetInfosList();
+        }
+        public static List<string> GetLevelNamesList()
+        {
+            return LevelSaves.GetInfosNameList();
+        }
+
+        #endregion
+
+        #region Level Saving (Assets)
 
         // ### Assets (Editor Only) ###
 #if UNITY_EDITOR
@@ -202,124 +189,25 @@ namespace LevelBuilder2D
         }
 #endif
 
+        #endregion
+    }
 
-
-
-        // ### Level List ###
-
-        [System.Serializable]
-        public struct LevelData
+    [System.Serializable]
+    public class LevelInfo : SaveInfo<Level>
+    {
+        public LevelInfo() { }
+        public LevelInfo(string name, Level save, string path = "/Levels/", string extension = ".txt")
+            : base(name, save, path, extension)
         {
-            public LevelData(string name, int style)
-            {
-                levelName = name;
-                levelStyleIndex = style;
-            }
+            levelStyleIndex = save.style;
+        }
+        public override void SetUp(string name, Level save, string path = "/", string extension = ".json")
+        {
+            base.SetUp(name, save, path, extension);
 
-            public string levelName;
-            public int levelStyleIndex;
+            levelStyleIndex = save.style;
         }
 
-        [System.Serializable]
-        private class LevelList
-        {
-            public LevelList(LevelData[] _list) { list = _list; }
-
-            public LevelData[] list;
-        }
-
-        /// <summary>
-        /// Get an array of levels name
-        /// </summary>
-        /// <returns>Array of levels name OR null</returns>
-        public static LevelData[] GetLevelList()
-        {
-            if (File.Exists(listSavePath))
-            {
-                string json = File.ReadAllText(listSavePath);
-                LevelList levelList = JsonUtility.FromJson<LevelList>(json);
-
-                if (levelList.list.Length == 0) return null;
-                return levelList.list;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Sets the array of levels name
-        /// </summary>
-        /// <param name="levels">Array of levels name</param>
-        private static void SetLevelList(LevelData[] levels)
-        {
-            LevelList levelList = new(levels);
-
-            string json = JsonUtility.ToJson(levelList);
-
-            File.WriteAllText(listSavePath, json);
-        }
-
-
-        private static void DeleteLevelInList(LevelData levelToDelete)
-        {
-            LevelData[] array = GetLevelList();
-
-            if (array == null) return;
-
-            List<LevelData> list = new(array);
-            list.Remove(levelToDelete);
-
-            SetLevelList(list.ToArray());
-        }
-
-
-        // ### Extension Methods ###
-
-        public static Sprite GetSprite(this TileBase tileBase)
-        {
-            if (tileBase is Tile) return (tileBase as Tile).sprite;
-            if (tileBase is RuleTile) return (tileBase as RuleTile).m_DefaultSprite;
-            return null;
-        }
-
-        /// <summary>
-        /// Fills a rectangle on a tilemap
-        /// </summary>
-        /// <param name="self">The tilemap to be filled</param>
-        /// <param name="tile">The tile to fill the box with</param>
-        /// <param name="startPosition">The lower left corner of the box</param>
-        /// <param name="endPosition">The upper right corner of the box</param>
-        public static void BoxFill(this Tilemap self, TileBase tile, Vector3Int start, Vector3Int end)
-        {
-            //Determine directions on X and Y axis
-            var xDir = start.x < end.x ? 1 : -1;
-            var yDir = start.y < end.y ? 1 : -1;
-            //How many tiles on each axis?
-            int xCols = 1 + Mathf.Abs(start.x - end.x);
-            int yCols = 1 + Mathf.Abs(start.y - end.y);
-            //Start painting
-            for (var x = 0; x < xCols; x++)
-            {
-                for (var y = 0; y < yCols; y++)
-                {
-                    var tilePos = start + new Vector3Int(x * xDir, y * yDir, 0);
-                    self.SetTile(tilePos, tile);
-                }
-            }
-        }
-
-
-        public static TileBase GetTile(this Tilemap tilemap, int x, int y)
-        {
-            return tilemap.GetTile(new Vector3Int(x, y, 0));
-        }
-        public static TileBase GetTile(this Tilemap tilemap, Vector2Int pos)
-        {
-            return tilemap.GetTile(new Vector3Int(pos.x, pos.y, 0));
-        }
-        public static void SetTile(this Tilemap tilemap, Vector2Int pos, TileBase tile)
-        {
-            tilemap.SetTile(new Vector3Int(pos.x, pos.y, 0), tile);
-        }
+        public int levelStyleIndex;
     }
 }

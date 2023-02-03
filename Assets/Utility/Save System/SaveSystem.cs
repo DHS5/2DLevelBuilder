@@ -94,6 +94,28 @@ namespace Dhs5.Utility.SaveSystem
         }
         #endregion
 
+        #region Text
+        public static void SaveText(string text, string filename, string extension, string path = "/")
+        {
+            string directoryPath = Application.persistentDataPath + path;
+            SetUpDirectory(directoryPath);
+            string completePath = directoryPath + filename + extension;
+            File.WriteAllText(completePath, text);
+        }
+
+        public static bool TryLoadText(out string textToLoad, string filename, string extension, string path = "/")
+        {
+            textToLoad = "";
+            string completePath = Application.persistentDataPath + path + filename + extension;
+            bool exists = File.Exists(completePath);
+            if (exists)
+            {
+                textToLoad = File.ReadAllText(completePath);
+            }
+            return exists;
+        }
+        #endregion
+
         #region Private Useful Functions
         private static void SetUpDirectory(string directoryPath)
         {
@@ -111,19 +133,28 @@ namespace Dhs5.Utility.SaveSystem
         }
         #endregion
 
+        #region Public Useful Functions
+        public static void DeleteFile(string filename, string extension, string path = "/", bool overridePath = false)
+        {
+            string completePath = (overridePath ? "" : Application.persistentDataPath) + path + filename + extension;
+            DeleteFile(completePath);
+        }
+        #endregion
+
         // Save PNG and other type of files (simple info with playerPrefs etc...)
     }
 
     #region Save Classes
 
     [Serializable]
-    public class SavesRepertory<T> where T : SaveClass
+    public class SavesRepertory<T, U> where T : SaveClass, new() where U : SaveInfo<T>, new()
     {
         #region Constructor
-        public SavesRepertory(string name = "SavesRepertory", string path = "/Saves/")
+        public SavesRepertory(string name = "SavesRepertory", string path = "/Saves/", string extension = ".json")
         {
             repertoryName = name;
             repertoryPath = path;
+            savesExtension = extension;
 
             Load();
         }
@@ -132,20 +163,21 @@ namespace Dhs5.Utility.SaveSystem
         #region Serialized properties
         [SerializeField] private string repertoryName;
         [SerializeField] private string repertoryPath;
+        [SerializeField] private string savesExtension;
 
         [SerializeField] private string lastSaveInfoName;
 
-        [SerializeField] private Dico<string, SaveInfo<T>> saveInfos = new(0);
+        [SerializeField] private Dico<string, U> saveInfos = new(0);
         #endregion
 
         #region Accessors
-        public Dico<string, SaveInfo<T>> SaveInfos { get { return saveInfos; } }
+        public Dico<string, U> SaveInfos { get { return saveInfos; } }
 
-        public SaveInfo<T> LastSaveInfo
+        public U LastSaveInfo
         {
             get
             {
-                if (TryGetLastSaveInfo(out SaveInfo<T> lastSaveInfo)) return lastSaveInfo;
+                if (TryGetLastSaveInfo(out U lastSaveInfo)) return lastSaveInfo;
                 return null;
             }
         }
@@ -160,9 +192,11 @@ namespace Dhs5.Utility.SaveSystem
         // Modify Actions
         public void Add(string saveName, T save)
         {
-            SaveInfo<T> saveInfo = new SaveInfo<T>(saveName, save, repertoryPath);
+            //U saveInfo = new U(saveName, save, repertoryPath, savesExtension);
+            U saveInfo = new();
+            saveInfo.SetUp(saveName, save, repertoryPath, savesExtension);
             Add(saveInfo);
-            SaveSystem.SaveClassToJSON(save, saveInfo.filename, repertoryPath);
+            save.Save(saveInfo.filename, repertoryPath, savesExtension);
         }
         public bool Remove(string saveName)
         {
@@ -171,12 +205,12 @@ namespace Dhs5.Utility.SaveSystem
                 Load();
                 if (!loaded) return false;
             }
-            if (saveInfos.Pop(saveName, out SaveInfo<T> saveInfo))
-                SaveSystem.DeleteJSON(saveInfo.filename, saveInfo.filepath);
+            if (saveInfos.Pop(saveName, out U saveInfo))
+                SaveSystem.DeleteFile(saveInfo.filename, savesExtension, saveInfo.filepath);
             Save();
             return true;
         }
-        public bool Remove(SaveInfo<T> saveInfo) 
+        public bool Remove(U saveInfo) 
         {
             if (!loaded)
             {
@@ -184,51 +218,61 @@ namespace Dhs5.Utility.SaveSystem
                 if (!loaded) return false;
             }
             saveInfos.Remove(saveInfo.saveName);
-            SaveSystem.DeleteJSON(saveInfo.filename, saveInfo.filepath);
+            SaveSystem.DeleteFile(saveInfo.filename, savesExtension, saveInfo.filepath);
             Save();
             return true;
         }
 
         // Get Infos Actions
-        public bool TryGetInfo(string saveName, out SaveInfo<T> saveInfo)
+        public bool TryGetInfo(string saveName, out U saveInfo)
         {
             return saveInfos.TryGet(saveName, out saveInfo);
         }
-        public SaveInfo<T> GetInfo(string saveName)
+        public U GetInfo(string saveName)
         {
-            if (TryGetInfo(saveName, out SaveInfo<T> saveInfo)) return saveInfo;
+            if (TryGetInfo(saveName, out U saveInfo)) return saveInfo;
             return null;
         }
         /// <summary>
         /// Returns the last (by date) save info
         /// </summary>
         /// <returns>Last save info <b>! Can be null !</b></returns>
-        public bool TryGetLastSaveInfo(out SaveInfo<T> lastSaveInfo)
+        public bool TryGetLastSaveInfo(out U lastSaveInfo)
         {
             if (string.IsNullOrWhiteSpace(lastSaveInfoName))
             {
-                saveInfos.Sort((x, y) => x.saveDate.CompareTo(y.saveDate));
-                lastSaveInfoName = saveInfos.Last.saveName;
+                saveInfos.Sort((x, y) => - x.saveDate.CompareTo(y.saveDate));
+                lastSaveInfoName = saveInfos.First.saveName;
             }
             return TryGetInfo(lastSaveInfoName, out lastSaveInfo);
         }
+        public List<U> GetInfosList()
+        {
+            saveInfos.Sort((x, y) => - x.saveDate.CompareTo(y.saveDate));
+            return saveInfos.ValuesList;
+        }
         public List<string> GetInfosNameList()
         {
-            List<string> names = new();
-            saveInfos.Sort((x, y) => x.saveDate.CompareTo(y.saveDate));
-            foreach (Pair<string, SaveInfo<T>> entry in saveInfos)
-            {
-                names.Add(entry.key);
-            }
+            saveInfos.Sort((x, y) => - x.saveDate.CompareTo(y.saveDate));
+            return saveInfos.KeysList;
+        }
+        public bool VerifyNewSaveName(string name, int minLength = 5)
+        {
+            name.Trim();
+            if (name.Length < minLength) return false;
 
-            return names;
+            foreach (Pair<string, U> entry in saveInfos)
+            {
+                if (entry.key == name) return false;
+            }
+            return true;
         }
 
         // Get Saves Actions
         public bool TryGetSave(string saveName, out T save)
         {
             save = null;
-            bool gotInfo = TryGetInfo(saveName, out SaveInfo<T> saveInfo);
+            bool gotInfo = TryGetInfo(saveName, out U saveInfo);
             if (gotInfo) return saveInfo.TryGetSave(out save);
             return false;
         }
@@ -252,7 +296,7 @@ namespace Dhs5.Utility.SaveSystem
         }
         public bool TryCopyFromSave(string saveName, T saveToCopyIn)
         {
-            if (TryGetInfo(saveName, out SaveInfo<T> saveInfo))
+            if (TryGetInfo(saveName, out U saveInfo))
             {
                 return saveInfo.TryCopyFromSave(saveToCopyIn);
             }
@@ -268,18 +312,18 @@ namespace Dhs5.Utility.SaveSystem
         }
         private void Load()
         {
-            if (SaveSystem.TryLoadClassFromJSON(out SavesRepertory<T> saves, repertoryName, repertoryPath))
+            if (SaveSystem.TryLoadClassFromJSON(out SavesRepertory<T,U> saves, repertoryName, repertoryPath))
             {
                 Copy(saves);
                 loaded = true;
             }
         }
-        private void Copy(SavesRepertory<T> saves)
+        private void Copy(SavesRepertory<T,U> saves)
         {
             lastSaveInfoName = saves.lastSaveInfoName;
             saveInfos = saves.SaveInfos;
         }
-        private void Add(SaveInfo<T> saveInfo)
+        private void Add(U saveInfo)
         {
             if (!loaded)
             {
@@ -297,14 +341,24 @@ namespace Dhs5.Utility.SaveSystem
     }
 
     [Serializable]
-    public class SaveInfo<T> where T : SaveClass
+    public class SaveInfo<T> where T : SaveClass, new()
     {
         #region Constructors
-        public SaveInfo(string name, T save, string path = "/")
+        public SaveInfo() { }
+        public SaveInfo(string name, T save, string path = "/", string extension = ".json")
         {
             saveName = name;
             filename = name + "_SAVE";
             filepath = path;
+            saveExtension = extension;
+            saveDate = Date.CurrentDate;
+        }
+        public virtual void SetUp(string name, T save, string path = "/", string extension = ".json")
+        {
+            saveName = name;
+            filename = name + "_SAVE";
+            filepath = path;
+            saveExtension = extension;
             saveDate = Date.CurrentDate;
         }
         #endregion
@@ -313,11 +367,15 @@ namespace Dhs5.Utility.SaveSystem
         public string saveName;
         public string filename;
         public string filepath;
+        public string saveExtension;
         public Date saveDate;
 
         #endregion
 
         #region Accessors
+        /// <summary>
+        /// Return the save if found, else null
+        /// </summary>
         public T Save
         {
             get
@@ -331,7 +389,8 @@ namespace Dhs5.Utility.SaveSystem
         #region Public Functions
         public bool TryGetSave(out T save)
         {
-            return SaveSystem.TryLoadClassFromJSON(out save, filename, filepath);
+            return (save = new()).TryLoad<T>(filename, filepath, saveExtension);
+            //return SaveSystem.TryLoadClassFromJSON(out save, filename, filepath);
         }
         public bool TryCopyFromSave(T saveToCopyIn)
         {
@@ -382,9 +441,33 @@ namespace Dhs5.Utility.SaveSystem
 
             CopyOperation(saveClass);
         }
-
         protected abstract void CopyOperation(SaveClass saveClass);
 
+
+        /// <summary>
+        /// By default, save this class as JSON at path as filename.
+        /// Override this function to save this class differently
+        /// </summary>
+        /// <param name="filename">Name of the save file</param>
+        /// <param name="filepath">Path of the save file, must start and end with "/"</param>
+        public virtual void Save(string filename, string filepath, string extension)
+        {
+            SaveSystem.SaveClassToJSON(this, filename, filepath);
+        }
+        /// <summary>
+        /// By default, load this class from JSON at path as filename.
+        /// Override this function to load this class differently
+        /// </summary>
+        /// <typeparam name="T">Type of this class</typeparam>
+        /// <param name="filename">Name of the save file</param>
+        /// <param name="filepath">Path of the save file, must start and end with "/"</param>
+        /// <returns></returns>
+        public virtual bool TryLoad<T>(string filename, string filepath, string extension) where T : SaveClass
+        {
+            bool result = SaveSystem.TryLoadClassFromJSON(out T saveClass, filename, filepath);
+            if (result) Copy(saveClass);
+            return result;
+        }
         #endregion
     }
 
@@ -609,6 +692,24 @@ namespace Dhs5.Utility.SaveSystem
         public bool Exists { get { return dictionary != null; } }
 
         // List accessors
+        public List<T> KeysList
+        {
+            get
+            {
+                List<T> list = new();
+                foreach (var item in pairs) list.Add(item.key);
+                return list;
+            }
+        }
+        public List<U> ValuesList
+        {
+            get
+            {
+                List<U> list = new();
+                foreach (var item in pairs) list.Add(item.value);
+                return list;
+            }
+        }
         public U First { get { return pairs[0].value; } }
         public U Last { get { return pairs[pairs.Count - 1].value; } }
         #endregion

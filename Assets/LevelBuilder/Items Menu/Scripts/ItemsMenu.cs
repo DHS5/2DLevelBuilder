@@ -87,7 +87,7 @@ namespace LevelBuilder2D
                 {
                     OnSaveLevel = SaveLevelOnDisk;
                     OnLoadLevel = LoadFromDisk;
-                    OnCreateLevel = CreateLevelOnDisk;
+                    OnCreateLevel = SaveLevelOnDisk;
                 }
                 else if (value == LevelBuilderEnvironment.ASSET)
                 {
@@ -359,10 +359,6 @@ namespace LevelBuilder2D
         }
 
         // Create
-        private void CreateLevelOnDisk()
-        {
-            LevelManager.CreateLevelOnDisk(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelName));
-        }
         private void CreateLevelSO()
         {
             LevelSO = LevelManager.InstanciateLevelSO(LevelManager.TilemapsToLevel(tilemapManager.Tilemaps, MenuContent, LevelName));

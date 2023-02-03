@@ -1,6 +1,6 @@
 {
     "name": "TilemapUtility",
-    "rootNamespace": "Dhs5.Utility.Tilemap",
+    "rootNamespace": "Dhs5.Utility.Tilemaps",
     "references": [
         "GUID:022a898c68ffb5b43b96b7a36e864b66",
         "GUID:613783dc1674e844b87788ea74ede0f6",

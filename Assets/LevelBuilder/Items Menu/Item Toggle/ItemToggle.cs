@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
 using System;
+using Dhs5.Utility.Tilemaps;
 
 namespace LevelBuilder2D
 {

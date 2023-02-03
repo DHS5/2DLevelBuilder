@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
+using Dhs5.Utility.SaveSystem;
 
 namespace LevelBuilder2D
 {
     [System.Serializable]
-    public class Level
+    public class Level : SaveClass
     {
         [Tooltip("Name of the level")]
         public string name;
@@ -24,6 +25,12 @@ namespace LevelBuilder2D
         public Level(string str)
         {
             Deserialize(str);
+        }
+        public Level() 
+        {
+            name = "Empty";
+            style = 0;
+            levelTilemaps = new LevelTilemap[0];
         }
 
         public string Serialize()
@@ -54,6 +61,29 @@ namespace LevelBuilder2D
             {
                 levelTilemaps[i-2] = new LevelTilemap(parts[i]);
             }
+        }
+
+        protected override void CopyOperation(SaveClass saveClass)
+        {
+            Level other = saveClass as Level;
+
+            levelTilemaps = other.levelTilemaps;
+            name = other.name;
+            style = other.style;
+        }
+
+        public override void Save(string filename, string filepath, string extension)
+        {
+            string serializedLevel = Serialize();
+
+            SaveSystem.SaveText(serializedLevel, filename, extension, filepath);
+        }
+
+        public override bool TryLoad<T>(string filename, string filepath, string extension)
+        {
+            bool result = SaveSystem.TryLoadText(out string serializedLevel, filename, extension, filepath);
+            if (result) Deserialize(serializedLevel);
+            return result;
         }
     }
 }

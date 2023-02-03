@@ -5,23 +5,13 @@ using System;
 
 namespace Dhs5.Utility.EventSystem
 {
-    public enum LevelBuilderEvent
+    public enum Dhs5Event
     {
-        CREATE_BUILDER = 0,
-        BUILDER_CREATED = 1,
-        OPEN_BUILDER = 2,
-        QUIT_BUILDER = 3,
-        SAVE_LEVEL = 4,
-        BEFORE_SAVE = 5,
-        DO_ACTION = 6,
-        UNDO_ACTION = 7,
-        OPEN_HELP = 8,
-        QUIT_HELP = 9
+        START = 0,
     }
 
-    public static class EventManager<T> where T :Enum
+    public static class EventManager<T> where T : Enum
     {
-
         private static Dictionary<T, Action> eventDico = new();
 
 

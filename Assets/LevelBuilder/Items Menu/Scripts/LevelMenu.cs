@@ -13,7 +13,7 @@ namespace LevelBuilder2D
         [SerializeField] private LevelListSO levelList;
 
         [Header("Menu Contents List")]
-        [SerializeField] private LevelStyleList styleList; // --> list
+        [SerializeField] private LevelStyleList styleList;
 
         [Header("Items Menu")]
         [SerializeField] private ItemsMenu itemsMenu;
@@ -47,8 +47,8 @@ namespace LevelBuilder2D
 
 
         // Variables
-        private LevelManager.LevelData[] diskLevelList;
-        private List<string> levelNames = new();
+        private List<LevelInfo> diskLevelList;
+        private List<string> levelNames;
 
         private LevelBuilderEnvironment environment;
 
@@ -89,7 +89,7 @@ namespace LevelBuilder2D
             {
                 if (environment == LevelBuilderEnvironment.DISK)
                 {
-                    name = diskLevelList[diskChoiceDropdown.value].levelName;
+                    name = diskLevelList[diskChoiceDropdown.value].saveName;
                     menuContent = styleList.GetByIndex(diskLevelList[diskChoiceDropdown.value].levelStyleIndex);
                 }
                 else if (environment == LevelBuilderEnvironment.ASSET)
@@ -195,10 +195,7 @@ namespace LevelBuilder2D
         private void FillDiskLevelList()
         {
             diskLevelList = LevelManager.GetLevelList();
-            levelNames.Clear();
-            if (diskLevelList == null) return;
-            foreach (LevelManager.LevelData ld in diskLevelList)
-                levelNames.Add(ld.levelName);
+            levelNames = LevelManager.GetLevelNamesList();
         }
         private void FillDiskDropdown()
         {
