@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 6239484143921565053}
   - component: {fileID: 6239484143921565050}
   - component: {fileID: 6239484143921565051}
-  - component: {fileID: 6239484143921565052}
+  - component: {fileID: 1856424221278136236}
   m_Layer: 5
   m_Name: Mask
   m_TagString: Untagged
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6239484143921565052
+--- !u!114 &1856424221278136236
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6239484143921565054}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 385b7d1277b6c4007a84c065696e0f8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 643653e0de119b2438ee8c1cc2cb99ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 6239484144353291430}
   - component: {fileID: 6239484144353291428}
   - component: {fileID: 6239484144353291429}
-  - component: {fileID: 6239484144353291427}
+  - component: {fileID: 1740099030891398282}
   m_Layer: 5
   m_Name: Tile Sprite
   m_TagString: Untagged
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6239484144353291427
+--- !u!114 &1740099030891398282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -476,7 +476,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6239484144353291431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97bc2ebab6563400c95b036136d26ea6, type: 3}
+  m_Script: {fileID: 11500000, guid: 1079b002f211ac94c8392d6f1119c4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Inverse: 0
