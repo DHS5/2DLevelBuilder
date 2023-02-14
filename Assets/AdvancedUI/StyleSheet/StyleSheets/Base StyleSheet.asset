@@ -193,20 +193,20 @@ MonoBehaviour:
         imageType: 0
         pixelsPerUnit: 1
         transition:
-          transitionType: 0
+          transitionType: 1
           spriteState:
             m_HighlightedSprite: {fileID: 0}
             m_PressedSprite: {fileID: 0}
             m_SelectedSprite: {fileID: 0}
             m_DisabledSprite: {fileID: 0}
           colorBlock:
-            m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-            m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-            m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-            m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+            m_NormalColor: {r: 0, g: 0, b: 0, a: 1}
+            m_HighlightedColor: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
+            m_PressedColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+            m_SelectedColor: {r: 0, g: 0, b: 0, a: 1}
             m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-            m_ColorMultiplier: 0
-            m_FadeDuration: 0
+            m_ColorMultiplier: 1
+            m_FadeDuration: 0.1
           animationTriggers:
             m_NormalTrigger: Normal
             m_HighlightedTrigger: Highlighted
@@ -3721,3 +3721,43 @@ MonoBehaviour:
       verticalScrollbarType: 0
       horizontalScrollbarActive: 0
       horizontalScrollbarType: 0
+  scrollListStyleSheets:
+    basic:
+      frameActive: 1
+      frameStyleSheet:
+        sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+        color: {r: 0, g: 0, b: 0, a: 1}
+        material: {fileID: 0}
+        imageType: 1
+        pixelsPerUnit: 0.25
+      frameMaskStyleSheet:
+        sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+        color: {r: 0, g: 0, b: 0, a: 1}
+        material: {fileID: 0}
+        imageType: 1
+        pixelsPerUnit: 0.25
+      backgroundStyleSheet:
+        sprite: {fileID: 0}
+        color: {r: 1, g: 0, b: 0, a: 1}
+        material: {fileID: 0}
+        imageType: 0
+        pixelsPerUnit: 1
+      horizontalMaskStyleSheet:
+        sprite: {fileID: -900609692, guid: 9935326adb7178b4b96bed62e069264c, type: 3}
+        color: {r: 0.5647059, g: 0.32941177, b: 0.32941177, a: 1}
+        material: {fileID: 0}
+        imageType: 1
+        pixelsPerUnit: 0.5
+      verticalMaskStyleSheet:
+        sprite: {fileID: 738066691, guid: c414ae9d778611e44ab3da07ab6bc149, type: 3}
+        color: {r: 0.5647059, g: 0.32941177, b: 0.32941177, a: 1}
+        material: {fileID: 0}
+        imageType: 1
+        pixelsPerUnit: 0.5
+      textStyleSheet:
+        font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+        color: {r: 0, g: 0, b: 0, a: 1}
+        fontStyle: 0
+        alignment: 514
+      leftButtonType: 2
+      rightButtonType: 2

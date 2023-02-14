@@ -131,6 +131,18 @@ namespace Dhs5.AdvancedUI
 
         #endregion
 
+        #region ScrollList
+
+        // ### ScrollLists ###
+
+        [MenuItem("GameObject/UI/AdvancedUI/ScrollLists/ScrollList")]
+        public static void CreateSimpleScrollList()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/ScrollList.prefab");
+        }
+
+        #endregion
+
         #region Popup
 
         // ### Popup ###
@@ -139,6 +151,18 @@ namespace Dhs5.AdvancedUI
         public static void CreateSimplePopup()
         {
             CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/PopUp.prefab");
+        }
+
+        #endregion
+        
+        #region Mask
+
+        // ### Mask ###
+
+        [MenuItem("GameObject/UI/AdvancedUI/Masks/Mask")]
+        public static void CreateSimpleMask()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/UIMask.prefab");
         }
 
         #endregion

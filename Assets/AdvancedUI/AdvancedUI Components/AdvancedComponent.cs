@@ -18,11 +18,11 @@ namespace Dhs5.AdvancedUI
             SetUpConfig();
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             LinkEvents();
         }
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             UnlinkEvents();
         }

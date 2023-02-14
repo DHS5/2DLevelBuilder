@@ -38,6 +38,9 @@ namespace Dhs5.AdvancedUI
         [Space, Space]
         [Header("ScrollView")]
         public ScrollViewStyleSheetList scrollViewStyleSheets;
+        [Space, Space]
+        [Header("ScrollList")]
+        public ScrollListStyleSheetList scrollListStyleSheets;
     }
 
     #region Composite Style Sheets
@@ -62,13 +65,23 @@ namespace Dhs5.AdvancedUI
     public class ImageStyleSheet
     {
         public Sprite baseSprite;
-        public Color baseColor;
+        public Color baseColor = Color.white;
         public Material baseMaterial;
         [Space]
         public Image.Type imageType;
         [Range(0, 10)] public float pixelsPerUnit = 1;
         [Space]
         public TransitionStyleSheet transition;
+    }
+    [System.Serializable]
+    public class StaticImageStyleSheet
+    {
+        public Sprite sprite;
+        public Color color = Color.white;
+        public Material material;
+        [Space]
+        public Image.Type imageType;
+        [Range(0, 10)] public float pixelsPerUnit = 1;
     }
 
     [System.Serializable]
@@ -79,6 +92,14 @@ namespace Dhs5.AdvancedUI
         public TextAlignmentOptions alignment;
         [Space]
         public ColorBlock transition;
+    }
+    [System.Serializable]
+    public class StaticTextStyleSheet
+    {
+        public TMP_FontAsset font;
+        public Color color = Color.black;
+        public FontStyles fontStyle;
+        public TextAlignmentOptions alignment;
     }
 
     [System.Serializable]

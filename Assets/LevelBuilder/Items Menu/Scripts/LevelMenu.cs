@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Dhs5.Utility.EventSystem;
+using Dhs5.AdvancedUI;
 
 namespace LevelBuilder2D
 {
@@ -32,7 +33,7 @@ namespace LevelBuilder2D
         [SerializeField] private Button diskCreateButton;
         [SerializeField] private TMP_Dropdown diskChoiceDropdown;
         [SerializeField] private TMP_InputField diskNewLevelInput;
-        [SerializeField] private StyleChoiceComponent diskStyleChoiceComponent;
+        [SerializeField] private ScrollListComponent diskStyleChoiceComponent;
         [Space]
         // Asset
         [SerializeField] private GameObject assetWindow;
@@ -43,7 +44,7 @@ namespace LevelBuilder2D
         [SerializeField] private Button assetCreateButton;
         [SerializeField] private TMP_Dropdown assetChoiceDropdown;
         [SerializeField] private TMP_InputField assetNewLevelInput;
-        [SerializeField] private StyleChoiceComponent assetStyleChoiceComponent;
+        [SerializeField] private ScrollListComponent assetStyleChoiceComponent;
 
 
         // Variables
@@ -82,8 +83,8 @@ namespace LevelBuilder2D
             if (startAction == StartAction.CREATE)
             {
                 name = environment == LevelBuilderEnvironment.DISK ? diskNewLevelInput.text : assetNewLevelInput.text;
-                menuContent = environment == LevelBuilderEnvironment.DISK ? 
-                    diskStyleChoiceComponent.CurrentStyle : assetStyleChoiceComponent.CurrentStyle;
+                menuContent = styleList.menuContents[environment == LevelBuilderEnvironment.DISK ?
+                    diskStyleChoiceComponent.CurrentSelectionIndex : assetStyleChoiceComponent.CurrentSelectionIndex];
             }
             else if (startAction == StartAction.LOAD)
             {
@@ -96,7 +97,7 @@ namespace LevelBuilder2D
                 {
                     levelSO = levelList.levels[assetChoiceDropdown.value];
                     name = levelSO.level.name;
-                    menuContent = assetStyleChoiceComponent.CurrentStyle;
+                    menuContent = styleList.menuContents[assetStyleChoiceComponent.CurrentSelectionIndex];
                 }
             }
             itemsMenu.GetStartInfos(menuContent, startAction, environment, name, levelSO);
@@ -168,11 +169,13 @@ namespace LevelBuilder2D
             FillAssetDropdown();
             AddAssetListeners();
             ActuAssetButton(assetNewLevelInput.text);
+            CreateAssetStyleChoiceList();
 #else
             OnlyDiskEnvironment();
 #endif
             AddDiskListeners();
 
+            CreateDiskStyleChoiceList();
             FillDiskDropdown();
             ActuDiskButton(diskNewLevelInput.text);
         }
@@ -190,6 +193,14 @@ namespace LevelBuilder2D
             diskBackButton.gameObject.SetActive(false);
 
             diskWindow.SetActive(true);
+        }
+        private void CreateAssetStyleChoiceList()
+        {
+            assetStyleChoiceComponent.CreateList(styleList.menuContents);
+        }
+        private void CreateDiskStyleChoiceList()
+        {
+            diskStyleChoiceComponent.CreateList(styleList.menuContents);
         }
 
         private void FillDiskLevelList()

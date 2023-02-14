@@ -16,5 +16,19 @@ namespace Dhs5.AdvancedUI
 
             onPointerDown?.Invoke();
         }
+
+        public override void OnBeginDrag(PointerEventData eventData)
+        {
+            base.OnBeginDrag(eventData);
+
+            Debug.Log(eventData.position);
+        }
+
+        public override void OnEndDrag(PointerEventData eventData)
+        {
+            base.OnEndDrag(eventData);
+
+            Debug.Log(eventData.position);
+        }
     }
 }
