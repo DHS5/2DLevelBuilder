@@ -16,10 +16,10 @@ namespace Dhs5.AdvancedUI
         public bool leftTextActive;
         [ShowIf(nameof(leftTextActive))]
         [AllowNesting]
-        public TextStyleSheet leftTextStyleSheet;
+        public TextType leftTextType;
         public bool rightTextActive;
         [ShowIf(nameof(rightTextActive))]
         [AllowNesting]
-        public TextStyleSheet rightTextStyleSheet;
+        public TextType rightTextType;
     }
 }

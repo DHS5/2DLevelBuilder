@@ -47,8 +47,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private ScrollViewStyleSheet customStyleSheet;
 
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private ScrollViewStyleSheet CurrentStyleSheet
         { get { return Type == AdvancedScrollViewType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.scrollViewStyleSheets.GetStyleSheet(Type) : null; } }

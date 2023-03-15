@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7fdf5a09efda249bb99632320b31c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  styleSheetContainer: {fileID: 0}
   buttonType: 6
   buttonContent:
     backgroundSprite: {fileID: 0}

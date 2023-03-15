@@ -45,9 +45,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private SwitchToggleStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private SwitchToggleStyleSheet CurrentStyleSheet { get { return switchType == SwitchToggleType.CUSTOM ? customStyleSheet : 
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.switchToggleStyleSheets.GetStyleSheet(switchType) : null; } }
 
@@ -68,8 +65,8 @@ namespace Dhs5.AdvancedUI
             slider.GetGraphics(background, CurrentStyleSheet.backgroundStyleSheet,
                 foreground, CurrentStyleSheet.foregroundStyleSheet,
                 handle, CurrentStyleSheet.handleStyleSheet,
-                leftText, CurrentStyleSheet.leftTextStyleSheet,
-                rightText, CurrentStyleSheet.rightTextStyleSheet);
+                leftText, GetTextStyleSheet(CurrentStyleSheet.leftTextType),
+                rightText, GetTextStyleSheet(CurrentStyleSheet.rightTextType));
 
             base.Awake();
         }
@@ -140,14 +137,14 @@ namespace Dhs5.AdvancedUI
             if (leftText)
             {
                 leftText.enabled = CurrentStyleSheet.leftTextActive;
-                leftText.SetUpText(CurrentStyleSheet.leftTextStyleSheet);
+                leftText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.leftTextType));
                 leftText.text = Content.leftText;
             }
             // Right Text
             if (rightText)
             {
                 rightText.enabled = CurrentStyleSheet.rightTextActive;
-                rightText.SetUpText(CurrentStyleSheet.rightTextStyleSheet);
+                rightText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.rightTextType));
                 rightText.text = Content.rightText;
             }
         }

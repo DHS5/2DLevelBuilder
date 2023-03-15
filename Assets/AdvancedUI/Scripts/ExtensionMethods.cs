@@ -20,6 +20,8 @@ namespace Dhs5.AdvancedUI
 
         public static void TransitionImage(this Image image, int state, bool instant, ImageStyleSheet styleSheet)
         {
+            if (styleSheet.isStatic) return;
+
             if (styleSheet.transition.transitionType == Selectable.Transition.SpriteSwap)
             {
                 var targetSprite =
@@ -47,16 +49,31 @@ namespace Dhs5.AdvancedUI
 
         public static void TransitionText(this TextMeshProUGUI text, int state, bool instant, TextStyleSheet styleSheet)
         {
-            // CrossFadeColor : current color * target color --> black * ... = black / white * ... = ...
-            text.color = Color.white;
+            if (styleSheet.isStatic) return;
 
-            var targetColor =
-            state == (int)SelectionState.Disabled ? styleSheet.transition.disabledColor :
-            state == (int)SelectionState.Highlighted ? styleSheet.transition.highlightedColor :
-            state == (int)SelectionState.Pressed ? styleSheet.transition.pressedColor :
-            state == (int)SelectionState.Selected ? styleSheet.transition.selectedColor : styleSheet.transition.normalColor;
+            if (!styleSheet.isGradient)
+            {
+                // CrossFadeColor : current color * target color --> black * ... = black / white * ... = ...
+                text.color = Color.white;
 
-            text.CrossFadeColor(targetColor, instant ? 0 : styleSheet.transition.fadeDuration, true, true);
+                var targetColor =
+                state == (int)SelectionState.Disabled ? styleSheet.colorTransition.disabledColor :
+                state == (int)SelectionState.Highlighted ? styleSheet.colorTransition.highlightedColor :
+                state == (int)SelectionState.Pressed ? styleSheet.colorTransition.pressedColor :
+                state == (int)SelectionState.Selected ? styleSheet.colorTransition.selectedColor : styleSheet.colorTransition.normalColor;
+
+                text.CrossFadeColor(targetColor, instant ? 0 : styleSheet.colorTransition.fadeDuration, true, true);
+                return;
+            }
+
+            var targetGradient =
+            state == (int)SelectionState.Disabled ? styleSheet.gradientTransition.disabledGradient :
+            state == (int)SelectionState.Highlighted ? styleSheet.gradientTransition.highlightedGradient :
+            state == (int)SelectionState.Pressed ? styleSheet.gradientTransition.pressedGradient :
+            state == (int)SelectionState.Selected ? styleSheet.gradientTransition.selectedGradient : 
+            styleSheet.gradientTransition.normalGradient;
+
+            text.colorGradient = targetGradient;
         }
 
         public static void TransitionGraphic(this Graphic graphic, int state, bool instant, GraphicStyleSheet styleSheet)
@@ -76,30 +93,31 @@ namespace Dhs5.AdvancedUI
             image.type = styleSheet.imageType;
             image.pixelsPerUnitMultiplier = styleSheet.pixelsPerUnit;
         }
-        public static void SetUpImage(this Image image, StaticImageStyleSheet styleSheet)
+        public static void SetUpImage(this Image image, ImageStyleSheet styleSheet, Sprite overrideSprite)
         {
             if (image == null) throw new NullReferenceException();
 
-            image.sprite = styleSheet.sprite;
-            image.color = styleSheet.color;
-            image.material = styleSheet.material;
+            image.sprite = overrideSprite;
+            image.color = styleSheet.baseColor;
+            image.material = styleSheet.baseMaterial;
             image.type = styleSheet.imageType;
             image.pixelsPerUnitMultiplier = styleSheet.pixelsPerUnit;
         }
 
         public static void SetUpText(this TextMeshProUGUI text, TextStyleSheet styleSheet)
         {
-            text.color = styleSheet.transition.normalColor;
+            text.color = styleSheet.isGradient ? Color.white :
+                styleSheet.isStatic ? styleSheet.color : styleSheet.colorTransition.normalColor;
+            text.enableVertexGradient = styleSheet.isGradient;
+            if (styleSheet.isGradient)
+            {
+                text.colorGradient = styleSheet.isStatic ?
+                    styleSheet.colorGradient : styleSheet.gradientTransition.normalGradient;
+            }
+
             text.font = styleSheet.font;
             text.fontStyle = styleSheet.fontStyle;
-            text.alignment = styleSheet.alignment;
-        }
-        public static void SetUpText(this TextMeshProUGUI text, StaticTextStyleSheet styleSheet)
-        {
-            text.color = styleSheet.color;
-            text.font = styleSheet.font;
-            text.fontStyle = styleSheet.fontStyle;
-            text.alignment = styleSheet.alignment;
+            if (styleSheet.overrideAlignment) text.alignment = styleSheet.alignment;
         }
     }
 }

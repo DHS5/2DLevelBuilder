@@ -56,9 +56,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private DropdownStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private DropdownStyleSheet CurrentStyleSheet { get { return dropdownType == AdvancedDropdownType.CUSTOM ? customStyleSheet : 
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.dropdownStyleSheets.GetStyleSheet(dropdownType) : null; } }
 
@@ -81,9 +78,9 @@ namespace Dhs5.AdvancedUI
         protected override void Awake()
         {
             dropdown.GetGraphics(dropdownBackground, CurrentStyleSheet.backgroundStyleSheet,
-                titleText, CurrentStyleSheet.titleStyleSheet,
+                titleText, GetTextStyleSheet(CurrentStyleSheet.titleType),
                 arrowImage, CurrentStyleSheet.arrowStyleSheet,
-                dropdownText, CurrentStyleSheet.textStyleSheet);
+                dropdownText, GetTextStyleSheet(CurrentStyleSheet.textType));
 
             base.Awake();
         }
@@ -137,7 +134,7 @@ namespace Dhs5.AdvancedUI
             if (titleText)
             {
                 titleText.enabled = CurrentStyleSheet.titleActive;
-                titleText.SetUpText(CurrentStyleSheet.titleStyleSheet);
+                titleText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.titleType));
                 titleText.text = Content.dropdownTitle;
                 titleText.rectTransform.SetSizeWithCurrentAnchors
                     (RectTransform.Axis.Vertical, (gameObject.transform as RectTransform).rect.height);
@@ -153,7 +150,7 @@ namespace Dhs5.AdvancedUI
             // Title
             if (dropdownText)
             {
-                dropdownText.SetUpText(CurrentStyleSheet.textStyleSheet);
+                dropdownText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
 
             // ScrollView

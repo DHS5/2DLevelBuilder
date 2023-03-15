@@ -60,9 +60,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private ButtonStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private ButtonStyleSheet CurrentStyleSheet { get { return buttonType == AdvancedButtonType.CUSTOM ? customStyleSheet : 
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.buttonStyleSheets.GetStyleSheet(buttonType) : null; } }
 
@@ -76,7 +73,7 @@ namespace Dhs5.AdvancedUI
         {
             button.GetGraphics(buttonBackground, CurrentStyleSheet.backgroundStyleSheet,
                 buttonIcon, CurrentStyleSheet.iconStyleSheet,
-                buttonText, CurrentStyleSheet.textStyleSheet);
+                buttonText, GetTextStyleSheet(CurrentStyleSheet.textType));
 
             base.Awake();
         }
@@ -161,10 +158,7 @@ namespace Dhs5.AdvancedUI
             {
                 buttonText.enabled = CurrentStyleSheet.textActive;
                 buttonText.text = Content.text;
-                buttonText.color = CurrentStyleSheet.textStyleSheet.transition.normalColor;
-                buttonText.font = CurrentStyleSheet.textStyleSheet.font;
-                buttonText.fontStyle = CurrentStyleSheet.textStyleSheet.fontStyle;
-                buttonText.alignment = CurrentStyleSheet.textStyleSheet.alignment;
+                buttonText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
         }
         #endregion

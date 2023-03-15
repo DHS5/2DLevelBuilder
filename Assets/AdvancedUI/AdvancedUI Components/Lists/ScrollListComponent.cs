@@ -68,9 +68,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private ScrollListStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private ScrollListStyleSheet CurrentStyleSheet
         { get { return scrollListType == ScrollListType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.scrollListStyleSheets.GetStyleSheet(scrollListType) : null; } }
@@ -239,7 +236,7 @@ namespace Dhs5.AdvancedUI
         {
             if (scrollList == null) return;
 
-            if (state)
+            if (state && isActiveAndEnabled)
                 scrollList.Enable();
             else
                 scrollList.Disable();
@@ -399,7 +396,7 @@ namespace Dhs5.AdvancedUI
 
                 if (CurrentStyleSheet == null) return;
 
-                displayText.SetUpText(CurrentStyleSheet.textStyleSheet);
+                displayText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
         }
         private void SetButtons()

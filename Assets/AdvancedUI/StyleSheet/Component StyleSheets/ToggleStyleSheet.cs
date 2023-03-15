@@ -32,6 +32,6 @@ namespace Dhs5.AdvancedUI
         public bool textActive = true;
         [ShowIf(nameof(textActive))]
         [AllowNesting]
-        public TextStyleSheet textStyleSheet;
+        public TextType textType;
     }
 }

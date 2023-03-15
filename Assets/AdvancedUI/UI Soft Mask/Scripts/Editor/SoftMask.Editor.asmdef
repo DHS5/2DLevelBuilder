@@ -1,0 +1,18 @@
+{
+    "name": "SoftMask.Editor",
+    "rootNamespace": "Dhs5.AdvancedUI",
+    "references": [
+        "GUID:7ccca83e3419dce41a25a825b8ed0f35"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

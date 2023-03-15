@@ -15,6 +15,6 @@ namespace Dhs5.AdvancedUI
         [Space, Space]
         public ImageStyleSheet checkmarkStyleSheet;
         [Space, Space]
-        public TextStyleSheet textStyleSheet;
+        public TextType textType;
     }
 }

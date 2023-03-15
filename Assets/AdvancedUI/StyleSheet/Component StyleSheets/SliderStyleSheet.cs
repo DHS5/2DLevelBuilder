@@ -26,7 +26,7 @@ namespace Dhs5.AdvancedUI
         public bool textActive = false;
         [ShowIf(nameof(textActive))]
         [AllowNesting]
-        public TextStyleSheet textStyleSheet;
+        public TextType textType;
         [Space, Space]
         public bool isGradient = false;
         [ShowIf(nameof(isGradient))]

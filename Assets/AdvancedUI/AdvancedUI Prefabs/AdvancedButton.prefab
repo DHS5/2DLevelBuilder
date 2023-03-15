@@ -258,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -384,6 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534ceb27b445396439a8753f735f822a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
   buttonType: -1
   buttonContent:
     backgroundSprite: {fileID: 0}
@@ -413,6 +414,7 @@ MonoBehaviour:
       baseMaterial: {fileID: 0}
       imageType: 1
       pixelsPerUnit: 1
+      isStatic: 1
       transition:
         transitionType: 1
         spriteState:
@@ -428,6 +430,12 @@ MonoBehaviour:
           m_DisabledColor: {r: 0, g: 0, b: 0, a: 0.5882353}
           m_ColorMultiplier: 1
           m_FadeDuration: 0.1
+        animationTriggers:
+          m_NormalTrigger: Normal
+          m_HighlightedTrigger: Highlighted
+          m_PressedTrigger: Pressed
+          m_SelectedTrigger: Selected
+          m_DisabledTrigger: Disabled
     iconActive: 0
     iconScale: 1
     iconStyleSheet:
@@ -436,6 +444,7 @@ MonoBehaviour:
       baseMaterial: {fileID: 0}
       imageType: 0
       pixelsPerUnit: 1
+      isStatic: 1
       transition:
         transitionType: 0
         spriteState:
@@ -451,20 +460,14 @@ MonoBehaviour:
           m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
           m_ColorMultiplier: 0
           m_FadeDuration: 0
+        animationTriggers:
+          m_NormalTrigger: Normal
+          m_HighlightedTrigger: Highlighted
+          m_PressedTrigger: Pressed
+          m_SelectedTrigger: Selected
+          m_DisabledTrigger: Disabled
     textActive: 0
-    textStyleSheet:
-      font: {fileID: 0}
-      fontStyle: 0
-      alignment: 0
-      transition:
-        m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-        m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-        m_ColorMultiplier: 0
-        m_FadeDuration: 0
-  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    textType: 0
   button: {fileID: 4879705138327573223}
   buttonBackground: {fileID: 335038289486768724}
   buttonIcon: {fileID: 335038289721429766}

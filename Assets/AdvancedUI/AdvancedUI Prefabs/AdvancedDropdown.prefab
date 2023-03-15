@@ -76,7 +76,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -539,6 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95433dcd59d887647ab91033ee87a6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
   dropdownType: 0
   dropdownContent:
     dropdownTitle: Advanced Dropdown
@@ -563,6 +564,7 @@ MonoBehaviour:
       baseMaterial: {fileID: 0}
       imageType: 0
       pixelsPerUnit: 1
+      isStatic: 1
       transition:
         transitionType: 0
         spriteState:
@@ -585,18 +587,7 @@ MonoBehaviour:
           m_SelectedTrigger: Selected
           m_DisabledTrigger: Disabled
     titleActive: 1
-    titleStyleSheet:
-      font: {fileID: 0}
-      fontStyle: 0
-      alignment: 0
-      transition:
-        m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-        m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-        m_ColorMultiplier: 0
-        m_FadeDuration: 0
+    titleType: 0
     arrowActive: 1
     arrowStyleSheet:
       baseSprite: {fileID: 0}
@@ -604,6 +595,7 @@ MonoBehaviour:
       baseMaterial: {fileID: 0}
       imageType: 0
       pixelsPerUnit: 1
+      isStatic: 1
       transition:
         transitionType: 0
         spriteState:
@@ -625,21 +617,9 @@ MonoBehaviour:
           m_PressedTrigger: Pressed
           m_SelectedTrigger: Selected
           m_DisabledTrigger: Disabled
-    textStyleSheet:
-      font: {fileID: 0}
-      fontStyle: 0
-      alignment: 0
-      transition:
-        m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-        m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-        m_ColorMultiplier: 0
-        m_FadeDuration: 0
+    textType: 0
     templateScrollviewType: 0
     itemToggleType: 0
-  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
   dropdown: {fileID: 1706330461773838859}
   dropdownBackground: {fileID: 1706330461773838856}
   titleText: {fileID: 1706330461378210371}

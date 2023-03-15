@@ -17,8 +17,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private ScrollbarStyleSheet customStyleSheet;
 
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private ScrollbarStyleSheet CurrentStyleSheet
         { get { return Type == AdvancedScrollbarType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.scrollbarStyleSheets.GetStyleSheet(Type) : null; } }

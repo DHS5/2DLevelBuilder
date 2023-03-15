@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a4682734386c04ca020e941f89843a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
   scrollviewType: 0
   scrollViewContent:
     direction: 0
@@ -205,6 +206,7 @@ MonoBehaviour:
         baseMaterial: {fileID: 0}
         imageType: 0
         pixelsPerUnit: 1
+        isStatic: 1
         transition:
           transitionType: 0
           spriteState:
@@ -229,8 +231,17 @@ MonoBehaviour:
       textStyleSheet:
         font: {fileID: 0}
         fontStyle: 0
+        overrideAlignment: 0
         alignment: 0
-        transition:
+        isGradient: 0
+        isStatic: 1
+        color: {r: 0, g: 0, b: 0, a: 1}
+        colorGradient:
+          topLeft: {r: 0, g: 0, b: 0, a: 0}
+          topRight: {r: 0, g: 0, b: 0, a: 0}
+          bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+          bottomRight: {r: 0, g: 0, b: 0, a: 0}
+        colorTransition:
           m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
           m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
           m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
@@ -238,11 +249,36 @@ MonoBehaviour:
           m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
           m_ColorMultiplier: 0
           m_FadeDuration: 0
+        gradientTransition:
+          normalGradient:
+            topLeft: {r: 0, g: 0, b: 0, a: 0}
+            topRight: {r: 0, g: 0, b: 0, a: 0}
+            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+            bottomRight: {r: 0, g: 0, b: 0, a: 0}
+          highlightedGradient:
+            topLeft: {r: 0, g: 0, b: 0, a: 0}
+            topRight: {r: 0, g: 0, b: 0, a: 0}
+            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+            bottomRight: {r: 0, g: 0, b: 0, a: 0}
+          pressedGradient:
+            topLeft: {r: 0, g: 0, b: 0, a: 0}
+            topRight: {r: 0, g: 0, b: 0, a: 0}
+            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+            bottomRight: {r: 0, g: 0, b: 0, a: 0}
+          selectedGradient:
+            topLeft: {r: 0, g: 0, b: 0, a: 0}
+            topRight: {r: 0, g: 0, b: 0, a: 0}
+            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+            bottomRight: {r: 0, g: 0, b: 0, a: 0}
+          disabledGradient:
+            topLeft: {r: 0, g: 0, b: 0, a: 0}
+            topRight: {r: 0, g: 0, b: 0, a: 0}
+            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+            bottomRight: {r: 0, g: 0, b: 0, a: 0}
     verticalScrollbarActive: 1
     verticalScrollbarType: 0
     horizontalScrollbarActive: 0
     horizontalScrollbarType: 0
-  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
   scrollView: {fileID: 5097181643900173768}
   backgroundImage: {fileID: 5097181643900173367}
   viewportRect: {fileID: 5097181642027428162}

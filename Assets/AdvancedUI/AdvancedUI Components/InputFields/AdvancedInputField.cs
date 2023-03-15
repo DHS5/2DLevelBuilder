@@ -33,8 +33,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private InputfieldStyleSheet customStyleSheet;
 
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private InputfieldStyleSheet CurrentStyleSheet
         { get { return Type == AdvancedInputfieldType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.inputfieldStyleSheets.GetStyleSheet(Type) : null; } }
@@ -57,8 +55,8 @@ namespace Dhs5.AdvancedUI
         override protected void Awake()
         {
             inputField.GetGraphics(backgroundImage, CurrentStyleSheet.backgroundStyleSheet,
-                hintText, CurrentStyleSheet.hintTextStyleSheet,
-                inputText, CurrentStyleSheet.inputTextStyleSheet);
+                hintText, GetTextStyleSheet(CurrentStyleSheet.hintTextType),
+                inputText, GetTextStyleSheet(CurrentStyleSheet.inputTextType));
 
             base.Awake();
         }
@@ -97,11 +95,17 @@ namespace Dhs5.AdvancedUI
         {
             if (CurrentStyleSheet == null) return;
 
+            // Input Text
+            if (inputText)
+            {
+                inputText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.inputTextType));
+            }
+
             // Input Field
             if (inputField)
             {
                 inputField.selectionColor = CurrentStyleSheet.selectionColor;
-                inputField.caretColor = CurrentStyleSheet.inputTextStyleSheet.transition.normalColor;
+                inputField.caretColor = inputText != null ? inputText.color : Color.black;
             }
 
             // Background
@@ -116,13 +120,7 @@ namespace Dhs5.AdvancedUI
             {
                 hintText.enabled = CurrentStyleSheet.hintTextActive;
                 hintText.text = Content.hintText;
-                hintText.SetUpText(CurrentStyleSheet.hintTextStyleSheet);
-            }
-
-            // Input Text
-            if (inputText)
-            {
-                inputText.SetUpText(CurrentStyleSheet.inputTextStyleSheet);
+                hintText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.hintTextType));
             }
         }
 

@@ -16,6 +16,18 @@ namespace Dhs5.AdvancedUI
             Selection.activeGameObject = obj;
         }
 
+        #region Texts
+
+        // ### Texts ###
+
+        [MenuItem("GameObject/UI/AdvancedUI/Texts/Text", priority = 0)]
+        public static void CreateSimpleText()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/AdvancedText.prefab");
+        }
+
+        #endregion
+        
         #region Buttons
 
         // ### Buttons ###

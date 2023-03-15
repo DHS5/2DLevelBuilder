@@ -22,7 +22,7 @@ namespace Dhs5.AdvancedUI
             Selection.activeObject = SSContainer;
         }
         
-        [MenuItem("Window/Advanced UI/Current Style Sheet", priority = 1)]
+        [MenuItem("Window/Advanced UI/Current Style Sheet %&S", priority = 1)]
         private static void GetCurrentStyleSheet()
         {
             StyleSheetContainer container = SSContainer as StyleSheetContainer;

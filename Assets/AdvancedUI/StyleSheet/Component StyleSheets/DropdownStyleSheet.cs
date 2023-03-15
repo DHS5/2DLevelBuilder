@@ -16,14 +16,14 @@ namespace Dhs5.AdvancedUI
         public bool titleActive = true;
         [ShowIf(nameof(titleActive))]
         [AllowNesting]
-        public TextStyleSheet titleStyleSheet;
+        public TextType titleType;
         [Space, Space]
         public bool arrowActive = true;
         [ShowIf(nameof(arrowActive))]
         [AllowNesting]
         public ImageStyleSheet arrowStyleSheet;
         [Space, Space]
-        public TextStyleSheet textStyleSheet;
+        public TextType textType;
         [Space, Space]
         public AdvancedScrollViewType templateScrollviewType;
         [Space, Space]

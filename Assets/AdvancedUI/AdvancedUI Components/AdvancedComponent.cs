@@ -34,5 +34,14 @@ namespace Dhs5.AdvancedUI
 
 
         public abstract bool Interactable { get; set; }
+
+
+        [Header("Style Sheet Container")]
+        [SerializeField] protected StyleSheetContainer styleSheetContainer;
+
+        protected TextStyleSheet GetTextStyleSheet(TextType type)
+        {
+            return styleSheetContainer.projectStyleSheet.textStyleSheets.GetStyleSheet(type);
+        }
     }
 }

@@ -13,6 +13,9 @@ namespace Dhs5.AdvancedUI
     [CreateAssetMenu(fileName = "StyleSheet", menuName = "AdvancedUI/StyleSheet/StyleSheet", order = 1)]
     public class StyleSheet : ScriptableObject
     {
+        [Header("Texts")]
+        public TextStyleSheetList textStyleSheets;
+        [Space, Space]
         [Header("Buttons")]
         public ButtonStyleSheetList buttonStyleSheets;
         [Space, Space]
@@ -70,18 +73,19 @@ namespace Dhs5.AdvancedUI
         [Space]
         public Image.Type imageType;
         [Range(0, 10)] public float pixelsPerUnit = 1;
-        [Space]
+        [Header("Transition")]
+        public bool isStatic = true;
         public TransitionStyleSheet transition;
     }
+
     [System.Serializable]
-    public class StaticImageStyleSheet
+    public struct GradientTransition
     {
-        public Sprite sprite;
-        public Color color = Color.white;
-        public Material material;
-        [Space]
-        public Image.Type imageType;
-        [Range(0, 10)] public float pixelsPerUnit = 1;
+        public VertexGradient normalGradient;
+        public VertexGradient highlightedGradient;
+        public VertexGradient pressedGradient;
+        public VertexGradient selectedGradient;
+        public VertexGradient disabledGradient;
     }
 
     [System.Serializable]
@@ -89,17 +93,22 @@ namespace Dhs5.AdvancedUI
     {
         public TMP_FontAsset font;
         public FontStyles fontStyle;
+        public bool overrideAlignment;
         public TextAlignmentOptions alignment;
-        [Space]
-        public ColorBlock transition;
-    }
-    [System.Serializable]
-    public class StaticTextStyleSheet
-    {
-        public TMP_FontAsset font;
+
+        [Header("Color")]
+        public bool isGradient = false; bool IsNotGradient => !isGradient;
+        public bool isStatic = true; bool IsNotStatic => !isStatic;
+
+        [ShowIf(EConditionOperator.And, nameof(IsNotGradient), nameof(isStatic))][AllowNesting] 
         public Color color = Color.black;
-        public FontStyles fontStyle;
-        public TextAlignmentOptions alignment;
+        [ShowIf(EConditionOperator.And, nameof(isGradient), nameof(isStatic))][AllowNesting] 
+        public VertexGradient colorGradient;
+
+        [ShowIf(EConditionOperator.And, nameof(IsNotGradient), nameof(IsNotStatic))][AllowNesting] 
+        public ColorBlock colorTransition;
+        [ShowIf(EConditionOperator.And, nameof(isGradient), nameof(IsNotStatic))][AllowNesting]
+        public GradientTransition gradientTransition;
     }
 
     [System.Serializable]

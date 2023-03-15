@@ -52,8 +52,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private SliderStyleSheet customStyleSheet;
 
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private SliderStyleSheet CurrentStyleSheet
         { get { return Type == AdvancedSliderType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.sliderStyleSheets.GetStyleSheet(Type) : null; } }
@@ -75,7 +73,7 @@ namespace Dhs5.AdvancedUI
             slider.GetGraphics(backgroundImage, CurrentStyleSheet.backgroundStyleSheet,
                 handle, CurrentStyleSheet.handleStyleSheet,
                 fill, CurrentStyleSheet.fillStyleSheet,
-                sliderText, CurrentStyleSheet.textStyleSheet);
+                sliderText, GetTextStyleSheet(CurrentStyleSheet.textType));
 
             base.Awake();
         }
@@ -163,7 +161,7 @@ namespace Dhs5.AdvancedUI
             {
                 sliderText.enabled = CurrentStyleSheet.textActive;
                 sliderText.text = Content.text;
-                sliderText.SetUpText(CurrentStyleSheet.textStyleSheet);
+                sliderText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
 
             SetGradient();

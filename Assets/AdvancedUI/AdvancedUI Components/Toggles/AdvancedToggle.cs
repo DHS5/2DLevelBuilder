@@ -78,9 +78,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private ToggleStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private ToggleStyleSheet CurrentStyleSheet { get { return toggleType == AdvancedToggleType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.toggleStyleSheets.GetStyleSheet(toggleType) : null; } }
 
@@ -109,7 +106,7 @@ namespace Dhs5.AdvancedUI
             toggle.GetGraphics(toggleBackground, CurrentStyleSheet.backgroundStyleSheet,
                 CurrentCheckmark, CurrentStyleSheet.checkmarkStyleSheet,
                 CurrentUncheckmark, CurrentStyleSheet.uncheckmarkStyleSheet,
-                toggleText, CurrentStyleSheet.textStyleSheet);
+                toggleText, GetTextStyleSheet(CurrentStyleSheet.textType));
 
             base.Awake();
         }
@@ -178,11 +175,9 @@ namespace Dhs5.AdvancedUI
             if (toggleBackground != null)
             {
                 toggleBackground.enabled = CurrentStyleSheet.backgroundActive;
-                toggleBackground.sprite = Content.toggleBackground != null ? Content.toggleBackground : CurrentStyleSheet.backgroundStyleSheet.baseSprite;
-                toggleBackground.color = CurrentStyleSheet.backgroundStyleSheet.baseColor;
-                toggleBackground.material = CurrentStyleSheet.backgroundStyleSheet.baseMaterial;
-                toggleBackground.type = CurrentStyleSheet.backgroundStyleSheet.imageType;
-                toggleBackground.pixelsPerUnitMultiplier = CurrentStyleSheet.backgroundStyleSheet.pixelsPerUnit;
+                toggleBackground.SetUpImage(CurrentStyleSheet.backgroundStyleSheet);
+                toggleBackground.sprite = Content.toggleBackground != null ? 
+                    Content.toggleBackground : CurrentStyleSheet.backgroundStyleSheet.baseSprite;
             }
 
             // Checkmark Icon
@@ -191,21 +186,16 @@ namespace Dhs5.AdvancedUI
                 if (Content.checkmarkIcon == null) toggleContent.CheckmarkScale = CurrentStyleSheet.checkmarkScale;
                 checkmarkImage.enabled = CurrentStyleSheet.checkmarkActive && CurrentStyleSheet.checkmarkStyleSheet.isImage;
                 checkmarkImage.transform.localScale = new Vector2(Content.CheckmarkScale, Content.CheckmarkScale);
-                checkmarkImage.sprite = Content.checkmarkIcon != null ? Content.checkmarkIcon : CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.baseSprite;
-                checkmarkImage.color = CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.baseColor;
-                checkmarkImage.material = CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.baseMaterial;
-                checkmarkImage.type = CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.imageType;
-                checkmarkImage.pixelsPerUnitMultiplier = CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.pixelsPerUnit;
+                checkmarkImage.SetUpImage(CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet);
+                checkmarkImage.sprite = Content.checkmarkIcon != null ? 
+                    Content.checkmarkIcon : CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.baseSprite;
             }
             // Checkmark Text
             if (checkmarkText != null)
             {
                 checkmarkText.enabled = CurrentStyleSheet.checkmarkActive && !CurrentStyleSheet.checkmarkStyleSheet.isImage;
                 checkmarkText.text = Content.CheckmarkText;
-                checkmarkText.color = CurrentStyleSheet.checkmarkStyleSheet.textStyleSheet.transition.normalColor;
-                checkmarkText.font = CurrentStyleSheet.checkmarkStyleSheet.textStyleSheet.font;
-                checkmarkText.fontStyle = CurrentStyleSheet.checkmarkStyleSheet.textStyleSheet.fontStyle;
-                checkmarkText.alignment = CurrentStyleSheet.checkmarkStyleSheet.textStyleSheet.alignment;
+                checkmarkText.SetUpText(CurrentStyleSheet.checkmarkStyleSheet.textStyleSheet);
             }
 
             // Uncheckmark Icon
@@ -214,21 +204,16 @@ namespace Dhs5.AdvancedUI
                 if (Content.uncheckmarkIcon == null) toggleContent.UncheckmarkScale = CurrentStyleSheet.uncheckmarkScale;
                 uncheckmarkImage.enabled = CurrentStyleSheet.uncheckmarkActive && CurrentStyleSheet.uncheckmarkStyleSheet.isImage;
                 uncheckmarkImage.transform.localScale = new Vector2(Content.UncheckmarkScale, Content.UncheckmarkScale);
-                uncheckmarkImage.sprite = Content.uncheckmarkIcon != null ? Content.uncheckmarkIcon : CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.baseSprite;
-                uncheckmarkImage.color = CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.baseColor;
-                uncheckmarkImage.material = CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.baseMaterial;
-                uncheckmarkImage.type = CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.imageType;
-                uncheckmarkImage.pixelsPerUnitMultiplier = CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.pixelsPerUnit;
+                uncheckmarkImage.SetUpImage(CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet);
+                uncheckmarkImage.sprite = Content.uncheckmarkIcon != null ? 
+                    Content.uncheckmarkIcon : CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.baseSprite;
             }
             // Uncheckmark Text
             if (uncheckmarkText != null)
             {
                 uncheckmarkText.enabled = CurrentStyleSheet.uncheckmarkActive && !CurrentStyleSheet.uncheckmarkStyleSheet.isImage;
                 uncheckmarkText.text = Content.UncheckmarkText;
-                uncheckmarkText.color = CurrentStyleSheet.uncheckmarkStyleSheet.textStyleSheet.transition.normalColor;
-                uncheckmarkText.font = CurrentStyleSheet.uncheckmarkStyleSheet.textStyleSheet.font;
-                uncheckmarkText.fontStyle = CurrentStyleSheet.uncheckmarkStyleSheet.textStyleSheet.fontStyle;
-                uncheckmarkText.alignment = CurrentStyleSheet.uncheckmarkStyleSheet.textStyleSheet.alignment;
+                uncheckmarkText.SetUpText(CurrentStyleSheet.uncheckmarkStyleSheet.textStyleSheet);
             }
 
             // Text
@@ -236,11 +221,8 @@ namespace Dhs5.AdvancedUI
             {
                 toggleText.enabled = CurrentStyleSheet.textActive;
                 toggleText.text = Content.toggleText;
-                toggleText.color = CurrentStyleSheet.textStyleSheet.transition.normalColor;
                 toggleText.fontSize = Content.FontSize;
-                toggleText.font = CurrentStyleSheet.textStyleSheet.font;
-                toggleText.fontStyle = CurrentStyleSheet.textStyleSheet.fontStyle;
-                toggleText.alignment = CurrentStyleSheet.textStyleSheet.alignment;
+                toggleText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
 
             ActuState();

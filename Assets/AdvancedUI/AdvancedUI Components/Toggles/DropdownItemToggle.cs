@@ -25,9 +25,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private DropdownItemToggleStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private DropdownItemToggleStyleSheet CurrentStyleSheet { get { return toggleType == DropdownItemToggleType.CUSTOM ? customStyleSheet :
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.dropdownItemToggleStyleSheets.GetStyleSheet(toggleType) : null; } }
 
@@ -45,7 +42,7 @@ namespace Dhs5.AdvancedUI
         {
             toggle.GetGraphics(toggleBackground, CurrentStyleSheet.backgroundStyleSheet,
                 checkmarkImage, CurrentStyleSheet.checkmarkStyleSheet,
-                toggleText, CurrentStyleSheet.textStyleSheet);
+                toggleText, GetTextStyleSheet(CurrentStyleSheet.textType));
 
             base.Awake();
         }
@@ -110,7 +107,7 @@ namespace Dhs5.AdvancedUI
             if (toggleText != null)
             {
                 toggleText.text = Text;
-                toggleText.SetUpText(CurrentStyleSheet.textStyleSheet);
+                toggleText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
 
             ActuState();

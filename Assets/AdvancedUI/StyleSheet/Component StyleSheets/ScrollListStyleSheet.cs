@@ -9,14 +9,14 @@ namespace Dhs5.AdvancedUI
     public class ScrollListStyleSheet
     {
         public bool frameActive = false;
-        [ShowIf(nameof(frameActive))][AllowNesting] public StaticImageStyleSheet frameStyleSheet;
-        public StaticImageStyleSheet frameMaskStyleSheet;
-        public StaticImageStyleSheet backgroundStyleSheet;
+        [ShowIf(nameof(frameActive))][AllowNesting] public ImageStyleSheet frameStyleSheet;
+        public ImageStyleSheet frameMaskStyleSheet;
+        public ImageStyleSheet backgroundStyleSheet;
         [Space]
-        public StaticImageStyleSheet horizontalMaskStyleSheet;
-        public StaticImageStyleSheet verticalMaskStyleSheet;
+        public ImageStyleSheet horizontalMaskStyleSheet;
+        public ImageStyleSheet verticalMaskStyleSheet;
         [Space]
-        public StaticTextStyleSheet textStyleSheet;
+        public TextType textType;
         [Space]
         public AdvancedButtonType leftButtonType;
         public AdvancedButtonType rightButtonType;

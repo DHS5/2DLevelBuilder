@@ -61,9 +61,6 @@ namespace Dhs5.AdvancedUI
         [Header("Custom Style Sheet")]
         [SerializeField] private PopupStyleSheet customStyleSheet;
 
-
-        [Header("Style Sheet Container")]
-        [SerializeField] private StyleSheetContainer styleSheetContainer;
         private PopupStyleSheet CurrentStyleSheet { get { return popupType == PopupType.CUSTOM ? customStyleSheet : 
                     styleSheetContainer ? styleSheetContainer.projectStyleSheet.popupStyleSheets.GetStyleSheet(popupType) : null; } }
 
@@ -140,9 +137,7 @@ namespace Dhs5.AdvancedUI
                 popupText.enabled = CurrentStyleSheet.textActive;
                 popupText.text = popupContent.popupText;
                 popupText.fontSize = popupContent.FontSize;
-                popupText.font = CurrentStyleSheet.textStyleSheet.font;
-                popupText.fontStyle = CurrentStyleSheet.textStyleSheet.fontStyle;
-                popupText.alignment = CurrentStyleSheet.textStyleSheet.alignment;
+                popupText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
             }
 
             // Buttons

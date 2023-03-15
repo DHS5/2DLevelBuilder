@@ -16,9 +16,9 @@ namespace Dhs5.AdvancedUI
         public bool hintTextActive = true;
         [ShowIf(nameof(hintTextActive))]
         [AllowNesting]
-        public TextStyleSheet hintTextStyleSheet;
+        public TextType hintTextType;
         [Space, Space]
-        public TextStyleSheet inputTextStyleSheet;
+        public TextType inputTextType;
         public Color selectionColor;
     }
 }
