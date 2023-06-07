@@ -9,7 +9,7 @@ namespace Dhs5.AdvancedUI
     public class TransitionPropertyDrawer : PropertyDrawer
     {
         int transitionType = 0;
-        int[] typesRectHeight = { 0, 9, 6, 7 };
+        int[] typesRectHeight = { 1, 9, 6, 7 };
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

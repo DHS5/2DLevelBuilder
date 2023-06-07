@@ -107,10 +107,16 @@ MonoBehaviour:
     contentWidth: 0
     contentHeight: 600
   customStyleSheet:
+    container: {fileID: 0}
+    uniqueID: 0
+    name: 
     backgroundActive: 1
     backgroundStyleSheet:
       isImage: 0
       imageStyleSheet:
+        container: {fileID: 0}
+        uniqueID: 0
+        name: 
         baseSprite: {fileID: 0}
         baseColor: {r: 0, g: 0, b: 0, a: 0}
         baseMaterial: {fileID: 0}
@@ -139,6 +145,9 @@ MonoBehaviour:
             m_SelectedTrigger: Selected
             m_DisabledTrigger: Disabled
       textStyleSheet:
+        container: {fileID: 0}
+        uniqueID: 0
+        name: 
         font: {fileID: 0}
         fontStyle: 0
         overrideAlignment: 0
@@ -186,9 +195,17 @@ MonoBehaviour:
             bottomLeft: {r: 0, g: 0, b: 0, a: 0}
             bottomRight: {r: 0, g: 0, b: 0, a: 0}
     verticalScrollbarActive: 1
-    verticalScrollbarType: 0
+    verticalScrollbarStylePicker:
+      container: {fileID: 0}
+      type: 0
+      styleSheetUID: 0
+      name: 
     horizontalScrollbarActive: 0
-    horizontalScrollbarType: 0
+    horizontalScrollbarStylePicker:
+      container: {fileID: 0}
+      type: 0
+      styleSheetUID: 0
+      name: 
   scrollView: {fileID: 5893727172857605626}
   backgroundImage: {fileID: 5893727172857605125}
   viewportRect: {fileID: 5893727173673417072}

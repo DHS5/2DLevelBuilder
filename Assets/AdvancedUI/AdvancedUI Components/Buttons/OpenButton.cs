@@ -56,19 +56,23 @@ namespace Dhs5.AdvancedUI
 
         private Image backgroundImage;
         private ImageStyleSheet backgroundStyleSheet;
+
         private Image iconImage;
         private ImageStyleSheet iconStyleSheet;
+        private ImageOverrideSheet iconOverrideSheet;
+
         private TextMeshProUGUI textGraphic;
         private TextStyleSheet textStyleSheet;
 
         public void GetGraphics(Image background, ImageStyleSheet _backgroundStyleSheet,
-            Image icon, ImageStyleSheet _iconStyleSheet,
+            Image icon, ImageStyleSheet _iconStyleSheet, ImageOverrideSheet _iconOverrideSheet,
             TextMeshProUGUI text, TextStyleSheet _textStyleSheet)
         {
             backgroundImage = background;
             backgroundStyleSheet = _backgroundStyleSheet;
             iconImage = icon;
             iconStyleSheet = _iconStyleSheet;
+            iconOverrideSheet = _iconOverrideSheet;
             textGraphic = text;
             textStyleSheet = _textStyleSheet;
 
@@ -78,7 +82,13 @@ namespace Dhs5.AdvancedUI
         protected override void DoStateTransition(SelectionState state, bool instant)
         {
             if (backgroundImage != null && backgroundImage.enabled) backgroundImage.TransitionImage((int)state, instant, backgroundStyleSheet);
-            if (iconImage != null && iconImage.enabled) iconImage.TransitionImage((int)state, instant, iconStyleSheet);
+            if (iconImage != null && iconImage.enabled)
+            {
+                if (iconOverrideSheet != null && iconOverrideSheet.overrideTransition)
+                    iconImage.TransitionImage((int)state, instant, iconStyleSheet, iconOverrideSheet);
+                else
+                    iconImage.TransitionImage((int)state, instant, iconStyleSheet);
+            }
             if (textGraphic != null && textGraphic.enabled) textGraphic.TransitionText((int)state, instant, textStyleSheet);
         }
 

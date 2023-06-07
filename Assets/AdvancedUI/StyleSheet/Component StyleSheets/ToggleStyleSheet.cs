@@ -6,32 +6,43 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class ToggleStyleSheet
+    public class ToggleStyleSheet : BaseStyleSheet
     {
         public bool backgroundActive = true;
-        [ShowIf(nameof(backgroundActive))]
-        [AllowNesting]
-        public ImageStyleSheet backgroundStyleSheet;
+        public StylePicker backgroundStylePicker;
         [Space, Space]
         public bool checkmarkActive = true;
-        [ShowIf(nameof(checkmarkActive))]
-        [AllowNesting]
+        public bool checkmarkIsImage = true;
         public float checkmarkScale = 1;
-        [ShowIf(nameof(checkmarkActive))]
-        [AllowNesting]
-        public GraphicStyleSheet checkmarkStyleSheet;
+        public StylePicker checkmarkImageStylePicker;
+        public StylePicker checkmarkTextStylePicker;
         [Space, Space]
         public bool uncheckmarkActive = true;
-        [ShowIf(nameof(uncheckmarkActive))]
-        [AllowNesting]
+        public bool uncheckmarkIsImage = true;
         public float uncheckmarkScale = 1;
-        [ShowIf(nameof(uncheckmarkActive))]
-        [AllowNesting]
-        public GraphicStyleSheet uncheckmarkStyleSheet;
+        public StylePicker uncheckmarkImageStylePicker;
+        public StylePicker uncheckmarkTextStylePicker;
         [Space, Space]
         public bool textActive = true;
-        [ShowIf(nameof(textActive))]
-        [AllowNesting]
-        public TextType textType;
+        public StylePicker textStylePicker;
+
+        public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet CheckmarkImageStyleSheet => checkmarkImageStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet UncheckmarkImageStyleSheet => uncheckmarkImageStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet CheckmarkTextStyleSheet => checkmarkTextStylePicker.StyleSheet as TextStyleSheet;
+        public TextStyleSheet UncheckmarkTextStyleSheet => uncheckmarkTextStylePicker.StyleSheet as TextStyleSheet;
+        public TextStyleSheet TextStyleSheet => textStylePicker.StyleSheet as TextStyleSheet;
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            checkmarkImageStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Checkmark Image");
+            uncheckmarkImageStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Uncheckmark Image");
+            checkmarkTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Checkmark Text type");
+            uncheckmarkTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Uncheckmark Text type");
+            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text type");
+        }
     }
 }

@@ -16,6 +16,16 @@ namespace Dhs5.AdvancedUI
             Selection.activeGameObject = obj;
         }
 
+        #region Images
+
+        [MenuItem("GameObject/UI/AdvancedUI/Images/Frame", priority = 0)]
+        public static void CreateSimpleImage()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/AdvancedImage.prefab");
+        }
+
+        #endregion
+        
         #region Texts
 
         // ### Texts ###

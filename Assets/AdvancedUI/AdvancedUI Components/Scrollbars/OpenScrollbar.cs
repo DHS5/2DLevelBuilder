@@ -1,12 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System;
 
 namespace Dhs5.AdvancedUI
 {
     public class OpenScrollbar : Scrollbar
     {
+        #region Events
+
+        // Events
+        public event Action OnScrollbarDown;
+        public event Action OnScrollbarUp;
+
+
+        public override void OnPointerDown(PointerEventData eventData)
+        {
+            base.OnPointerDown(eventData);
+
+            OnScrollbarDown?.Invoke();
+        }
+        public override void OnPointerUp(PointerEventData eventData)
+        {
+            base.OnPointerUp(eventData);
+
+            OnScrollbarUp?.Invoke();
+        }
+
+        #endregion
+
         #region Transitions
 
         private Image backgroundImage;

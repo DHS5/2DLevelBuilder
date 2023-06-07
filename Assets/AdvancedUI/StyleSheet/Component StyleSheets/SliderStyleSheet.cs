@@ -6,31 +6,37 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class SliderStyleSheet
+    public class SliderStyleSheet : BaseStyleSheet
     {
         public bool backgroundActive = true;
-        [ShowIf(nameof(backgroundActive))]
-        [AllowNesting]
-        public ImageStyleSheet backgroundStyleSheet;
+        public StylePicker backgroundStylePicker;
         [Space, Space]
         public bool fillActive = true;
-        [ShowIf(nameof(fillActive))]
-        [AllowNesting]
-        public ImageStyleSheet fillStyleSheet;
+        public StylePicker fillStylePicker;
         [Space, Space]
         public bool handleActive = true;
-        [ShowIf(nameof(handleActive))]
-        [AllowNesting]
-        public ImageStyleSheet handleStyleSheet;
+        public StylePicker handleStylePicker;
         [Space, Space]
         public bool textActive = false;
-        [ShowIf(nameof(textActive))]
-        [AllowNesting]
-        public TextType textType;
+        public StylePicker textStylePicker;
         [Space, Space]
         public bool isGradient = false;
-        [ShowIf(nameof(isGradient))]
-        [AllowNesting]
         public Gradient sliderGradient;
+
+        public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet FillStyleSheet => fillStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet HandleStyleSheet => handleStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet TextStyleSheet => textStylePicker.StyleSheet as TextStyleSheet;
+
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            fillStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Fill");
+            handleStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Handle");
+            textStylePicker?.SetUp(container, StyleSheetType.TEXT, "Text type");
+        }
     }
 }

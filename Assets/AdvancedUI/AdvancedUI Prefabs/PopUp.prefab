@@ -101,8 +101,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -416,7 +416,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   customStyleSheet:
+    container: {fileID: 0}
+    uniqueID: 0
+    name: 
     popupStyleSheet:
+      container: {fileID: 0}
+      uniqueID: 0
+      name: 
       baseSprite: {fileID: 0}
       baseColor: {r: 0, g: 0, b: 0, a: 0}
       baseMaterial: {fileID: 0}
@@ -635,15 +641,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.24528301
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.24528301
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.24528301
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_enableAutoSizing
@@ -844,15 +850,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.24528301
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.24528301
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.24528301
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_enableAutoSizing
@@ -1029,27 +1035,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335038289486768724, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 335038289721429766, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c1667009dd6eeab4fae0911c52e52d84, type: 3}
+      objectReference: {fileID: 21300000, guid: 8753adc7a63d58f4786a5ab2bb2c7cdb, type: 3}
     - target: {fileID: 335038289721429766, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_Color.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 335038289721429766, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 335038289721429767, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 335038289721429767, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_text
@@ -1057,11 +1063,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_fontSize
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.21698111
+      objectReference: {fileID: 0}
+    - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.21698111
+      objectReference: {fileID: 0}
+    - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.21698111
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_enableAutoSizing
@@ -1069,11 +1087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_VerticalAlignment
-      value: 0
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 335038290051015124, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_HorizontalAlignment
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 335038290554429768, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_Name
@@ -1089,7 +1107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 335038290554429770, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: buttonContent.iconScale
-      value: 0.7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 335038290554429771, guid: 1b4a5b831fb63fa43993daabe02d4614, type: 3}
       propertyPath: m_Pivot.x

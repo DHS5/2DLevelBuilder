@@ -289,8 +289,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   customStyleSheet:
+    container: {fileID: 0}
+    uniqueID: 0
+    name: 
     backgroundActive: 1
     backgroundStyleSheet:
+      container: {fileID: 0}
+      uniqueID: 0
+      name: 
       baseSprite: {fileID: 0}
       baseColor: {r: 0, g: 0, b: 0, a: 0}
       baseMaterial: {fileID: 0}
@@ -323,6 +329,9 @@ MonoBehaviour:
     checkmarkStyleSheet:
       isImage: 0
       imageStyleSheet:
+        container: {fileID: 0}
+        uniqueID: 0
+        name: 
         baseSprite: {fileID: 0}
         baseColor: {r: 0, g: 0, b: 0, a: 0}
         baseMaterial: {fileID: 0}
@@ -351,6 +360,9 @@ MonoBehaviour:
             m_SelectedTrigger: Selected
             m_DisabledTrigger: Disabled
       textStyleSheet:
+        container: {fileID: 0}
+        uniqueID: 0
+        name: 
         font: {fileID: 0}
         fontStyle: 0
         overrideAlignment: 0
@@ -402,6 +414,9 @@ MonoBehaviour:
     uncheckmarkStyleSheet:
       isImage: 0
       imageStyleSheet:
+        container: {fileID: 0}
+        uniqueID: 0
+        name: 
         baseSprite: {fileID: 0}
         baseColor: {r: 0, g: 0, b: 0, a: 0}
         baseMaterial: {fileID: 0}
@@ -430,6 +445,9 @@ MonoBehaviour:
             m_SelectedTrigger: Selected
             m_DisabledTrigger: Disabled
       textStyleSheet:
+        container: {fileID: 0}
+        uniqueID: 0
+        name: 
         font: {fileID: 0}
         fontStyle: 0
         overrideAlignment: 0
@@ -586,8 +604,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 0
-  m_VerticalAlignment: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

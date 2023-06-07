@@ -6,24 +6,29 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class ButtonStyleSheet
+    public class ButtonStyleSheet : BaseStyleSheet
     {
         public bool backgroundActive = true;
-        [ShowIf(nameof(backgroundActive))]
-        [AllowNesting]
-        public ImageStyleSheet backgroundStyleSheet;
+        public StylePicker backgroundStylePicker;
         [Space, Space]
         public bool iconActive = true;
-        [ShowIf(nameof(iconActive))]
-        [AllowNesting]
         public float iconScale = 1;
-        [ShowIf(nameof(iconActive))]
-        [AllowNesting]
-        public ImageStyleSheet iconStyleSheet;
+        public StylePicker iconStylePicker;
         [Space, Space]
         public bool textActive = false;
-        [ShowIf(nameof(textActive))]
-        [AllowNesting]
-        public TextType textType;
+        public StylePicker textStylePicker;
+
+        public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet IconStyleSheet => iconStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet TextStyleSheet => textStylePicker.StyleSheet as TextStyleSheet;
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            iconStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Icon");
+            textStylePicker?.SetUp(container, StyleSheetType.TEXT, "Text type");
+        }
     }
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Dhs5.AdvancedUI
@@ -8,18 +10,27 @@ namespace Dhs5.AdvancedUI
     public class AdvancedScrollbar : AdvancedComponent
     {
         [Header("Scrollbar Type")]
-        [SerializeField] private AdvancedScrollbarType scrollbarType;
-        public AdvancedScrollbarType Type { get { return scrollbarType; } set { scrollbarType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker scrollbarStylePicker;
+        public StylePicker Style { get => scrollbarStylePicker; set { scrollbarStylePicker.ForceSet(value); SetUpConfig(); } }
 
         public override bool Interactable { get => scrollbar.interactable; set => scrollbar.interactable = value; }
 
 
+        [Header("Events")]
+        [SerializeField] private UnityEvent<float> onValueChanged;
+        [SerializeField] private UnityEvent onButtonDown;
+        [SerializeField] private UnityEvent onButtonUp;
+
+        public event Action<float> OnValueChanged;
+        public event Action OnButtonDown { add { scrollbar.OnScrollbarDown += value; } remove { scrollbar.OnScrollbarDown -= value; } }
+        public event Action OnButtonUp { add { scrollbar.OnScrollbarUp += value; } remove { scrollbar.OnScrollbarUp -= value; } }
+
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private ScrollbarStyleSheet customStyleSheet;
 
         private ScrollbarStyleSheet CurrentStyleSheet
-        { get { return Type == AdvancedScrollbarType.CUSTOM ? customStyleSheet :
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.scrollbarStyleSheets.GetStyleSheet(Type) : null; } }
+        { get { return custom ? customStyleSheet : styleSheetContainer ? Style.StyleSheet as ScrollbarStyleSheet : null; } }
 
 
         [Header("UI Components")]
@@ -28,18 +39,35 @@ namespace Dhs5.AdvancedUI
         [SerializeField] private Image backgroundImage;
         [SerializeField] private Image handle;
 
-        protected override void Awake()
-        {
-            scrollbar.GetGraphics(backgroundImage, CurrentStyleSheet.backgroundStyleSheet,
-                handle, CurrentStyleSheet.handleStyleSheet);
-
-            base.Awake();
-        }
 
         #region Events
 
-        protected override void LinkEvents() { }
-        protected override void UnlinkEvents() { }
+        protected override void LinkEvents()
+        {
+            scrollbar.onValueChanged.AddListener(ValueChanged);
+            OnButtonDown += ButtonDown;
+            OnButtonUp += ButtonUp;
+        }
+        protected override void UnlinkEvents()
+        {
+            scrollbar.onValueChanged?.RemoveListener(ValueChanged);
+            OnButtonDown -= ButtonDown;
+            OnButtonUp -= ButtonUp;
+        }
+
+        private void ValueChanged(float value)
+        {
+            onValueChanged?.Invoke(value);
+            OnValueChanged?.Invoke(value);
+        }
+        private void ButtonDown()
+        {
+            onButtonDown?.Invoke();
+        }
+        private void ButtonUp()
+        {
+            onButtonUp?.Invoke();
+        }
 
         #endregion
 
@@ -47,20 +75,31 @@ namespace Dhs5.AdvancedUI
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            scrollbarStylePicker.SetUp(styleSheetContainer, StyleSheetType.SCROLLBAR, "Scrollbar Type");
+
             if (CurrentStyleSheet == null) return;
 
             // Background
             if (backgroundImage)
             {
                 backgroundImage.enabled = CurrentStyleSheet.backgroundActive;
-                backgroundImage.SetUpImage(CurrentStyleSheet.backgroundStyleSheet);
+                backgroundImage.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
             }
 
             // Handle
             if (handle)
             {
-                handle.SetUpImage(CurrentStyleSheet.handleStyleSheet);
+                handle.SetUpImage(CurrentStyleSheet.HandleStyleSheet);
             }
+        }
+
+        protected override void SetUpGraphics()
+        {
+            scrollbar.GetGraphics(backgroundImage, CurrentStyleSheet.BackgroundStyleSheet,
+                handle, CurrentStyleSheet.HandleStyleSheet);
         }
 
         #endregion

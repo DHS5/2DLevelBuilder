@@ -52,8 +52,8 @@ namespace Dhs5.AdvancedUI
     public class AdvancedToggle : AdvancedComponent
     {
         [Header("Toggle Type")]
-        [SerializeField] private AdvancedToggleType toggleType;
-        public AdvancedToggleType Type { get { return toggleType; } set { toggleType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker toggleStylePicker;
+        public StylePicker Style { get => toggleStylePicker; set { toggleStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("Toggle Content")]
         [SerializeField] private bool isOn = true;
@@ -76,10 +76,11 @@ namespace Dhs5.AdvancedUI
 
 
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private ToggleStyleSheet customStyleSheet;
 
-        private ToggleStyleSheet CurrentStyleSheet { get { return toggleType == AdvancedToggleType.CUSTOM ? customStyleSheet :
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.toggleStyleSheets.GetStyleSheet(toggleType) : null; } }
+        private ToggleStyleSheet CurrentStyleSheet 
+        { get { return custom ? customStyleSheet : styleSheetContainer ? Style.StyleSheet as ToggleStyleSheet : null; } }
 
 
         [Header("UI Components")]
@@ -88,28 +89,21 @@ namespace Dhs5.AdvancedUI
         [Space]
         [SerializeField] private Image checkmarkImage;
         [SerializeField] private TextMeshProUGUI checkmarkText;
+        [SerializeField] private AspectRatioFitter checkmarkRatioFitter;
         [Space]
         [SerializeField] private Image uncheckmarkImage;
         [SerializeField] private TextMeshProUGUI uncheckmarkText;
+        [SerializeField] private AspectRatioFitter uncheckmarkRatioFitter;
         [Space]
         [SerializeField] private TextMeshProUGUI toggleText;
 
 
-        private Graphic CurrentCheckmark { get { return CurrentStyleSheet.checkmarkStyleSheet.isImage ? 
-                    checkmarkImage : checkmarkText; } }
-        private Graphic CurrentUncheckmark { get { return CurrentStyleSheet.uncheckmarkStyleSheet.isImage ? 
-                    uncheckmarkImage : uncheckmarkText; } }
+        private Graphic CurrentCheckmark 
+        { get { return CurrentStyleSheet.checkmarkIsImage ? checkmarkImage : checkmarkText; } }
+        private Graphic CurrentUncheckmark 
+        { get { return CurrentStyleSheet.uncheckmarkIsImage ? uncheckmarkImage : uncheckmarkText; } }
 
 
-        protected override void Awake()
-        {
-            toggle.GetGraphics(toggleBackground, CurrentStyleSheet.backgroundStyleSheet,
-                CurrentCheckmark, CurrentStyleSheet.checkmarkStyleSheet,
-                CurrentUncheckmark, CurrentStyleSheet.uncheckmarkStyleSheet,
-                toggleText, GetTextStyleSheet(CurrentStyleSheet.textType));
-
-            base.Awake();
-        }
 
         #region Public Accessors & Methods
 
@@ -169,51 +163,56 @@ namespace Dhs5.AdvancedUI
         {
             State = isOn;
 
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            toggleStylePicker.SetUp(styleSheetContainer, StyleSheetType.TOGGLE, "Toggle type");
+
             if (CurrentStyleSheet == null) return;
 
             // Background
             if (toggleBackground != null)
             {
                 toggleBackground.enabled = CurrentStyleSheet.backgroundActive;
-                toggleBackground.SetUpImage(CurrentStyleSheet.backgroundStyleSheet);
+                toggleBackground.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
                 toggleBackground.sprite = Content.toggleBackground != null ? 
-                    Content.toggleBackground : CurrentStyleSheet.backgroundStyleSheet.baseSprite;
+                    Content.toggleBackground : CurrentStyleSheet.BackgroundStyleSheet.baseSprite;
             }
 
             // Checkmark Icon
             if (checkmarkImage != null)
             {
                 if (Content.checkmarkIcon == null) toggleContent.CheckmarkScale = CurrentStyleSheet.checkmarkScale;
-                checkmarkImage.enabled = CurrentStyleSheet.checkmarkActive && CurrentStyleSheet.checkmarkStyleSheet.isImage;
+                checkmarkImage.enabled = CurrentStyleSheet.checkmarkActive && CurrentStyleSheet.checkmarkIsImage;
                 checkmarkImage.transform.localScale = new Vector2(Content.CheckmarkScale, Content.CheckmarkScale);
-                checkmarkImage.SetUpImage(CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet);
+                checkmarkImage.SetUpImage(CurrentStyleSheet.CheckmarkImageStyleSheet);
                 checkmarkImage.sprite = Content.checkmarkIcon != null ? 
-                    Content.checkmarkIcon : CurrentStyleSheet.checkmarkStyleSheet.imageStyleSheet.baseSprite;
+                    Content.checkmarkIcon : CurrentStyleSheet.CheckmarkImageStyleSheet.baseSprite;
             }
             // Checkmark Text
             if (checkmarkText != null)
             {
-                checkmarkText.enabled = CurrentStyleSheet.checkmarkActive && !CurrentStyleSheet.checkmarkStyleSheet.isImage;
+                checkmarkText.enabled = CurrentStyleSheet.checkmarkActive && !CurrentStyleSheet.checkmarkIsImage;
                 checkmarkText.text = Content.CheckmarkText;
-                checkmarkText.SetUpText(CurrentStyleSheet.checkmarkStyleSheet.textStyleSheet);
+                checkmarkText.SetUpText(CurrentStyleSheet.CheckmarkTextStyleSheet);
             }
 
             // Uncheckmark Icon
             if (uncheckmarkImage != null)
             {
                 if (Content.uncheckmarkIcon == null) toggleContent.UncheckmarkScale = CurrentStyleSheet.uncheckmarkScale;
-                uncheckmarkImage.enabled = CurrentStyleSheet.uncheckmarkActive && CurrentStyleSheet.uncheckmarkStyleSheet.isImage;
+                uncheckmarkImage.enabled = CurrentStyleSheet.uncheckmarkActive && CurrentStyleSheet.uncheckmarkIsImage;
                 uncheckmarkImage.transform.localScale = new Vector2(Content.UncheckmarkScale, Content.UncheckmarkScale);
-                uncheckmarkImage.SetUpImage(CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet);
+                uncheckmarkImage.SetUpImage(CurrentStyleSheet.UncheckmarkImageStyleSheet);
                 uncheckmarkImage.sprite = Content.uncheckmarkIcon != null ? 
-                    Content.uncheckmarkIcon : CurrentStyleSheet.uncheckmarkStyleSheet.imageStyleSheet.baseSprite;
+                    Content.uncheckmarkIcon : CurrentStyleSheet.UncheckmarkImageStyleSheet.baseSprite;
             }
             // Uncheckmark Text
             if (uncheckmarkText != null)
             {
-                uncheckmarkText.enabled = CurrentStyleSheet.uncheckmarkActive && !CurrentStyleSheet.uncheckmarkStyleSheet.isImage;
+                uncheckmarkText.enabled = CurrentStyleSheet.uncheckmarkActive && !CurrentStyleSheet.uncheckmarkIsImage;
                 uncheckmarkText.text = Content.UncheckmarkText;
-                uncheckmarkText.SetUpText(CurrentStyleSheet.uncheckmarkStyleSheet.textStyleSheet);
+                uncheckmarkText.SetUpText(CurrentStyleSheet.UncheckmarkTextStyleSheet);
             }
 
             // Text
@@ -222,10 +221,20 @@ namespace Dhs5.AdvancedUI
                 toggleText.enabled = CurrentStyleSheet.textActive;
                 toggleText.text = Content.toggleText;
                 toggleText.fontSize = Content.FontSize;
-                toggleText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
+                toggleText.SetUpText(CurrentStyleSheet.TextStyleSheet);
             }
 
             ActuState();
+        }
+
+        protected override void SetUpGraphics()
+        {
+            toggle.GetGraphics(toggleBackground, CurrentStyleSheet.BackgroundStyleSheet,
+                CurrentStyleSheet.checkmarkIsImage ? checkmarkImage : null, CurrentStyleSheet.CheckmarkImageStyleSheet,
+                CurrentStyleSheet.checkmarkIsImage ? null : checkmarkText, CurrentStyleSheet.CheckmarkTextStyleSheet,
+                CurrentStyleSheet.uncheckmarkIsImage ? uncheckmarkImage : null, CurrentStyleSheet.UncheckmarkImageStyleSheet,
+                CurrentStyleSheet.uncheckmarkIsImage ? null : uncheckmarkText, CurrentStyleSheet.UncheckmarkTextStyleSheet,
+                toggleText, CurrentStyleSheet.TextStyleSheet);
         }
 
         #endregion

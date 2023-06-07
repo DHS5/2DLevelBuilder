@@ -5,18 +5,31 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 namespace Dhs5.AdvancedUI
 {
     public class SelectableGraphic : Selectable
     {
-        public GraphicStyleSheet GraphicStyleSheet { get; set; }
+        public bool selectable = true;
 
+        public ImageStyleSheet ImageStyleSheet { get; private set; }
+        public TextStyleSheet TextStyleSheet { get; private set; }
+
+        public void SetStyleSheet(BaseStyleSheet styleSheet)
+        {
+            ImageStyleSheet = (styleSheet is ImageStyleSheet imageSS) ? imageSS : null;
+            TextStyleSheet = (styleSheet is TextStyleSheet textSS) ? textSS : null;
+
+            DoStateTransition(SelectionState.Normal, true);
+        }
 
         protected override void DoStateTransition(SelectionState state, bool instant)
         {
-            if (GraphicStyleSheet != null)
-                targetGraphic.TransitionGraphic((int)state, instant, GraphicStyleSheet);
+            if (ImageStyleSheet != null && targetGraphic is Image image)
+                image.TransitionImage((int)state, instant, ImageStyleSheet);
+            else if (TextStyleSheet != null && targetGraphic is TextMeshProUGUI text)
+                text.TransitionText((int)state, instant, TextStyleSheet);
             else
                 base.DoStateTransition(state, instant);
         }
@@ -46,5 +59,13 @@ namespace Dhs5.AdvancedUI
         }
 
         #endregion
+
+        public override void OnSelect(BaseEventData eventData)
+        {
+            if (selectable)
+            {
+                base.OnSelect(eventData);
+            }
+        }
     }
 }

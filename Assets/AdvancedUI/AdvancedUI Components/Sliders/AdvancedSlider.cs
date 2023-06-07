@@ -27,8 +27,8 @@ namespace Dhs5.AdvancedUI
     public class AdvancedSlider : AdvancedComponent
     {
         [Header("Slider Type")]
-        [SerializeField] private AdvancedSliderType sliderType;
-        public AdvancedSliderType Type { get { return sliderType; } set { sliderType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker sliderStylePicker;
+        public StylePicker Style { get => sliderStylePicker; set { sliderStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("Slider Content")]
         [SerializeField] private SliderContent sliderContent;
@@ -50,11 +50,11 @@ namespace Dhs5.AdvancedUI
 
 
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private SliderStyleSheet customStyleSheet;
 
         private SliderStyleSheet CurrentStyleSheet
-        { get { return Type == AdvancedSliderType.CUSTOM ? customStyleSheet :
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.sliderStyleSheets.GetStyleSheet(Type) : null; } }
+        { get { return custom ? customStyleSheet : styleSheetContainer ? Style.StyleSheet as SliderStyleSheet : null; } }
 
 
         [Header("UI Components")]
@@ -67,16 +67,6 @@ namespace Dhs5.AdvancedUI
         [Space]
         [SerializeField] private TextMeshProUGUI sliderText;
 
-
-        protected override void Awake()
-        {
-            slider.GetGraphics(backgroundImage, CurrentStyleSheet.backgroundStyleSheet,
-                handle, CurrentStyleSheet.handleStyleSheet,
-                fill, CurrentStyleSheet.fillStyleSheet,
-                sliderText, GetTextStyleSheet(CurrentStyleSheet.textType));
-
-            base.Awake();
-        }
 
         #region Private Functions
         private void SetGradient()
@@ -131,6 +121,11 @@ namespace Dhs5.AdvancedUI
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            sliderStylePicker.SetUp(styleSheetContainer, StyleSheetType.SLIDER, "Slider type");
+
             if (CurrentStyleSheet == null) return;
 
             SetSliderInfo();
@@ -139,21 +134,21 @@ namespace Dhs5.AdvancedUI
             if (backgroundImage)
             {
                 backgroundImage.enabled = CurrentStyleSheet.backgroundActive;
-                backgroundImage.SetUpImage(CurrentStyleSheet.backgroundStyleSheet);
+                backgroundImage.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
             }
 
             // Fill
             if (fill)
             {
                 fill.enabled = CurrentStyleSheet.fillActive;
-                fill.SetUpImage(CurrentStyleSheet.fillStyleSheet);
+                fill.SetUpImage(CurrentStyleSheet.FillStyleSheet);
             }
 
             // Handle
             if (handle)
             {
                 handle.enabled = CurrentStyleSheet.handleActive;
-                handle.SetUpImage(CurrentStyleSheet.handleStyleSheet);
+                handle.SetUpImage(CurrentStyleSheet.HandleStyleSheet);
             }
 
             // Text
@@ -161,10 +156,18 @@ namespace Dhs5.AdvancedUI
             {
                 sliderText.enabled = CurrentStyleSheet.textActive;
                 sliderText.text = Content.text;
-                sliderText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
+                sliderText.SetUpText(CurrentStyleSheet.TextStyleSheet);
             }
 
             SetGradient();
+        }
+
+        protected override void SetUpGraphics()
+        {
+            slider.GetGraphics(backgroundImage, CurrentStyleSheet.BackgroundStyleSheet,
+                handle, CurrentStyleSheet.HandleStyleSheet,
+                fill, CurrentStyleSheet.FillStyleSheet,
+                sliderText, CurrentStyleSheet.TextStyleSheet);
         }
 
         private void SetSliderInfo()

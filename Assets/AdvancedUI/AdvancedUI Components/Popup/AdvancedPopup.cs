@@ -40,8 +40,8 @@ namespace Dhs5.AdvancedUI
     public class AdvancedPopup : AdvancedComponent
     {
         [Header("Popup Type")]
-        [SerializeField] private PopupType popupType;
-        public PopupType Type { get { return popupType; } set { popupType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker popupStylePicker;
+        public StylePicker Style { get => popupStylePicker; set { popupStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("Content")]
         [SerializeField] private PopupContent popupContent;
@@ -59,10 +59,11 @@ namespace Dhs5.AdvancedUI
 
 
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private PopupStyleSheet customStyleSheet;
 
-        private PopupStyleSheet CurrentStyleSheet { get { return popupType == PopupType.CUSTOM ? customStyleSheet : 
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.popupStyleSheets.GetStyleSheet(popupType) : null; } }
+        private PopupStyleSheet CurrentStyleSheet 
+        { get { return custom ? customStyleSheet : styleSheetContainer ? popupStylePicker.StyleSheet as PopupStyleSheet : null; } }
 
         [Header("UI Components")]
         [SerializeField] private Image popupImage;
@@ -112,16 +113,21 @@ namespace Dhs5.AdvancedUI
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            popupStylePicker.SetUp(styleSheetContainer, StyleSheetType.POPUP, "Popup Style");
+
             if (CurrentStyleSheet == null) return;
 
             // Background
             if (popupImage != null)
             {
-                popupImage.sprite = CurrentStyleSheet.popupStyleSheet.baseSprite;
-                popupImage.color = CurrentStyleSheet.popupStyleSheet.baseColor;
-                popupImage.material = CurrentStyleSheet.popupStyleSheet.baseMaterial;
-                popupImage.type = CurrentStyleSheet.popupStyleSheet.imageType;
-                popupImage.pixelsPerUnitMultiplier = CurrentStyleSheet.popupStyleSheet.pixelsPerUnit;
+                popupImage.sprite = CurrentStyleSheet.PopupBackgroundStyleSheet.baseSprite;
+                popupImage.color = CurrentStyleSheet.PopupBackgroundStyleSheet.baseColor;
+                popupImage.material = CurrentStyleSheet.PopupBackgroundStyleSheet.baseMaterial;
+                popupImage.type = CurrentStyleSheet.PopupBackgroundStyleSheet.imageType;
+                popupImage.pixelsPerUnitMultiplier = CurrentStyleSheet.PopupBackgroundStyleSheet.pixelsPerUnit;
             }
 
             // Filter
@@ -137,7 +143,7 @@ namespace Dhs5.AdvancedUI
                 popupText.enabled = CurrentStyleSheet.textActive;
                 popupText.text = popupContent.popupText;
                 popupText.fontSize = popupContent.FontSize;
-                popupText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
+                popupText.SetUpText(CurrentStyleSheet.TextStyleSheet);
             }
 
             // Buttons
@@ -149,19 +155,19 @@ namespace Dhs5.AdvancedUI
             if (confirmButton)
             {
                 confirmButton.gameObject.SetActive(CurrentStyleSheet.confirmButtonActive);
-                confirmButton.Type = CurrentStyleSheet.confirmButtonType;
+                confirmButton.Style = CurrentStyleSheet.ConfirmationButtonStyle;
                 confirmButton.Content = new ButtonContent(Content.ConfirmationText);
             }
             if (cancelButton)
             {
                 cancelButton.gameObject.SetActive(CurrentStyleSheet.cancelButtonActive);
-                cancelButton.Type = CurrentStyleSheet.cancelButtonType;
+                cancelButton.Style = CurrentStyleSheet.CancelButtonStyle;
                 cancelButton.Content = new ButtonContent(Content.CancelText);
             }
             if (quitButton)
             {
                 quitButton.gameObject.SetActive(CurrentStyleSheet.quitButtonActive);
-                quitButton.Type = CurrentStyleSheet.quitButtonType;
+                quitButton.Style = CurrentStyleSheet.QuitButtonStyle;
             }
 
             if (popupImage)
@@ -170,6 +176,8 @@ namespace Dhs5.AdvancedUI
                 LayoutRebuilder.ForceRebuildLayoutImmediate(popupImage.rectTransform);
             }
         }
+
+        protected override void SetUpGraphics() { }
         #endregion
     }
 }

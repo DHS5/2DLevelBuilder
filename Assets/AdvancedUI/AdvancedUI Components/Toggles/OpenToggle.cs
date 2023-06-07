@@ -75,34 +75,49 @@ namespace Dhs5.AdvancedUI
 
         private Image backgroundImage;
         private ImageStyleSheet backgroundStyleSheet;
-        private Graphic checkmarkGraphic;
-        private GraphicStyleSheet checkmarkGStyleSheet;
+
         private Image checkmarkImage;
         private ImageStyleSheet checkmarkIStyleSheet;
-        private Graphic uncheckmarkGraphic;
-        private GraphicStyleSheet uncheckmarkStyleSheet;
+        private TextMeshProUGUI checkmarkText;
+        private TextStyleSheet checkmarkTStyleSheet;
+
+        private Image uncheckmarkImage;
+        private ImageStyleSheet uncheckmarkIStyleSheet;
+        private TextMeshProUGUI uncheckmarkText;
+        private TextStyleSheet uncheckmarkTStyleSheet;
+
         private TextMeshProUGUI toggleText;
         private TextStyleSheet textStyleSheet;
 
         private bool gotGraphics = false;
 
         public void GetGraphics(Image background, ImageStyleSheet _backgroundStyleSheet,
-            Graphic checkmark, GraphicStyleSheet _checkmarkStyleSheet, Graphic uncheckmark, GraphicStyleSheet _uncheckmarkStyleSheet, 
+            Image checkmarkI, ImageStyleSheet _checkmarkIStyleSheet, TextMeshProUGUI checkmarkT, TextStyleSheet _checkmarkTStyleSheet,
+            Image uncheckmarkI, ImageStyleSheet _uncheckmarkIStyleSheet, TextMeshProUGUI uncheckmarkT, TextStyleSheet _uncheckmarkTStyleSheet,
             TextMeshProUGUI text, TextStyleSheet _textStyleSheet)
         {
             gotGraphics = true;
 
             backgroundImage = background;
             backgroundStyleSheet = _backgroundStyleSheet;
-            checkmarkGraphic = checkmark;
-            checkmarkGStyleSheet = _checkmarkStyleSheet;
-            uncheckmarkGraphic = uncheckmark;
-            uncheckmarkStyleSheet = _uncheckmarkStyleSheet;
+
+            checkmarkImage = checkmarkI;
+            checkmarkIStyleSheet = _checkmarkIStyleSheet;
+            checkmarkText = checkmarkT;
+            checkmarkTStyleSheet = _checkmarkTStyleSheet;
+
+            uncheckmarkImage = uncheckmarkI;
+            uncheckmarkIStyleSheet = _uncheckmarkIStyleSheet;
+            uncheckmarkText = uncheckmarkT;
+            uncheckmarkTStyleSheet = _uncheckmarkTStyleSheet;
+
             toggleText = text;
             textStyleSheet = _textStyleSheet;
 
             ForceInstantTransition();
         }
+
+        // No uncheckmark
         public void GetGraphics(Image background, ImageStyleSheet _backgroundStyleSheet,
             Image checkmark, ImageStyleSheet _checkmarkStyleSheet, 
             TextMeshProUGUI text, TextStyleSheet _textStyleSheet)
@@ -111,8 +126,17 @@ namespace Dhs5.AdvancedUI
 
             backgroundImage = background;
             backgroundStyleSheet = _backgroundStyleSheet;
+
             checkmarkImage = checkmark;
             checkmarkIStyleSheet = _checkmarkStyleSheet;
+            checkmarkText = null;
+            checkmarkTStyleSheet = null;
+
+            uncheckmarkImage = null;
+            uncheckmarkIStyleSheet = null;
+            uncheckmarkText = null;
+            uncheckmarkTStyleSheet = null;
+
             toggleText = text;
             textStyleSheet = _textStyleSheet;
 
@@ -128,11 +152,14 @@ namespace Dhs5.AdvancedUI
             }
 
             if (backgroundImage && backgroundImage.enabled) backgroundImage.TransitionImage((int)state, instant, backgroundStyleSheet);
-            if (uncheckmarkGraphic && uncheckmarkGraphic.enabled) uncheckmarkGraphic.TransitionGraphic((int)state, instant, uncheckmarkStyleSheet);
-            if (toggleText && toggleText.enabled) toggleText.TransitionText((int)state, instant, textStyleSheet);
 
-            if (checkmarkGraphic && checkmarkGraphic.enabled) checkmarkGraphic.TransitionGraphic((int)state, instant, checkmarkGStyleSheet);
-            else if (checkmarkImage) checkmarkImage.TransitionImage((int)state, instant, checkmarkIStyleSheet);
+            if (checkmarkImage && checkmarkImage.enabled) checkmarkImage.TransitionImage((int)state, instant, checkmarkIStyleSheet);
+            if (checkmarkText && checkmarkText.enabled) checkmarkText.TransitionText((int)state, instant, checkmarkTStyleSheet);
+            
+            if (uncheckmarkImage && uncheckmarkImage.enabled) uncheckmarkImage.TransitionImage((int)state, instant, uncheckmarkIStyleSheet);
+            if (uncheckmarkText && uncheckmarkText.enabled) uncheckmarkText.TransitionText((int)state, instant, uncheckmarkTStyleSheet);
+
+            if (toggleText && toggleText.enabled) toggleText.TransitionText((int)state, instant, textStyleSheet);
         }
 
         public void ForceInstantTransition()

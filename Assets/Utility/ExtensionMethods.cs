@@ -130,7 +130,6 @@ namespace Dhs5.Utility
         {
             transform.localScale = Vector3.one;
         }
-
         #endregion
 
         #region RectTransform
@@ -229,6 +228,41 @@ namespace Dhs5.Utility
         public static T Get<T>(this List<T> list, int index)
         {
             return list[list.ValidIndex(index)];
+        }
+        public static T Last<T>(this List<T> list)
+        {
+            return list[list.Count - 1];
+        }
+        #endregion
+
+        #region LayerMask
+        public static LayerMask Everything(this LayerMask mask)
+        {
+            return ~0;
+        }
+        public static LayerMask Nothing(this LayerMask mask)
+        {
+            return 0;
+        }
+        /// <summary>
+        /// Whether a layer is included in this LayerMask
+        /// </summary>
+        /// <param name="mask">This mask</param>
+        /// <param name="layer">The layer to compare</param>
+        /// <returns>True if the layer is included</returns>
+        public static bool Include(this LayerMask mask, int layer)
+        {
+            return ((1 << layer) & mask) != 0;
+        }
+        /// <summary>
+        /// Whether a layer is excluded from this LayerMask
+        /// </summary>
+        /// <param name="mask">This mask</param>
+        /// <param name="layer">The layer to compare</param>
+        /// <returns>True if the layer is excluded</returns>
+        public static bool Exclude(this LayerMask mask, int layer)
+        {
+            return ((1 << layer) & mask) == 0;
         }
         #endregion
 

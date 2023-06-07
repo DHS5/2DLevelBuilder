@@ -1,0 +1,19 @@
+{
+    "name": "Events.Editor",
+    "rootNamespace": "Dhs5.Utility.Events.Editor",
+    "references": [
+        "GUID:022a898c68ffb5b43b96b7a36e864b66",
+        "GUID:9c98c9369de1bba43936efcdb3e19b4a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

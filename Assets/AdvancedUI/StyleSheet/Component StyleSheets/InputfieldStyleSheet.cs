@@ -6,19 +6,29 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class InputfieldStyleSheet
+    public class InputfieldStyleSheet : BaseStyleSheet
     {
         public bool backgroundActive = true;
-        [ShowIf(nameof(backgroundActive))]
-        [AllowNesting]
-        public ImageStyleSheet backgroundStyleSheet;
+        public StylePicker backgroundStylePicker;
         [Space, Space]
         public bool hintTextActive = true;
-        [ShowIf(nameof(hintTextActive))]
-        [AllowNesting]
-        public TextType hintTextType;
+        public StylePicker hintTextStylePicker;
         [Space, Space]
-        public TextType inputTextType;
+        public StylePicker inputTextStylePicker;
         public Color selectionColor;
+
+        public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet HintTextStyleSheet => hintTextStylePicker.StyleSheet as TextStyleSheet;
+        public TextStyleSheet InputTextStyleSheet => inputTextStylePicker.StyleSheet as TextStyleSheet;
+
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            hintTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Hint Text type");
+            inputTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Input Text type");
+        }
     }
 }

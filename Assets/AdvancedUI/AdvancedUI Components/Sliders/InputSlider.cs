@@ -9,14 +9,15 @@ namespace Dhs5.AdvancedUI
     public class InputSlider : AdvancedComponent
     {
         [Header("Slider")]
-        [SerializeField] private AdvancedSliderType sliderType;
+        [SerializeField] private StylePicker sliderStylePicker;
+        public StylePicker SliderStyle { get =>  sliderStylePicker; set { sliderStylePicker.ForceSet(value); SetUpConfig(); } }
+
         [SerializeField] private SliderContent sliderContent;
-        public AdvancedSliderType SliderType { get { return sliderType; } set { sliderType = value; SetUpConfig(); } }
-        public SliderContent SliderContent { get { return sliderContent; } set { sliderContent = value; SetUpConfig(); } }
+        public SliderContent SliderContent { get => sliderContent; set { sliderContent = value; SetUpConfig(); } }
         
         [Header("InputField")]
-        [SerializeField] private AdvancedInputfieldType inputfieldType;
-        public AdvancedInputfieldType InputfieldType { get { return inputfieldType; } set { inputfieldType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker inputfieldStylePicker;
+        public StylePicker InputStyle { get => inputfieldStylePicker; set { inputfieldStylePicker.ForceSet(value); SetUpConfig(); } }
 
         public override bool Interactable 
         {
@@ -112,16 +113,23 @@ namespace Dhs5.AdvancedUI
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            sliderStylePicker.SetUp(styleSheetContainer, StyleSheetType.SLIDER, "Slider type");
+            inputfieldStylePicker.SetUp(styleSheetContainer, StyleSheetType.INPUT_FIELD, "InputField type");
+
             if (slider)
             {
-                slider.Type = SliderType;
+                slider.Style = SliderStyle;
                 slider.Content = SliderContent;
             }
             if (inputField)
             {
-                inputField.Type = InputfieldType;
+                inputField.Style = InputStyle;
             }
         }
+
+        protected override void SetUpGraphics() { }
 
         #endregion
     }

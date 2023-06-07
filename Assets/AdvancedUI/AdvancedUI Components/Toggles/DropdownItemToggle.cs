@@ -11,8 +11,8 @@ namespace Dhs5.AdvancedUI
     public class DropdownItemToggle : AdvancedComponent
     {
         [Header("Toggle Type")]
-        [SerializeField] private DropdownItemToggleType toggleType;
-        public DropdownItemToggleType Type { get { return toggleType; } set { toggleType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker toggleStylePicker;
+        public StylePicker Style { get => toggleStylePicker; set { toggleStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("Toggle Content")]
         [SerializeField] private bool isOn = true;
@@ -22,11 +22,23 @@ namespace Dhs5.AdvancedUI
         public override bool Interactable { get => toggle.interactable; set => toggle.interactable = value; }
 
 
+        [Header("Events")]
+        [SerializeField] private UnityEvent<bool> onValueChanged;
+        [SerializeField] private UnityEvent onClick;
+        [SerializeField] private UnityEvent onMouseEnter;
+        [SerializeField] private UnityEvent onMouseExit;
+
+        public event Action<bool> OnValueChanged { add { toggle.OnValueChanged += value; } remove { toggle.OnValueChanged -= value; } }
+        public event Action OnClick { add { toggle.OnToggleClick += value; } remove { toggle.OnToggleClick -= value; } }
+        public event Action OnMouseEnter { add { toggle.OnToggleEnter += value; } remove { toggle.OnToggleEnter -= value; } }
+        public event Action OnMouseExit { add { toggle.OnToggleExit += value; } remove { toggle.OnToggleExit -= value; } }
+
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private DropdownItemToggleStyleSheet customStyleSheet;
 
-        private DropdownItemToggleStyleSheet CurrentStyleSheet { get { return toggleType == DropdownItemToggleType.CUSTOM ? customStyleSheet :
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.dropdownItemToggleStyleSheets.GetStyleSheet(toggleType) : null; } }
+        private DropdownItemToggleStyleSheet CurrentStyleSheet 
+        { get { return custom ? customStyleSheet : styleSheetContainer ? toggleStylePicker.StyleSheet as DropdownItemToggleStyleSheet : null; } }
 
 
         [Header("UI Components")]
@@ -37,15 +49,6 @@ namespace Dhs5.AdvancedUI
         [Space]
         [SerializeField] private TextMeshProUGUI toggleText;
 
-
-        protected override void Awake()
-        {
-            toggle.GetGraphics(toggleBackground, CurrentStyleSheet.backgroundStyleSheet,
-                checkmarkImage, CurrentStyleSheet.checkmarkStyleSheet,
-                toggleText, GetTextStyleSheet(CurrentStyleSheet.textType));
-
-            base.Awake();
-        }
 
         #region Public Accessors & Methods
 
@@ -63,21 +66,38 @@ namespace Dhs5.AdvancedUI
 
         #region Events
 
-        public event Action<bool> OnValueChanged { add { toggle.OnValueChanged += value; } remove { toggle.OnValueChanged -= value; } }
-
         protected override void LinkEvents()
         {
             OnValueChanged += ValueChanged;
+            OnClick += Click;
+            OnMouseEnter += MouseEnter;
+            OnMouseExit += MouseExit;
         }
         protected override void UnlinkEvents()
         {
             OnValueChanged -= ValueChanged;
+            OnClick -= Click;
+            OnMouseEnter -= MouseEnter;
+            OnMouseExit -= MouseExit;
         }
 
         private void ValueChanged(bool state)
         {
             isOn = state;
             ActuState();
+            onValueChanged?.Invoke(state);
+        }
+        private void Click()
+        {
+            onClick?.Invoke();
+        }
+        private void MouseEnter()
+        {
+            onMouseEnter?.Invoke();
+        }
+        private void MouseExit()
+        {
+            onMouseExit?.Invoke();
         }
 
         #endregion
@@ -88,29 +108,41 @@ namespace Dhs5.AdvancedUI
         {
             State = isOn;
 
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            toggleStylePicker.SetUp(styleSheetContainer, StyleSheetType.DROPDOWN_ITEM_TOGGLE, "Toggle Type");
+
             if (CurrentStyleSheet == null) return;
 
             // Background
             if (toggleBackground != null)
             {
                 toggleBackground.enabled = CurrentStyleSheet.backgroundActive;
-                toggleBackground.SetUpImage(CurrentStyleSheet.backgroundStyleSheet);
+                toggleBackground.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
             }
 
             // Checkmark Icon
             if (checkmarkImage != null)
             {
-                checkmarkImage.SetUpImage(CurrentStyleSheet.checkmarkStyleSheet);
+                checkmarkImage.SetUpImage(CurrentStyleSheet.CheckmarkStyleSheet);
             }
 
             // Text
             if (toggleText != null)
             {
                 toggleText.text = Text;
-                toggleText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
+                toggleText.SetUpText(CurrentStyleSheet.TextStyleSheet);
             }
 
             ActuState();
+        }
+
+        protected override void SetUpGraphics()
+        {
+            toggle.GetGraphics(toggleBackground, CurrentStyleSheet.BackgroundStyleSheet,
+                checkmarkImage, CurrentStyleSheet.CheckmarkStyleSheet,
+                toggleText, CurrentStyleSheet.TextStyleSheet);
         }
 
         private void OnTransformParentChanged()

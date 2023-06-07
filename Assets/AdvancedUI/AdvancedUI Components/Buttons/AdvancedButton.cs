@@ -13,19 +13,19 @@ namespace Dhs5.AdvancedUI
     [System.Serializable]
     public struct ButtonContent
     {
-        public ButtonContent(string _text = "", Sprite backround = null, Sprite icon = null, float scale = 1)
+        public ButtonContent(string _text = "")//, Sprite backround = null, Sprite icon = null, float scale = 1)
         {
             text = _text;
-            backgroundSprite = backround;
-            iconSprite = icon;
-            iconScale = scale;
+            //backgroundSprite = backround;
+            //iconSprite = icon;
+            //iconScale = scale;
         }
 
         // ### Properties ###
-        public Sprite backgroundSprite;
-        public Sprite iconSprite;
-        [SerializeField] private float iconScale; public float IconScale { get { return iconScale > 0 ? iconScale : 1; } set { iconScale = value; } }
-        [Space]
+        //public Sprite backgroundSprite;
+        //public Sprite iconSprite;
+        //[SerializeField] private float iconScale; public float IconScale { get { return iconScale > 0 ? iconScale : 1; } set { iconScale = value; } }
+        //[Space]
         public string text;
     }
 
@@ -34,8 +34,8 @@ namespace Dhs5.AdvancedUI
     public class AdvancedButton : AdvancedComponent
     {
         [Header("Button Type")]
-        [SerializeField] private AdvancedButtonType buttonType;
-        public AdvancedButtonType Type { get { return buttonType; } set { buttonType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker buttonStylePicker;
+        public StylePicker Style { get => buttonStylePicker; set { buttonStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("Content")]
         [SerializeField] private ButtonContent buttonContent;
@@ -58,28 +58,25 @@ namespace Dhs5.AdvancedUI
 
 
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private ButtonStyleSheet customStyleSheet;
 
-        private ButtonStyleSheet CurrentStyleSheet { get { return buttonType == AdvancedButtonType.CUSTOM ? customStyleSheet : 
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.buttonStyleSheets.GetStyleSheet(buttonType) : null; } }
+        [Header("Overrides")]
+        [SerializeField] private bool overrideIcon;
+        [SerializeField] private ImageOverrideSheet iconOverrideSheet;
+
+        private ButtonStyleSheet CurrentStyleSheet 
+        { get { return custom ? customStyleSheet : styleSheetContainer ? buttonStylePicker.StyleSheet as ButtonStyleSheet : null; } }
 
         [Header("UI Components")]
         [SerializeField] private OpenButton button;
         [SerializeField] private Image buttonBackground;
         [SerializeField] private Image buttonIcon;
+        [SerializeField] private AspectRatioFitter iconRatioFitter;
         [SerializeField] private TextMeshProUGUI buttonText;
 
-        protected override void Awake()
-        {
-            button.GetGraphics(buttonBackground, CurrentStyleSheet.backgroundStyleSheet,
-                buttonIcon, CurrentStyleSheet.iconStyleSheet,
-                buttonText, GetTextStyleSheet(CurrentStyleSheet.textType));
-
-            base.Awake();
-        }
 
         #region Events
-        // ### Events ###
 
         protected override void LinkEvents()
         {
@@ -123,34 +120,35 @@ namespace Dhs5.AdvancedUI
         #endregion
 
         #region Configs
-        // ### Configs ###
-
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            buttonStylePicker.SetUp(styleSheetContainer, StyleSheetType.BUTTON, "Button Style");
+
             if (CurrentStyleSheet == null) return;
 
             // Background
             if (buttonBackground != null)
             {
                 buttonBackground.enabled = CurrentStyleSheet.backgroundActive;
-                buttonBackground.sprite = Content.backgroundSprite != null ? Content.backgroundSprite : CurrentStyleSheet.backgroundStyleSheet.baseSprite;
-                buttonBackground.color = CurrentStyleSheet.backgroundStyleSheet.baseColor;
-                buttonBackground.material = CurrentStyleSheet.backgroundStyleSheet.baseMaterial;
-                buttonBackground.type = CurrentStyleSheet.backgroundStyleSheet.imageType;
-                buttonBackground.pixelsPerUnitMultiplier = CurrentStyleSheet.backgroundStyleSheet.pixelsPerUnit;
+                buttonBackground.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
             }
 
             // Icon
             if (buttonIcon != null)
             {
-                if (Content.iconSprite == null) buttonContent.IconScale = CurrentStyleSheet.iconScale;
                 buttonIcon.enabled = CurrentStyleSheet.iconActive;
-                buttonIcon.transform.localScale = new Vector2(Content.IconScale, Content.IconScale);
-                buttonIcon.sprite = Content.iconSprite != null ? Content.iconSprite : CurrentStyleSheet.iconStyleSheet.baseSprite;
-                buttonIcon.color = CurrentStyleSheet.iconStyleSheet.baseColor;
-                buttonIcon.material = CurrentStyleSheet.iconStyleSheet.baseMaterial;
-                buttonIcon.type = CurrentStyleSheet.iconStyleSheet.imageType;
-                buttonIcon.pixelsPerUnitMultiplier = CurrentStyleSheet.iconStyleSheet.pixelsPerUnit;
+                buttonIcon.transform.localScale = Vector2.one * CurrentStyleSheet.iconScale;
+                if (!overrideIcon)
+                {
+                    buttonIcon.SetUpImage(CurrentStyleSheet.IconStyleSheet, iconRatioFitter);
+                }
+                else
+                {
+                    buttonIcon.SetUpImage(CurrentStyleSheet.IconStyleSheet, iconOverrideSheet, iconRatioFitter);
+                }
             }
 
             // Text
@@ -158,8 +156,15 @@ namespace Dhs5.AdvancedUI
             {
                 buttonText.enabled = CurrentStyleSheet.textActive;
                 buttonText.text = Content.text;
-                buttonText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
+                buttonText.SetUpText(CurrentStyleSheet.TextStyleSheet);
             }
+        }
+
+        protected override void SetUpGraphics()
+        {
+            button.GetGraphics(buttonBackground, CurrentStyleSheet.BackgroundStyleSheet,
+                buttonIcon, CurrentStyleSheet.IconStyleSheet, overrideIcon ? iconOverrideSheet : null,
+                buttonText, CurrentStyleSheet.TextStyleSheet);
         }
         #endregion
     }

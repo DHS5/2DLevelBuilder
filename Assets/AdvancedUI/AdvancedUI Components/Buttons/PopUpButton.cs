@@ -11,15 +11,13 @@ namespace Dhs5.AdvancedUI
     public class PopUpButton : AdvancedComponent
     {
         [Header("Button")]
-        [SerializeField] private AdvancedButtonType buttonType;
+        [SerializeField] private StylePicker buttonStylePicker;
         [SerializeField] private ButtonContent buttonContent;
-        public AdvancedButtonType ButtonType { get { return buttonType; } set { buttonType = value; } }
         public ButtonContent ButtonContent { get { return buttonContent; } set { buttonContent = value; } }
 
         [Header("Popup")]
-        [SerializeField] private PopupType popupType;
+        [SerializeField] private StylePicker popupStylePicker;
         [SerializeField] private PopupContent popupContent;
-        public PopupType PopupType { get { return popupType; } set { popupType = value; } }
         public PopupContent PopupContent { get { return popupContent; } set { popupContent = value; } }
 
         public override bool Interactable { get => button.Interactable; set => button.Interactable = value; }
@@ -86,17 +84,24 @@ namespace Dhs5.AdvancedUI
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            buttonStylePicker.SetUp(styleSheetContainer, StyleSheetType.BUTTON, "Button Style");
+            popupStylePicker.SetUp(styleSheetContainer, StyleSheetType.POPUP, "Popup Style");
+
             if (button)
             {
-                button.Type = buttonType;
+                button.Style = buttonStylePicker;
                 button.Content = buttonContent;
             }
             if (popup)
             {
-                popup.Type = popupType;
+                popup.Style = popupStylePicker;
                 popup.Content = popupContent;
             }
         }
+
+        protected override void SetUpGraphics() { }
 
         #endregion
     }

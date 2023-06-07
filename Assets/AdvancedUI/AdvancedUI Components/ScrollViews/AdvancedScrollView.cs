@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,8 +35,8 @@ namespace Dhs5.AdvancedUI
     public class AdvancedScrollView : AdvancedComponent
     {
         [Header("ScrollView Type")]
-        [SerializeField] private AdvancedScrollViewType scrollviewType;
-        public AdvancedScrollViewType Type { get { return scrollviewType; } set { scrollviewType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker scrollviewStylePicker;
+        public StylePicker Style { get => scrollviewStylePicker; set { scrollviewStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("ScrollView Content")]
         [SerializeField] private ScrollViewContent scrollViewContent;
@@ -45,11 +46,11 @@ namespace Dhs5.AdvancedUI
 
 
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private ScrollViewStyleSheet customStyleSheet;
 
         private ScrollViewStyleSheet CurrentStyleSheet
-        { get { return Type == AdvancedScrollViewType.CUSTOM ? customStyleSheet :
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.scrollViewStyleSheets.GetStyleSheet(Type) : null; } }
+        { get { return custom ? customStyleSheet : styleSheetContainer ? scrollviewStylePicker.StyleSheet as ScrollViewStyleSheet : null; } }
 
 
         [Header("UI Components")]
@@ -64,21 +65,53 @@ namespace Dhs5.AdvancedUI
 
 
         #region Events
-        protected override void LinkEvents() { }
-        protected override void UnlinkEvents() { }
+        public event Action<Vector2> OnValueChanged;
+        public event Action OnMouseEnter;
+        public event Action OnMouseExit;
+
+        protected override void LinkEvents()
+        {
+            scrollView.onValueChanged.AddListener(ValueChanged);
+            backgroundImage.OnMouseEnter += MouseEnter;
+            backgroundImage.OnMouseExit += MouseExit;
+        }
+        protected override void UnlinkEvents()
+        {
+            scrollView.onValueChanged.RemoveListener(ValueChanged);
+            backgroundImage.OnMouseEnter -= MouseEnter;
+            backgroundImage.OnMouseExit -= MouseExit;
+        }
+
+        private void ValueChanged(Vector2 newValue)
+        {
+            OnValueChanged?.Invoke(newValue);
+        }
+        private void MouseEnter()
+        {
+            OnMouseEnter?.Invoke();
+        }
+        private void MouseExit()
+        {
+            OnMouseExit?.Invoke();
+        }
         #endregion
 
         #region Configs
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            scrollviewStylePicker.SetUp(styleSheetContainer, StyleSheetType.SCROLL_VIEW, "Scrollview Type");
+
             if (CurrentStyleSheet == null) return;
 
             // Background
-            if (backgroundImage)
+            if (backgroundImage && backgroundImage.targetGraphic is Image image)
             {
-                backgroundImage.targetGraphic.enabled = CurrentStyleSheet.backgroundActive;
-                backgroundImage.GraphicStyleSheet = CurrentStyleSheet.backgroundStyleSheet;
+                image.enabled = CurrentStyleSheet.backgroundActive;
+                image.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
             }
 
             // Content
@@ -120,13 +153,18 @@ namespace Dhs5.AdvancedUI
             if (verticalScrollbar)
             {
                 verticalScrollbar.gameObject.SetActive(CurrentStyleSheet.verticalScrollbarActive);
-                verticalScrollbar.Type = CurrentStyleSheet.verticalScrollbarType;
+                verticalScrollbar.Style = CurrentStyleSheet.VerticalScrollbarStyle;
             }
             if (horizontalScrollbar)
             {
                 horizontalScrollbar.gameObject.SetActive(CurrentStyleSheet.horizontalScrollbarActive);
-                horizontalScrollbar.Type = CurrentStyleSheet.horizontalScrollbarType;
+                horizontalScrollbar.Style = CurrentStyleSheet.HorizontalScrollbarStyle;
             }
+        }
+
+        protected override void SetUpGraphics()
+        {
+            backgroundImage.SetStyleSheet(CurrentStyleSheet.BackgroundStyleSheet);
         }
 
         #endregion

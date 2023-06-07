@@ -12,6 +12,8 @@ namespace Dhs5.AdvancedUI
         protected virtual void Awake()
         {
             SetUpConfig();
+
+            SetUpGraphics();
         }
         private void OnValidate()
         {
@@ -31,17 +33,19 @@ namespace Dhs5.AdvancedUI
         protected abstract void UnlinkEvents();
 
         protected abstract void SetUpConfig();
+        protected abstract void SetUpGraphics();
 
 
         public abstract bool Interactable { get; set; }
 
 
+        public void ShowObjectOnStack(GameObject go) { if (go == null) return; UIStack.Show(go); }
+        public void BackOnStack() { UIStack.Back(); }
+        public void ClearStack() { UIStack.Clear(); }
+        public void StartNewStack(GameObject go) { if (go == null) return; UIStack.Clear(go); }
+
+
         [Header("Style Sheet Container")]
         [SerializeField] protected StyleSheetContainer styleSheetContainer;
-
-        protected TextStyleSheet GetTextStyleSheet(TextType type)
-        {
-            return styleSheetContainer.projectStyleSheet.textStyleSheets.GetStyleSheet(type);
-        }
     }
 }

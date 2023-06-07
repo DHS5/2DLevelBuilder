@@ -6,31 +6,40 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class PopupStyleSheet
+    public class PopupStyleSheet : BaseStyleSheet
     {
-        public ImageStyleSheet popupStyleSheet;
+        public StylePicker popupStylePicker;
         [Space]
         public bool filterActive = true;
-        [ShowIf(nameof(filterActive))]
-        [AllowNesting]
         public Color filterColor;
         [Space]
         public bool textActive = true;
-        [ShowIf(nameof(textActive))]
-        [AllowNesting]
-        public TextType textType;
+        public StylePicker textStylePicker;
         [Space]
         public bool confirmButtonActive = false;
-        [ShowIf(nameof(confirmButtonActive))]
-        [AllowNesting]
-        public AdvancedButtonType confirmButtonType;
+        [SerializeField] private StylePicker confirmationButtonStylePicker;
         public bool cancelButtonActive = false;
-        [ShowIf(nameof(cancelButtonActive))]
-        [AllowNesting]
-        public AdvancedButtonType cancelButtonType;
+        [SerializeField] private StylePicker cancelButtonStylePicker;
         public bool quitButtonActive = true;
-        [ShowIf(nameof(quitButtonActive))]
-        [AllowNesting]
-        public AdvancedButtonType quitButtonType;
+        [SerializeField] private StylePicker quitButtonStylePicker;
+
+        public ImageStyleSheet PopupBackgroundStyleSheet => popupStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet TextStyleSheet => textStylePicker.StyleSheet as TextStyleSheet;
+        public StylePicker ConfirmationButtonStyle => confirmationButtonStylePicker;
+        public StylePicker CancelButtonStyle => cancelButtonStylePicker;
+        public StylePicker QuitButtonStyle => quitButtonStylePicker;
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            popupStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Popup");
+
+            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text Type");
+
+            confirmationButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Confirmation Button");
+            cancelButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Cancel Button");
+            quitButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Quit Button");
+        }
     }
 }

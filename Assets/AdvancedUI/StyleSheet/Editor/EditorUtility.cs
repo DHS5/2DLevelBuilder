@@ -10,9 +10,15 @@ namespace Dhs5.AdvancedUI
         private static Object SSContainer
         {
             get 
-            { 
-                return AssetDatabase.LoadAssetAtPath("Assets/AdvancedUI/StyleSheet/StyleSheet Container.asset",
+            {
+                Object container = AssetDatabase.LoadAssetAtPath("Assets/AdvancedUI/StyleSheet/StyleSheet Container.asset",
                 typeof(StyleSheetContainer));
+                if (container == null)
+                {
+                    container = ScriptableObject.CreateInstance<StyleSheetContainer>();
+                    AssetDatabase.CreateAsset(container, "Assets/AdvancedUI/StyleSheet/StyleSheet Container.asset");
+                }
+                return container;
             }
         }
 
@@ -26,7 +32,8 @@ namespace Dhs5.AdvancedUI
         private static void GetCurrentStyleSheet()
         {
             StyleSheetContainer container = SSContainer as StyleSheetContainer;
-            Selection.activeObject = container.projectStyleSheet;
+            if (container.projectStyleSheet != null)
+                Selection.activeObject = container.projectStyleSheet;
         }
     }
 }

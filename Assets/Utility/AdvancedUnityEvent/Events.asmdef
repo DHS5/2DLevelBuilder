@@ -1,0 +1,16 @@
+{
+    "name": "Events",
+    "rootNamespace": "Dhs5.Utility.Events",
+    "references": [
+        "GUID:022a898c68ffb5b43b96b7a36e864b66"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

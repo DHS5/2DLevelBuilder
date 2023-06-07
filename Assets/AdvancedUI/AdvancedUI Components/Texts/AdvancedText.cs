@@ -8,26 +8,47 @@ namespace Dhs5.AdvancedUI
     public class AdvancedText : AdvancedComponent
     {
         [Header("Text Type")]
-        [SerializeField] private TextType textType;
-        public TextType Type { get { return textType; } set { textType = value; } }
+        public StylePicker textStylePicker;
+        public bool selectable;
 
-        [Header("Style Sheet")]
+        [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private TextStyleSheet customStyleSheet;
 
+        private TextStyleSheet CurrentStyleSheet
+        { get { return custom ? customStyleSheet : styleSheetContainer ? textStylePicker.StyleSheet as TextStyleSheet : null; } }
+
         [Header("UI Components")]
-        [SerializeField] private TextMeshProUGUI text;
+        [SerializeField] private SelectableGraphic textGraphic;
 
         public override bool Interactable { get => true; set => SetUpConfig(); }
 
+        #region Events
         protected override void LinkEvents() { }
         protected override void UnlinkEvents() { }
+        #endregion
 
+        #region Configs
         protected override void SetUpConfig()
         {
             if (styleSheetContainer == null) return;
 
-            if (text)
-                text.SetUpText(Type == TextType.CUSTOM ? customStyleSheet : GetTextStyleSheet(Type));
+            customStyleSheet.SetUp(styleSheetContainer);
+            textStylePicker.SetUp(styleSheetContainer, StyleSheetType.TEXT);
+
+            if (CurrentStyleSheet == null) return;
+
+            if (textGraphic && textGraphic.targetGraphic is TextMeshProUGUI text)
+            {
+                text.SetUpText(CurrentStyleSheet);
+                textGraphic.selectable = selectable;
+            }
         }
+
+        protected override void SetUpGraphics()
+        {
+            textGraphic.SetStyleSheet(CurrentStyleSheet);
+        }
+        #endregion
     }
 }

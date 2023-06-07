@@ -6,13 +6,23 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class ScrollbarStyleSheet
+    public class ScrollbarStyleSheet : BaseStyleSheet
     {
         public bool backgroundActive = true;
-        [ShowIf(nameof(backgroundActive))]
-        [AllowNesting]
-        public ImageStyleSheet backgroundStyleSheet;
+        public StylePicker backgroundStylePicker;
         [Space, Space]
-        public ImageStyleSheet handleStyleSheet;
+        public StylePicker handleStylePicker;
+
+
+        public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet HandleStyleSheet => handleStylePicker.StyleSheet as ImageStyleSheet;
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            handleStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Handle");
+        }
     }
 }

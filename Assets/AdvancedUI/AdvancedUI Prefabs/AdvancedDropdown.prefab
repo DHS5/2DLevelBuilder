@@ -100,8 +100,8 @@ MonoBehaviour:
   m_fontSizeMin: 10
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 0
-  m_VerticalAlignment: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -557,8 +557,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   customStyleSheet:
+    container: {fileID: 0}
+    uniqueID: 0
+    name: 
     backgroundActive: 1
     backgroundStyleSheet:
+      container: {fileID: 0}
+      uniqueID: 0
+      name: 
       baseSprite: {fileID: 0}
       baseColor: {r: 0, g: 0, b: 0, a: 0}
       baseMaterial: {fileID: 0}
@@ -590,6 +596,9 @@ MonoBehaviour:
     titleType: 0
     arrowActive: 1
     arrowStyleSheet:
+      container: {fileID: 0}
+      uniqueID: 0
+      name: 
       baseSprite: {fileID: 0}
       baseColor: {r: 0, g: 0, b: 0, a: 0}
       baseMaterial: {fileID: 0}

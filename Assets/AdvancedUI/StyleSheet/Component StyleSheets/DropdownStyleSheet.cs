@@ -6,27 +6,40 @@ using NaughtyAttributes;
 namespace Dhs5.AdvancedUI
 {
     [System.Serializable]
-    public class DropdownStyleSheet
+    public class DropdownStyleSheet : BaseStyleSheet
     {
         public bool backgroundActive = true;
-        [ShowIf(nameof(backgroundActive))]
-        [AllowNesting]
-        public ImageStyleSheet backgroundStyleSheet;
+        public StylePicker backgroundStylePicker;
         [Space, Space]
         public bool titleActive = true;
-        [ShowIf(nameof(titleActive))]
-        [AllowNesting]
-        public TextType titleType;
+        public StylePicker titleTextStylePicker;
         [Space, Space]
         public bool arrowActive = true;
-        [ShowIf(nameof(arrowActive))]
-        [AllowNesting]
-        public ImageStyleSheet arrowStyleSheet;
+        public StylePicker arrowStylePicker;
         [Space, Space]
-        public TextType textType;
+        public StylePicker textStylePicker;
         [Space, Space]
-        public AdvancedScrollViewType templateScrollviewType;
+        [SerializeField] private StylePicker templateScrollviewStylePicker;
         [Space, Space]
-        public DropdownItemToggleType itemToggleType;
+        [SerializeField] private StylePicker itemToggleStylePicker;
+
+        public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet TitleStyleSheet => titleTextStylePicker.StyleSheet as TextStyleSheet;
+        public ImageStyleSheet ArrowStyleSheet => arrowStylePicker.StyleSheet as ImageStyleSheet;
+        public TextStyleSheet TextStyleSheet => textStylePicker.StyleSheet as TextStyleSheet;
+        public StylePicker TemplateScrollviewStyle => templateScrollviewStylePicker;
+        public StylePicker ItemToggleStyle => itemToggleStylePicker;
+
+        public override void SetUp(StyleSheetContainer _container)
+        {
+            base.SetUp(_container);
+
+            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            titleTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Title Text type");
+            arrowStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Arrow Icon");
+            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text type");
+            templateScrollviewStylePicker.SetUp(container, StyleSheetType.SCROLL_VIEW, "Scrollview");
+            itemToggleStylePicker.SetUp(container, StyleSheetType.DROPDOWN_ITEM_TOGGLE, "Item Toggle");
+        }
     }
 }

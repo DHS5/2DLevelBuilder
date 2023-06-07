@@ -34,8 +34,8 @@ namespace Dhs5.AdvancedUI
     public class AdvancedDropdown : AdvancedComponent
     {
         [Header("Dropdown Type")]
-        [SerializeField] private AdvancedDropdownType dropdownType;
-        public AdvancedDropdownType Type { get { return dropdownType; } set { dropdownType = value; SetUpConfig(); } }
+        [SerializeField] private StylePicker dropdownStylePicker;
+        public StylePicker Style { get => dropdownStylePicker; set { dropdownStylePicker.ForceSet(value); SetUpConfig(); } }
 
         [Header("Dropdown Content")]
         [SerializeField] private DropdownContent dropdownContent;
@@ -54,10 +54,11 @@ namespace Dhs5.AdvancedUI
 
 
         [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
         [SerializeField] private DropdownStyleSheet customStyleSheet;
 
-        private DropdownStyleSheet CurrentStyleSheet { get { return dropdownType == AdvancedDropdownType.CUSTOM ? customStyleSheet : 
-                    styleSheetContainer ? styleSheetContainer.projectStyleSheet.dropdownStyleSheets.GetStyleSheet(dropdownType) : null; } }
+        private DropdownStyleSheet CurrentStyleSheet 
+        { get { return custom ? customStyleSheet : styleSheetContainer ? dropdownStylePicker.StyleSheet as DropdownStyleSheet : null; } }
 
 
         [Header("UI Components")]
@@ -73,17 +74,6 @@ namespace Dhs5.AdvancedUI
         [Space]
         [SerializeField] private DropdownItemToggle itemToggle;
 
-
-
-        protected override void Awake()
-        {
-            dropdown.GetGraphics(dropdownBackground, CurrentStyleSheet.backgroundStyleSheet,
-                titleText, GetTextStyleSheet(CurrentStyleSheet.titleType),
-                arrowImage, CurrentStyleSheet.arrowStyleSheet,
-                dropdownText, GetTextStyleSheet(CurrentStyleSheet.textType));
-
-            base.Awake();
-        }
 
         #region Events
         protected override void LinkEvents()
@@ -113,6 +103,11 @@ namespace Dhs5.AdvancedUI
 
         protected override void SetUpConfig()
         {
+            if (styleSheetContainer == null) return;
+
+            customStyleSheet.SetUp(styleSheetContainer);
+            dropdownStylePicker.SetUp(styleSheetContainer, StyleSheetType.DROPDOWN, "Dropdown Type");
+
             if (CurrentStyleSheet == null) return;
 
             // Dropdown
@@ -127,14 +122,14 @@ namespace Dhs5.AdvancedUI
             if (dropdownBackground)
             {
                 dropdownBackground.enabled = CurrentStyleSheet.backgroundActive;
-                dropdownBackground.SetUpImage(CurrentStyleSheet.backgroundStyleSheet);
+                dropdownBackground.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
             }
 
             // Title
             if (titleText)
             {
                 titleText.enabled = CurrentStyleSheet.titleActive;
-                titleText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.titleType));
+                titleText.SetUpText(CurrentStyleSheet.TitleStyleSheet);
                 titleText.text = Content.dropdownTitle;
                 titleText.rectTransform.SetSizeWithCurrentAnchors
                     (RectTransform.Axis.Vertical, (gameObject.transform as RectTransform).rect.height);
@@ -144,20 +139,20 @@ namespace Dhs5.AdvancedUI
             if (arrowImage)
             {
                 arrowImage.enabled = CurrentStyleSheet.arrowActive;
-                arrowImage.SetUpImage(CurrentStyleSheet.arrowStyleSheet);
+                arrowImage.SetUpImage(CurrentStyleSheet.ArrowStyleSheet);
             }
 
             // Title
             if (dropdownText)
             {
-                dropdownText.SetUpText(GetTextStyleSheet(CurrentStyleSheet.textType));
+                dropdownText.SetUpText(CurrentStyleSheet.TextStyleSheet);
             }
 
             // ScrollView
             if (templateScrollView)
             {
                 templateScrollView.Content = new ScrollViewContent(ScrollViewContent.ScrollViewDirection.VERTICAL, Content.ItemHeight);
-                templateScrollView.Type = CurrentStyleSheet.templateScrollviewType;
+                templateScrollView.Style = CurrentStyleSheet.TemplateScrollviewStyle;
                 (templateScrollView.transform as RectTransform).
                     SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Content.TemplateHeight);
             }
@@ -165,8 +160,16 @@ namespace Dhs5.AdvancedUI
             // Item Toggle
             if (itemToggle)
             {
-                itemToggle.Type = CurrentStyleSheet.itemToggleType;
+                itemToggle.Style = CurrentStyleSheet.ItemToggleStyle;
             }
+        }
+
+        protected override void SetUpGraphics()
+        {
+            dropdown.GetGraphics(dropdownBackground, CurrentStyleSheet.BackgroundStyleSheet,
+                titleText, CurrentStyleSheet.TitleStyleSheet,
+                arrowImage, CurrentStyleSheet.ArrowStyleSheet,
+                dropdownText, CurrentStyleSheet.TextStyleSheet);
         }
 
         #endregion
