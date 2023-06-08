@@ -38,7 +38,8 @@ namespace Dhs5.AdvancedUI
         {
             base.OnPointerClick(eventData);
 
-            OnClick?.Invoke();
+            if (interactable)
+                OnClick?.Invoke();
         }
 
         #endregion

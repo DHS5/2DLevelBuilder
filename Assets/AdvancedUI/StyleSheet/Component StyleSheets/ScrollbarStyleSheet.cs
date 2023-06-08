@@ -21,8 +21,8 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
-            handleStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Handle");
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            handleStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Handle");
         }
     }
 }

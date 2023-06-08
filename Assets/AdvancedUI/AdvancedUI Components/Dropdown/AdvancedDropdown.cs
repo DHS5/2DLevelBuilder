@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Events;
 using System;
+using System.Linq;
 
 namespace Dhs5.AdvancedUI
 {
@@ -42,7 +43,7 @@ namespace Dhs5.AdvancedUI
         public DropdownContent Content { get { return dropdownContent; } set { dropdownContent = value; SetUpConfig(); } }
 
         public override bool Interactable { get => dropdown.interactable; set => dropdown.interactable = value; }
-
+        public int Value { get => dropdown.value; set => dropdown.value = value; }
 
         [Header("Events")]
         [SerializeField] private UnityEvent<int> onValueChanged;
@@ -74,6 +75,32 @@ namespace Dhs5.AdvancedUI
         [Space]
         [SerializeField] private DropdownItemToggle itemToggle;
 
+        #region Dropdown Options
+        public void SetOptions(List<string> options)
+        {
+            dropdown.ClearOptions();
+            dropdown.AddOptions(options);
+        }
+        public void SetOptions(string[] options)
+        {
+            dropdown.ClearOptions();
+            dropdown.AddOptions(options.ToList());
+        }
+
+        public void AddOptions(List<string> options)
+        {
+            dropdown.AddOptions(options);
+        }
+        public void AddOptions(string[] options)
+        {
+            dropdown.AddOptions(options.ToList());
+        }
+
+        public void ClearOptions()
+        {
+            dropdown.ClearOptions();
+        }
+        #endregion
 
         #region Events
         protected override void LinkEvents()

@@ -191,114 +191,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
-  scrollviewType: 0
+  scrollviewStylePicker:
+    container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    type: 10
+    styleSheetUID: 6688
+    name: Scrollview Type
   scrollViewContent:
     direction: 0
     contentWidth: 0
     contentHeight: 600
+  custom: 0
   customStyleSheet:
-    container: {fileID: 0}
+    container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
     uniqueID: 0
     name: 
     backgroundActive: 1
-    backgroundStyleSheet:
-      isImage: 0
-      imageStyleSheet:
-        container: {fileID: 0}
-        uniqueID: 0
-        name: 
-        baseSprite: {fileID: 0}
-        baseColor: {r: 0, g: 0, b: 0, a: 0}
-        baseMaterial: {fileID: 0}
-        imageType: 0
-        pixelsPerUnit: 1
-        isStatic: 1
-        transition:
-          transitionType: 0
-          spriteState:
-            m_HighlightedSprite: {fileID: 0}
-            m_PressedSprite: {fileID: 0}
-            m_SelectedSprite: {fileID: 0}
-            m_DisabledSprite: {fileID: 0}
-          colorBlock:
-            m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-            m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-            m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-            m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-            m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-            m_ColorMultiplier: 0
-            m_FadeDuration: 0
-          animationTriggers:
-            m_NormalTrigger: Normal
-            m_HighlightedTrigger: Highlighted
-            m_PressedTrigger: Pressed
-            m_SelectedTrigger: Selected
-            m_DisabledTrigger: Disabled
-      textStyleSheet:
-        container: {fileID: 0}
-        uniqueID: 0
-        name: 
-        font: {fileID: 0}
-        fontStyle: 0
-        overrideAlignment: 0
-        alignment: 0
-        isGradient: 0
-        isStatic: 1
-        color: {r: 0, g: 0, b: 0, a: 1}
-        colorGradient:
-          topLeft: {r: 0, g: 0, b: 0, a: 0}
-          topRight: {r: 0, g: 0, b: 0, a: 0}
-          bottomLeft: {r: 0, g: 0, b: 0, a: 0}
-          bottomRight: {r: 0, g: 0, b: 0, a: 0}
-        colorTransition:
-          m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-          m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-          m_ColorMultiplier: 0
-          m_FadeDuration: 0
-        gradientTransition:
-          normalGradient:
-            topLeft: {r: 0, g: 0, b: 0, a: 0}
-            topRight: {r: 0, g: 0, b: 0, a: 0}
-            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
-            bottomRight: {r: 0, g: 0, b: 0, a: 0}
-          highlightedGradient:
-            topLeft: {r: 0, g: 0, b: 0, a: 0}
-            topRight: {r: 0, g: 0, b: 0, a: 0}
-            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
-            bottomRight: {r: 0, g: 0, b: 0, a: 0}
-          pressedGradient:
-            topLeft: {r: 0, g: 0, b: 0, a: 0}
-            topRight: {r: 0, g: 0, b: 0, a: 0}
-            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
-            bottomRight: {r: 0, g: 0, b: 0, a: 0}
-          selectedGradient:
-            topLeft: {r: 0, g: 0, b: 0, a: 0}
-            topRight: {r: 0, g: 0, b: 0, a: 0}
-            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
-            bottomRight: {r: 0, g: 0, b: 0, a: 0}
-          disabledGradient:
-            topLeft: {r: 0, g: 0, b: 0, a: 0}
-            topRight: {r: 0, g: 0, b: 0, a: 0}
-            bottomLeft: {r: 0, g: 0, b: 0, a: 0}
-            bottomRight: {r: 0, g: 0, b: 0, a: 0}
+    backgroundStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 12
+      styleSheetUID: 0
+      name: Background
+    viewportMaskStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 12
+      styleSheetUID: 0
+      name: Viewport Mask
     verticalScrollbarActive: 1
     verticalScrollbarStylePicker:
-      container: {fileID: 0}
-      type: 0
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 8
       styleSheetUID: 0
-      name: 
+      name: Vertical Scrollbar
     horizontalScrollbarActive: 0
     horizontalScrollbarStylePicker:
-      container: {fileID: 0}
-      type: 0
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 8
       styleSheetUID: 0
-      name: 
+      name: Horizontal Scrollbar
   scrollView: {fileID: 5097181643900173768}
   backgroundImage: {fileID: 5097181643900173367}
   viewportRect: {fileID: 5097181642027428162}
+  viewportMask: {fileID: 5097181642027428160}
   contentRect: {fileID: 5097181643485416461}
   verticalScrollbar: {fileID: 6454480636966199068}
   horizontalScrollbar: {fileID: 0}
@@ -373,6 +306,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 5097181643900173769}
+  selectable: 1
   onMouseEnter:
     m_PersistentCalls:
       m_Calls: []
@@ -392,15 +326,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.19607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 0}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -443,6 +377,18 @@ PrefabInstance:
     - target: {fileID: 2246795128523630757, guid: e71f5b46201543440a18c68683bf5165, type: 3}
       propertyPath: m_Direction
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246795128523630758, guid: e71f5b46201543440a18c68683bf5165, type: 3}
+      propertyPath: scrollbarStylePicker.styleSheetUID
+      value: 8611
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246795128523630776, guid: e71f5b46201543440a18c68683bf5165, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246795128523630776, guid: e71f5b46201543440a18c68683bf5165, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 2246795128523630778, guid: e71f5b46201543440a18c68683bf5165, type: 3}
       propertyPath: m_Pivot.x

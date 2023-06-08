@@ -26,26 +26,25 @@ namespace LevelBuilder2D
         [Space]
         // Disk
         [SerializeField] private GameObject diskWindow;
-        [SerializeField] private Button diskBackButton;
+        [SerializeField] private AdvancedButton diskBackButton;
         [SerializeField] private AdvancedButton diskChoiceButton;
-        [SerializeField] private Button diskDeleteButton;
-        [SerializeField] private Button diskLoadButton;
-        [SerializeField] private Button diskCreateButton;
-        [SerializeField] private TMP_Dropdown diskChoiceDropdown;
+        [SerializeField] private AdvancedButton diskDeleteButton;
+        [SerializeField] private AdvancedButton diskLoadButton;
+        [SerializeField] private AdvancedButton diskCreateButton;
+        [SerializeField] private AdvancedDropdown diskChoiceDropdown;
         [SerializeField] private TMP_InputField diskNewLevelInput;
         [SerializeField] private ScrollListComponent diskStyleChoiceComponent;
         [Space]
         // Asset
         [SerializeField] private GameObject assetWindow;
-        [SerializeField] private Button assetBackButton;
+        [SerializeField] private AdvancedButton assetBackButton;
         [SerializeField] private AdvancedButton assetChoiceButton;
-        [SerializeField] private Button assetDeleteButton;
-        [SerializeField] private Button assetLoadButton;
-        [SerializeField] private Button assetCreateButton;
-        [SerializeField] private TMP_Dropdown assetChoiceDropdown;
+        [SerializeField] private AdvancedButton assetDeleteButton;
+        [SerializeField] private AdvancedButton assetLoadButton;
+        [SerializeField] private AdvancedButton assetCreateButton;
+        [SerializeField] private AdvancedDropdown assetChoiceDropdown;
         [SerializeField] private TMP_InputField assetNewLevelInput;
         [SerializeField] private ScrollListComponent assetStyleChoiceComponent;
-
 
         // Variables
         private List<LevelInfo> diskLevelList;
@@ -90,12 +89,12 @@ namespace LevelBuilder2D
             {
                 if (environment == LevelBuilderEnvironment.DISK)
                 {
-                    name = diskLevelList[diskChoiceDropdown.value].saveName;
-                    menuContent = styleList.GetByIndex(diskLevelList[diskChoiceDropdown.value].levelStyleIndex);
+                    name = diskLevelList[diskChoiceDropdown.Value].saveName;
+                    menuContent = styleList.GetByIndex(diskLevelList[diskChoiceDropdown.Value].levelStyleIndex);
                 }
                 else if (environment == LevelBuilderEnvironment.ASSET)
                 {
-                    levelSO = levelList.levels[assetChoiceDropdown.value];
+                    levelSO = levelList.levels[assetChoiceDropdown.Value];
                     name = levelSO.level.name;
                     menuContent = styleList.menuContents[assetStyleChoiceComponent.CurrentSelectionIndex];
                 }
@@ -108,56 +107,44 @@ namespace LevelBuilder2D
         }
 
 
-        // ### Listeners ###
+        #region Listeners
 
         private void SendInfoCreate() { SendInformation(StartAction.CREATE); }
         private void SendInfoLoad() { SendInformation(StartAction.LOAD); }
 
         private void ActuDiskButton(string str)
         {
-            diskCreateButton.interactable = VerifyNewLevelName(str);
+            diskCreateButton.Interactable = VerifyNewLevelName(str);
         }
         private void ActuAssetButton(string str)
         {
-            assetCreateButton.interactable = VerifyNewLevelName(str);
+            assetCreateButton.Interactable = VerifyNewLevelName(str);
         }
         private void EnvironmentDisk() 
         { 
             environment = LevelBuilderEnvironment.DISK;
-            diskWindow.SetActive(true);
-            environmentChoiceWindow.SetActive(false);
+            UIStack.Show(diskWindow);
         }
         private void EnvironmentAsset() 
         {
             environment = LevelBuilderEnvironment.ASSET;
-            assetWindow.SetActive(true);
-            environmentChoiceWindow.SetActive(false);
+            UIStack.Show(assetWindow);
         }
 
-        private void BackFromDisk()
-        {
-            diskWindow.SetActive(false);
-            environmentChoiceWindow.SetActive(true);
-        }
-        private void BackFromAsset()
-        {
-            assetWindow.SetActive(false);
-            environmentChoiceWindow.SetActive(true);
-        }
         private void DeleteFromDisk()
         {
-            LevelManager.DeleteLevelFromDisk(diskLevelList[diskChoiceDropdown.value]);
+            LevelManager.DeleteLevelFromDisk(diskLevelList[diskChoiceDropdown.Value]);
             FillDiskLevelList();
             FillDiskDropdown();
         }
         private void DeleteFromAsset()
         {
 #if UNITY_EDITOR
-            LevelManager.DeleteLevelSO(levelList.levels[assetChoiceDropdown.value], levelList);
+            LevelManager.DeleteLevelSO(levelList.levels[assetChoiceDropdown.Value], levelList);
             FillAssetDropdown();
 #endif
         }
-
+        #endregion
 
         // ### UI ###
 
@@ -184,17 +171,19 @@ namespace LevelBuilder2D
 
         private void FullEnvironment()
         {
-            environmentChoiceWindow.SetActive(true);
+            UIStack.Clear(environmentChoiceWindow);
 
+            // Safety
             diskWindow.SetActive(false);
             assetWindow.SetActive(false);
         }
         private void OnlyDiskEnvironment()
         {
             environmentChoiceWindow.SetActive(false);
+            assetWindow.SetActive(false);
             diskBackButton.gameObject.SetActive(false);
 
-            diskWindow.SetActive(true);
+            UIStack.Clear(diskWindow);
         }
         private void CreateAssetStyleChoiceList()
         {
@@ -214,25 +203,25 @@ namespace LevelBuilder2D
         {
             diskChoiceDropdown.ClearOptions();
 
-            if (diskLevelList != null)
+            if (diskLevelList != null && diskLevelList.Count > 0)
             {
-                diskChoiceDropdown.AddOptions(new List<string>(levelNames));
-                diskChoiceDropdown.interactable = true;
-                diskLoadButton.interactable = true;
-                diskDeleteButton.interactable = true;
+                diskChoiceDropdown.SetOptions(new List<string>(levelNames));
+                diskChoiceDropdown.Interactable = true;
+                diskLoadButton.Interactable = true;
+                diskDeleteButton.Interactable = true;
             }
             else
             {
-                diskChoiceDropdown.interactable = false;
-                diskLoadButton.interactable = false;
-                diskDeleteButton.interactable = false;
+                diskChoiceDropdown.Interactable = false;
+                diskLoadButton.Interactable = false;
+                diskDeleteButton.Interactable = false;
             }
         }
         private void FillAssetDropdown()
         {
             assetChoiceDropdown.ClearOptions();
 
-            if (levelList.levels != null)
+            if (levelList.levels != null && levelList.levels.Count > 0)
             {
                 List<string> assetNamesList = new();
 
@@ -241,55 +230,55 @@ namespace LevelBuilder2D
                     assetNamesList.Add(l.level.name);
                 }
 
-                assetChoiceDropdown.AddOptions(new List<string>(assetNamesList));
+                assetChoiceDropdown.SetOptions(new List<string>(assetNamesList));
 
-                assetChoiceDropdown.interactable = true;
-                assetLoadButton.interactable = true;
-                assetDeleteButton.interactable = true;
+                assetChoiceDropdown.Interactable = true;
+                assetLoadButton.Interactable = true;
+                assetDeleteButton.Interactable = true;
             }
             else
             {
-                assetChoiceDropdown.interactable = false;
-                assetLoadButton.interactable = false;
-                assetDeleteButton.interactable = false;
+                assetChoiceDropdown.Interactable = false;
+                assetLoadButton.Interactable = false;
+                assetDeleteButton.Interactable = false;
             }
         }
         private void AddDiskListeners()
         {
-            diskBackButton.onClick.RemoveAllListeners();
-            diskBackButton.onClick.AddListener(BackFromDisk);
+            diskBackButton.OnClick -= UIStack.Back;
+            diskBackButton.OnClick += UIStack.Back;
 
-            diskDeleteButton.onClick.RemoveAllListeners();
-            diskDeleteButton.onClick.AddListener(DeleteFromDisk);
+            diskDeleteButton.OnClick -= DeleteFromDisk;
+            diskDeleteButton.OnClick += DeleteFromDisk;
 
             diskChoiceButton.OnClick -= EnvironmentDisk;
             diskChoiceButton.OnClick += EnvironmentDisk;
 
-            diskCreateButton.onClick.RemoveAllListeners();
-            diskCreateButton.onClick.AddListener(SendInfoCreate);
+            diskCreateButton.OnClick -= SendInfoCreate;
+            diskCreateButton.OnClick += SendInfoCreate;
 
-            diskLoadButton.onClick.RemoveAllListeners();
-            diskLoadButton.onClick.AddListener(SendInfoLoad);
+            diskLoadButton.OnClick -= SendInfoLoad;
+            diskLoadButton.OnClick += SendInfoLoad;
 
             diskNewLevelInput.onValueChanged.RemoveAllListeners();
             diskNewLevelInput.onValueChanged.AddListener(ActuDiskButton);
         }
         private void AddAssetListeners()
         {
-            assetBackButton.onClick.RemoveAllListeners();
-            assetBackButton.onClick.AddListener(BackFromAsset);
+            assetBackButton.OnClick -= UIStack.Back;
+            assetBackButton.OnClick += UIStack.Back;
 
-            assetDeleteButton.onClick.RemoveAllListeners();
-            assetDeleteButton.onClick.AddListener(DeleteFromAsset);
+            assetDeleteButton.OnClick -= DeleteFromAsset;
+            assetDeleteButton.OnClick += DeleteFromAsset;
 
             assetChoiceButton.OnClick -= EnvironmentAsset;
             assetChoiceButton.OnClick += EnvironmentAsset;
 
-            assetCreateButton.onClick.RemoveAllListeners();
-            assetCreateButton.onClick.AddListener(SendInfoCreate);
+            assetCreateButton.OnClick -= SendInfoCreate;
+            assetCreateButton.OnClick += SendInfoCreate;
 
-            assetLoadButton.onClick.RemoveAllListeners();
-            assetLoadButton.onClick.AddListener(SendInfoLoad);
+            assetLoadButton.OnClick -= SendInfoLoad;
+            assetLoadButton.OnClick += SendInfoLoad;
 
             assetNewLevelInput.onValueChanged.RemoveAllListeners();
             assetNewLevelInput.onValueChanged.AddListener(ActuAssetButton);

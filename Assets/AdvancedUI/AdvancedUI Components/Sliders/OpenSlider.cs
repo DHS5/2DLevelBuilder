@@ -38,13 +38,15 @@ namespace Dhs5.AdvancedUI
         {
             base.OnPointerDown(eventData);
 
-            OnSliderDown?.Invoke();
+            if (interactable)
+                OnSliderDown?.Invoke();
         }
         public override void OnPointerUp(PointerEventData eventData)
         {
             base.OnPointerUp(eventData);
 
-            OnSliderUp?.Invoke();
+            if (interactable)
+                OnSliderUp?.Invoke();
         }
 
         #endregion

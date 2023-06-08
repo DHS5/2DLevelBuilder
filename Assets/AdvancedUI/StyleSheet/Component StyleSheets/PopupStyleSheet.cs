@@ -33,13 +33,13 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            popupStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Popup");
+            popupStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Popup");
 
-            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text Type");
+            textStylePicker?.SetUp(container, StyleSheetType.TEXT, "Text Type");
 
-            confirmationButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Confirmation Button");
-            cancelButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Cancel Button");
-            quitButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Quit Button");
+            confirmationButtonStylePicker?.SetUp(container, StyleSheetType.BUTTON, "Confirmation Button");
+            cancelButtonStylePicker?.SetUp(container, StyleSheetType.BUTTON, "Cancel Button");
+            quitButtonStylePicker?.SetUp(container, StyleSheetType.BUTTON, "Quit Button");
         }
     }
 }

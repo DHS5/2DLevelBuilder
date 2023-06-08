@@ -42,31 +42,36 @@ namespace Dhs5.AdvancedUI
         {
             base.OnPointerClick(eventData);
 
-            OnToggleClick?.Invoke();
+            if (interactable)
+                OnToggleClick?.Invoke();
         }
         public override void OnPointerEnter(PointerEventData eventData)
         {
             base.OnPointerEnter(eventData);
 
-            OnToggleEnter?.Invoke();
+            if (interactable)
+                OnToggleEnter?.Invoke();
         }
         public override void OnPointerExit(PointerEventData eventData)
         {
             base.OnPointerExit(eventData);
 
-            OnToggleExit?.Invoke();
+            if (interactable)
+                OnToggleExit?.Invoke();
         }
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
 
-            OnToggleDown?.Invoke();
+            if (interactable)
+                OnToggleDown?.Invoke();
         }
         public override void OnPointerUp(PointerEventData eventData)
         {
             base.OnPointerUp(eventData);
 
-            OnToggleUp?.Invoke();
+            if (interactable)
+                OnToggleUp?.Invoke();
         }
 
         #endregion

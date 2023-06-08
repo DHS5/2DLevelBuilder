@@ -28,11 +28,11 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
-            foregroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Foreground");
-            handleStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Handle");
-            leftTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Left Text type");
-            rightTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Right Text type");
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            foregroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Foreground");
+            handleStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Handle");
+            leftTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Left Text type");
+            rightTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Right Text type");
         }
     }
 }

@@ -58,6 +58,8 @@ namespace Dhs5.AdvancedUI
         [SerializeField] private SelectableGraphic backgroundImage;
         [Space]
         [SerializeField] private RectTransform viewportRect;
+        [SerializeField] private Image viewportMask;
+        [Space]
         [SerializeField] private RectTransform contentRect;
         [Space]
         [SerializeField] private AdvancedScrollbar verticalScrollbar;
@@ -112,6 +114,12 @@ namespace Dhs5.AdvancedUI
             {
                 image.enabled = CurrentStyleSheet.backgroundActive;
                 image.SetUpImage(CurrentStyleSheet.BackgroundStyleSheet);
+            }
+
+            // Viewport Mask
+            if (viewportMask)
+            {
+                viewportMask.SetUpImage(CurrentStyleSheet.ViewportMaskStyleSheet);
             }
 
             // Content

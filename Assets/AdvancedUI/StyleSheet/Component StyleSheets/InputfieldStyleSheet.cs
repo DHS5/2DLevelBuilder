@@ -26,9 +26,9 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
-            hintTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Hint Text type");
-            inputTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Input Text type");
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            hintTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Hint Text type");
+            inputTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Input Text type");
         }
     }
 }

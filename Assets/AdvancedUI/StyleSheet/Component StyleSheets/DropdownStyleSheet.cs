@@ -34,12 +34,12 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
-            titleTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Title Text type");
-            arrowStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Arrow Icon");
-            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text type");
-            templateScrollviewStylePicker.SetUp(container, StyleSheetType.SCROLL_VIEW, "Scrollview");
-            itemToggleStylePicker.SetUp(container, StyleSheetType.DROPDOWN_ITEM_TOGGLE, "Item Toggle");
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            titleTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Title Text type");
+            arrowStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Arrow Icon");
+            textStylePicker?.SetUp(container, StyleSheetType.TEXT, "Text type");
+            templateScrollviewStylePicker?.SetUp(container, StyleSheetType.SCROLL_VIEW, "Scrollview");
+            itemToggleStylePicker?.SetUp(container, StyleSheetType.DROPDOWN_ITEM_TOGGLE, "Item Toggle");
         }
     }
 }

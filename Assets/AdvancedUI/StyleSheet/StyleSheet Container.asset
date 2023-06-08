@@ -27,6 +27,8 @@ MonoBehaviour:
   backgroundSS:
   - UID: 443
     name: Button/Background
+  - UID: 7199
+    name: Button/Confirmation Background
   - UID: 3095
     name: Toggle/Background
   - UID: 9053
@@ -49,14 +51,26 @@ MonoBehaviour:
     name: Switch/Background
   - UID: 8647
     name: Switch/Foreground
+  - UID: 6106
+    name: Dropdown/Background
   - UID: 5026
     name: Dropdown Item/Background
-  - UID: 1999
-    name: Scroll View/Background
+  - UID: 7006
+    name: Dropdown Item/Dropdown Background
   - UID: 5880
     name: Frame/Red Hover
   - UID: 5655
     name: Frame/Black Hover
+  - UID: 4053
+    name: Panel/Background
+  - UID: 1999
+    name: Scroll View/Background
+  - UID: 8686
+    name: Scroll View/Viewport Mask
+  - UID: 9939
+    name: Scroll View/Dropdown/Background
+  - UID: 6228
+    name: Scroll View/Dropdown/Viewport Mask
   iconSS:
   - UID: 4763
     name: Toggle/Checkmark
@@ -109,6 +123,8 @@ MonoBehaviour:
   dropdownItemToggleSS:
   - UID: 3971
     name: Classic
+  - UID: 1116
+    name: Dropdown
   switchToggleSS:
   - UID: 8990
     name: Classic
@@ -133,6 +149,8 @@ MonoBehaviour:
   scrollviewSS:
   - UID: 6688
     name: Classic
+  - UID: 2973
+    name: Dropdown
   scrolllistSS:
   - UID: 2248
     name: Classic

@@ -36,15 +36,15 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            frameStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Frame");
-            frameMaskStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Frame mask");
-            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
-            horizontalMaskStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Horizontal mask");
-            verticalMaskStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Vertical mask");
+            frameStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Frame");
+            frameMaskStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Frame mask");
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            horizontalMaskStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Horizontal mask");
+            verticalMaskStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Vertical mask");
 
-            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text Type");
-            leftButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Left Button");
-            rightButtonStylePicker.SetUp(container, StyleSheetType.BUTTON, "Right Button");
+            textStylePicker?.SetUp(container, StyleSheetType.TEXT, "Text Type");
+            leftButtonStylePicker?.SetUp(container, StyleSheetType.BUTTON, "Left Button");
+            rightButtonStylePicker?.SetUp(container, StyleSheetType.BUTTON, "Right Button");
         }
     }
 }

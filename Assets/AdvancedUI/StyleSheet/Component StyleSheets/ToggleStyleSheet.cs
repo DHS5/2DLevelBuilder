@@ -37,12 +37,12 @@ namespace Dhs5.AdvancedUI
         {
             base.SetUp(_container);
 
-            backgroundStylePicker.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
-            checkmarkImageStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Checkmark Image");
-            uncheckmarkImageStylePicker.SetUp(container, StyleSheetType.ICON_IMAGE, "Uncheckmark Image");
-            checkmarkTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Checkmark Text type");
-            uncheckmarkTextStylePicker.SetUp(container, StyleSheetType.TEXT, "Uncheckmark Text type");
-            textStylePicker.SetUp(container, StyleSheetType.TEXT, "Text type");
+            backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            checkmarkImageStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Checkmark Image");
+            uncheckmarkImageStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Uncheckmark Image");
+            checkmarkTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Checkmark Text type");
+            uncheckmarkTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Uncheckmark Text type");
+            textStylePicker?.SetUp(container, StyleSheetType.TEXT, "Text type");
         }
     }
 }

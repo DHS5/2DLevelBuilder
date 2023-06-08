@@ -20,13 +20,15 @@ namespace Dhs5.AdvancedUI
         {
             base.OnPointerDown(eventData);
 
-            OnScrollbarDown?.Invoke();
+            if (interactable)
+                OnScrollbarDown?.Invoke();
         }
         public override void OnPointerUp(PointerEventData eventData)
         {
             base.OnPointerUp(eventData);
 
-            OnScrollbarUp?.Invoke();
+            if (interactable)
+                OnScrollbarUp?.Invoke();
         }
 
         #endregion

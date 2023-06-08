@@ -67,8 +67,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -113,7 +113,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 5, y: 0}
+  m_AnchoredPosition: {x: 10, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4275998468257750089
@@ -190,7 +190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5, y: -0.5}
+  m_AnchoredPosition: {x: 10, y: -0.5}
   m_SizeDelta: {x: 0, y: -3}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4275998468818216670
@@ -355,67 +355,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4845b482c17ea264c843d1189456d10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleType: 0
+  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+  toggleStylePicker:
+    container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    type: 3
+    styleSheetUID: 3971
+    name: Toggle Type
   isOn: 1
   overrideText: 0
   text: 
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onClick:
+    m_PersistentCalls:
+      m_Calls: []
+  onMouseEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onMouseExit:
+    m_PersistentCalls:
+      m_Calls: []
+  custom: 0
   customStyleSheet:
+    container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    uniqueID: 0
+    name: 
     backgroundActive: 1
-    backgroundStyleSheet:
-      baseSprite: {fileID: 0}
-      baseColor: {r: 0, g: 0, b: 0, a: 0}
-      baseMaterial: {fileID: 0}
-      imageType: 0
-      pixelsPerUnit: 1
-      transition:
-        transitionType: 0
-        spriteState:
-          m_HighlightedSprite: {fileID: 0}
-          m_PressedSprite: {fileID: 0}
-          m_SelectedSprite: {fileID: 0}
-          m_DisabledSprite: {fileID: 0}
-        colorBlock:
-          m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-          m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-          m_ColorMultiplier: 0
-          m_FadeDuration: 0
-    checkmarkStyleSheet:
-      baseSprite: {fileID: 0}
-      baseColor: {r: 0, g: 0, b: 0, a: 0}
-      baseMaterial: {fileID: 0}
-      imageType: 0
-      pixelsPerUnit: 1
-      transition:
-        transitionType: 0
-        spriteState:
-          m_HighlightedSprite: {fileID: 0}
-          m_PressedSprite: {fileID: 0}
-          m_SelectedSprite: {fileID: 0}
-          m_DisabledSprite: {fileID: 0}
-        colorBlock:
-          m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-          m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-          m_ColorMultiplier: 0
-          m_FadeDuration: 0
-    textStyleSheet:
-      font: {fileID: 0}
-      fontStyle: 0
-      alignment: 0
-      transition:
-        m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-        m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-        m_ColorMultiplier: 0
-        m_FadeDuration: 0
-  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    backgroundStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 12
+      styleSheetUID: 0
+      name: Background
+    checkmarkStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 13
+      styleSheetUID: 0
+      name: Checkmark
+    textStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 0
+      styleSheetUID: 0
+      name: Text type
   toggle: {fileID: 578695986084156874}
   toggleBackground: {fileID: 4275998467994288548}
   checkmarkImage: {fileID: 4275998468257750094}
