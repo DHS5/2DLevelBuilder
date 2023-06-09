@@ -188,59 +188,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51c5950afa5ec8418a43bcafe9295a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliderType: 0
+  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+  inputFieldStylePicker:
+    container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    type: 7
+    styleSheetUID: 0
+    name: InputField type
   inputfieldContent:
     hintText: Enter Text...
+  custom: 0
   customStyleSheet:
+    container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+    uniqueID: 0
+    name: 
     backgroundActive: 1
-    backgroundStyleSheet:
-      baseSprite: {fileID: 0}
-      baseColor: {r: 0, g: 0, b: 0, a: 0}
-      baseMaterial: {fileID: 0}
-      imageType: 0
-      pixelsPerUnit: 1
-      transition:
-        transitionType: 0
-        spriteState:
-          m_HighlightedSprite: {fileID: 0}
-          m_PressedSprite: {fileID: 0}
-          m_SelectedSprite: {fileID: 0}
-          m_DisabledSprite: {fileID: 0}
-        colorBlock:
-          m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-          m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-          m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-          m_ColorMultiplier: 0
-          m_FadeDuration: 0
+    backgroundStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 12
+      styleSheetUID: 0
+      name: Background
     hintTextActive: 1
-    hintTextStyleSheet:
-      font: {fileID: 0}
-      fontStyle: 0
-      alignment: 0
-      transition:
-        m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-        m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-        m_ColorMultiplier: 0
-        m_FadeDuration: 0
-    inputTextStyleSheet:
-      font: {fileID: 0}
-      fontStyle: 0
-      alignment: 0
-      transition:
-        m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
-        m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
-        m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
-        m_ColorMultiplier: 0
-        m_FadeDuration: 0
+    hintTextStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 0
+      styleSheetUID: 0
+      name: Hint Text type
+    inputTextStylePicker:
+      container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
+      type: 0
+      styleSheetUID: 0
+      name: Input Text type
     selectionColor: {r: 0, g: 0, b: 0, a: 0}
-  styleSheetContainer: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
   inputField: {fileID: 2659539752250033879}
   backgroundImage: {fileID: 2659539752250033873}
   hintText: {fileID: 2659539752434636577}
@@ -575,7 +553,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: -20, y: -13}
+  m_SizeDelta: {x: -30, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2659539752492034807
 MonoBehaviour:
@@ -589,5 +567,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3312d7739989d2b4e91e6319e9a96d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Padding: {x: -8, y: -5, z: -8, w: -5}
+  m_Padding: {x: -8, y: 0, z: -8, w: 0}
   m_Softness: {x: 0, y: 0}

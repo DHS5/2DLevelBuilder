@@ -214,7 +214,7 @@ MonoBehaviour:
     uniqueID: 4667
     name: Hint
     font: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-    fontStyle: 0
+    fontStyle: 2
     overrideAlignment: 0
     alignment: 0
     isGradient: 0

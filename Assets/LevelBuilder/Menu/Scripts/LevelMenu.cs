@@ -32,7 +32,7 @@ namespace LevelBuilder2D
         [SerializeField] private AdvancedButton diskLoadButton;
         [SerializeField] private AdvancedButton diskCreateButton;
         [SerializeField] private AdvancedDropdown diskChoiceDropdown;
-        [SerializeField] private TMP_InputField diskNewLevelInput;
+        [SerializeField] private AdvancedInputField diskNewLevelInput;
         [SerializeField] private ScrollListComponent diskStyleChoiceComponent;
         [Space]
         // Asset
@@ -43,7 +43,7 @@ namespace LevelBuilder2D
         [SerializeField] private AdvancedButton assetLoadButton;
         [SerializeField] private AdvancedButton assetCreateButton;
         [SerializeField] private AdvancedDropdown assetChoiceDropdown;
-        [SerializeField] private TMP_InputField assetNewLevelInput;
+        [SerializeField] private AdvancedInputField assetNewLevelInput;
         [SerializeField] private ScrollListComponent assetStyleChoiceComponent;
 
         // Variables
@@ -81,7 +81,7 @@ namespace LevelBuilder2D
             ItemsMenuContent menuContent = null;
             if (startAction == StartAction.CREATE)
             {
-                name = environment == LevelBuilderEnvironment.DISK ? diskNewLevelInput.text : assetNewLevelInput.text;
+                name = environment == LevelBuilderEnvironment.DISK ? diskNewLevelInput.Text : assetNewLevelInput.Text;
                 menuContent = styleList.menuContents[environment == LevelBuilderEnvironment.DISK ?
                     diskStyleChoiceComponent.CurrentSelectionIndex : assetStyleChoiceComponent.CurrentSelectionIndex];
             }
@@ -157,7 +157,7 @@ namespace LevelBuilder2D
             FullEnvironment();
             FillAssetDropdown();
             AddAssetListeners();
-            ActuAssetButton(assetNewLevelInput.text);
+            ActuAssetButton(assetNewLevelInput.Text);
             CreateAssetStyleChoiceList();
 #else
             OnlyDiskEnvironment();
@@ -166,7 +166,7 @@ namespace LevelBuilder2D
 
             CreateDiskStyleChoiceList();
             FillDiskDropdown();
-            ActuDiskButton(diskNewLevelInput.text);
+            ActuDiskButton(diskNewLevelInput.Text);
         }
 
         private void FullEnvironment()
@@ -260,8 +260,8 @@ namespace LevelBuilder2D
             diskLoadButton.OnClick -= SendInfoLoad;
             diskLoadButton.OnClick += SendInfoLoad;
 
-            diskNewLevelInput.onValueChanged.RemoveAllListeners();
-            diskNewLevelInput.onValueChanged.AddListener(ActuDiskButton);
+            diskNewLevelInput.OnValueChanged -= ActuDiskButton;
+            diskNewLevelInput.OnValueChanged += ActuDiskButton;
         }
         private void AddAssetListeners()
         {
@@ -280,8 +280,8 @@ namespace LevelBuilder2D
             assetLoadButton.OnClick -= SendInfoLoad;
             assetLoadButton.OnClick += SendInfoLoad;
 
-            assetNewLevelInput.onValueChanged.RemoveAllListeners();
-            assetNewLevelInput.onValueChanged.AddListener(ActuAssetButton);
+            assetNewLevelInput.OnValueChanged -= ActuAssetButton;
+            assetNewLevelInput.OnValueChanged += ActuAssetButton;
         }
 
 

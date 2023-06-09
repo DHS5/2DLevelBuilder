@@ -121,16 +121,13 @@ namespace NaughtyAttributes.Editor
 
         public static bool IsVisible(SerializedProperty property)
         {
-            Debug.Log("is visible");
             ShowIfAttributeBase showIfAttribute = GetAttribute<ShowIfAttributeBase>(property);
             if (showIfAttribute == null)
             {
-                Debug.Log("null");
                 return true;
             }
 
             object target = GetTargetObjectWithProperty(property);
-            Debug.Log("target : " + target);
             // deal with enum conditions
             if (showIfAttribute.EnumValue != null)
             {
