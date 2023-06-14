@@ -10,6 +10,8 @@ namespace Dhs5.AdvancedUI
     {
         public bool backgroundActive = true;
         public StylePicker backgroundStylePicker;
+        public bool trueBackground = false;
+        public StylePicker trueBackgroundStylePicker;
         [Space, Space]
         public bool checkmarkActive = true;
         public bool checkmarkIsImage = true;
@@ -27,6 +29,7 @@ namespace Dhs5.AdvancedUI
         public StylePicker textStylePicker;
 
         public ImageStyleSheet BackgroundStyleSheet => backgroundStylePicker.StyleSheet as ImageStyleSheet;
+        public ImageStyleSheet TrueBackgroundStyleSheet => trueBackgroundStylePicker.StyleSheet as ImageStyleSheet;
         public ImageStyleSheet CheckmarkImageStyleSheet => checkmarkImageStylePicker.StyleSheet as ImageStyleSheet;
         public ImageStyleSheet UncheckmarkImageStyleSheet => uncheckmarkImageStylePicker.StyleSheet as ImageStyleSheet;
         public TextStyleSheet CheckmarkTextStyleSheet => checkmarkTextStylePicker.StyleSheet as TextStyleSheet;
@@ -38,6 +41,7 @@ namespace Dhs5.AdvancedUI
             base.SetUp(_container);
 
             backgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "Background");
+            trueBackgroundStylePicker?.SetUp(container, StyleSheetType.BACKGROUND_IMAGE, "True Background");
             checkmarkImageStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Checkmark Image");
             uncheckmarkImageStylePicker?.SetUp(container, StyleSheetType.ICON_IMAGE, "Uncheckmark Image");
             checkmarkTextStylePicker?.SetUp(container, StyleSheetType.TEXT, "Checkmark Text type");

@@ -6,50 +6,48 @@ using TMPro;
 using UnityEngine.Events;
 using System;
 using System.Linq;
-using static Codice.CM.WorkspaceServer.WorkspaceTreeDataStore;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Dropdown Content
-    [System.Serializable]
-    public struct DropdownContent
-    {
-        public DropdownContent(List<string> options, string title = "", float tHeight = 200, float iHeight = 40)
-        {
-            dropdownTitle = title;
-            dropdownOptions = options;
-            templateHeight = tHeight;
-            itemHeight = iHeight;
-        }
-
-        // ### Properties ###
-        public string dropdownTitle;
-        public List<string> dropdownOptions;
-        [Space]
-        [SerializeField] private float templateHeight;
-        public float TemplateHeight { get { return templateHeight > 0 ? templateHeight : 200; } set { templateHeight = value; } }
-        [SerializeField] private float itemHeight;
-        public float ItemHeight { get { return itemHeight > 0 ? itemHeight : 40; } set { itemHeight = value; } }
-
-        // ### Functions ###
-        public DropdownContent SetOptions(List<string> options)
-        {
-            return new(options, this.dropdownTitle, this.templateHeight, this.itemHeight);
-        }
-        public DropdownContent AddOptions(List<string> options)
-        {
-            this.dropdownOptions.AddRange(options);
-            return new(options, this.dropdownTitle, this.templateHeight, this.itemHeight);
-        }
-        public DropdownContent ClearOptions()
-        {
-            return new(new(), this.dropdownTitle, this.templateHeight, this.itemHeight);
-        }
-    }
-    #endregion
-
     public class AdvancedDropdown : AdvancedComponent
     {
+        #region Dropdown Content
+        [System.Serializable]
+        public class DropdownContent
+        {
+            public DropdownContent(List<string> options, string title = "", float tHeight = 200, float iHeight = 40)
+            {
+                dropdownTitle = title;
+                dropdownOptions = options;
+                templateHeight = tHeight;
+                itemHeight = iHeight;
+            }
+
+            // ### Properties ###
+            public string dropdownTitle;
+            public List<string> dropdownOptions;
+            [Space]
+            [SerializeField] private float templateHeight;
+            public float TemplateHeight { get { return templateHeight > 0 ? templateHeight : 200; } set { templateHeight = value; } }
+            [SerializeField] private float itemHeight;
+            public float ItemHeight { get { return itemHeight > 0 ? itemHeight : 40; } set { itemHeight = value; } }
+
+            // ### Functions ###
+            public void SetOptions(List<string> options)
+            {
+                dropdownOptions = options;
+            }
+            public void AddOptions(List<string> options)
+            {
+                dropdownOptions.AddRange(options);
+            }
+            public void ClearOptions()
+            {
+                dropdownOptions.Clear();
+            }
+        }
+        #endregion
+
         [Header("Dropdown Type")]
         [SerializeField] private StylePicker dropdownStylePicker;
         public StylePicker Style { get => dropdownStylePicker; set { dropdownStylePicker.ForceSet(value); SetUpConfig(); } }
@@ -94,33 +92,33 @@ namespace Dhs5.AdvancedUI
         #region Dropdown Options
         public void SetOptions(List<string> options)
         {
-            Content = Content.SetOptions(options);
+            Content.SetOptions(options);
             dropdown.ClearOptions();
             dropdown.AddOptions(options);
         }
         public void SetOptions(string[] options)
         {
             List<string> list = options.ToList();
-            Content = Content.SetOptions(list);
+            Content.SetOptions(list);
             dropdown.ClearOptions();
             dropdown.AddOptions(list);
         }
 
         public void AddOptions(List<string> options)
         {
-            Content = Content.AddOptions(options);
+            Content.AddOptions(options);
             dropdown.AddOptions(options);
         }
         public void AddOptions(string[] options)
         {
             List<string> list = options.ToList();
-            Content = Content.AddOptions(list);
+            Content.AddOptions(list);
             dropdown.AddOptions(list);
         }
 
         public void ClearOptions()
         {
-            Content = Content.ClearOptions();
+            Content.ClearOptions();
             dropdown.ClearOptions();
         }
         #endregion
@@ -201,7 +199,9 @@ namespace Dhs5.AdvancedUI
             // ScrollView
             if (templateScrollView)
             {
-                templateScrollView.Content = new ScrollViewContent(ScrollViewContent.ScrollViewDirection.VERTICAL, Content.ItemHeight);
+                templateScrollView.Content.direction = AdvancedScrollView.ScrollViewContent.ScrollViewDirection.VERTICAL;
+                templateScrollView.Content.ContentHeight = Content.ItemHeight;
+
                 templateScrollView.Style = CurrentStyleSheet.TemplateScrollviewStyle;
                 (templateScrollView.transform as RectTransform).
                     SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, Content.TemplateHeight);

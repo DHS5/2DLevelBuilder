@@ -12,8 +12,8 @@ namespace Dhs5.AdvancedUI
         [SerializeField] private StylePicker sliderStylePicker;
         public StylePicker SliderStyle { get =>  sliderStylePicker; set { sliderStylePicker.ForceSet(value); SetUpConfig(); } }
 
-        [SerializeField] private SliderContent sliderContent;
-        public SliderContent SliderContent { get => sliderContent; set { sliderContent = value; SetUpConfig(); } }
+        [SerializeField] private AdvancedSlider.SliderContent sliderContent;
+        public AdvancedSlider.SliderContent SliderContent { get => sliderContent; set { sliderContent = value; SetUpConfig(); } }
         
         [Header("InputField")]
         [SerializeField] private StylePicker inputfieldStylePicker;
@@ -120,11 +120,13 @@ namespace Dhs5.AdvancedUI
 
             if (slider)
             {
+                slider.SetContainer(styleSheetContainer);
                 slider.Style = SliderStyle;
                 slider.Content = SliderContent;
             }
             if (inputField)
             {
+                inputField.SetContainer(styleSheetContainer);
                 inputField.Style = InputStyle;
             }
         }

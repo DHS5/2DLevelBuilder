@@ -7,17 +7,17 @@ using System;
 
 namespace Dhs5.AdvancedUI
 {
-    #region InputField Content
-    [System.Serializable]
-    public struct InputFieldContent
-    {
-        // ### Properties ###
-        public string hintText;
-    }
-    #endregion
-
     public class AdvancedInputField : AdvancedComponent
     {
+        #region InputField Content
+        [System.Serializable]
+        public class InputFieldContent
+        {
+            // ### Properties ###
+            public string hintText;
+        }
+        #endregion
+
         [Header("InputField Type")]
         [SerializeField] private StylePicker inputFieldStylePicker;
         public StylePicker Style { get => inputFieldStylePicker; set { inputFieldStylePicker.ForceSet(value); SetUpConfig(); } }

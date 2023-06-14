@@ -6,34 +6,34 @@ using UnityEngine.UI;
 
 namespace Dhs5.AdvancedUI
 {
-    #region ScrollView Content
-
-    [System.Serializable]
-    public struct ScrollViewContent
-    {
-        [System.Serializable]
-        public enum ScrollViewDirection { VERTICAL, HORIZONTAL, BOTH };
-
-        public ScrollViewContent(ScrollViewDirection _direction, float _height = 0, float _width = 0)
-        {
-            direction = _direction;
-            contentHeight = _height;
-            contentWidth = _width;
-        }
-
-        // ### Properties ###
-        public ScrollViewDirection direction;
-        [Space]
-        [SerializeField] private float contentWidth;
-        public float ContentWidth { get { return contentWidth > 0 ? contentWidth : 100; } set { contentWidth = value; } }
-        [SerializeField] private float contentHeight;
-        public float ContentHeight { get { return contentHeight > 0 ? contentHeight : 100; } set { contentHeight = value; } }
-    }
-
-    #endregion
-
     public class AdvancedScrollView : AdvancedComponent
     {
+        #region ScrollView Content
+
+        [System.Serializable]
+        public class ScrollViewContent
+        {
+            [System.Serializable]
+            public enum ScrollViewDirection { VERTICAL, HORIZONTAL, BOTH };
+
+            public ScrollViewContent(ScrollViewDirection _direction, float _height = 0, float _width = 0)
+            {
+                direction = _direction;
+                contentHeight = _height;
+                contentWidth = _width;
+            }
+
+            // ### Properties ###
+            public ScrollViewDirection direction;
+            [Space]
+            [SerializeField] private float contentWidth;
+            public float ContentWidth { get { return contentWidth > 0 ? contentWidth : 100; } set { contentWidth = value; } }
+            [SerializeField] private float contentHeight;
+            public float ContentHeight { get { return contentHeight > 0 ? contentHeight : 100; } set { contentHeight = value; } }
+        }
+
+        #endregion
+
         [Header("ScrollView Type")]
         [SerializeField] private StylePicker scrollviewStylePicker;
         public StylePicker Style { get => scrollviewStylePicker; set { scrollviewStylePicker.ForceSet(value); SetUpConfig(); } }
@@ -160,11 +160,13 @@ namespace Dhs5.AdvancedUI
             // Scrollbars
             if (verticalScrollbar)
             {
+                verticalScrollbar.SetContainer(styleSheetContainer);
                 verticalScrollbar.gameObject.SetActive(CurrentStyleSheet.verticalScrollbarActive);
                 verticalScrollbar.Style = CurrentStyleSheet.VerticalScrollbarStyle;
             }
             if (horizontalScrollbar)
             {
+                horizontalScrollbar.SetContainer(styleSheetContainer);
                 horizontalScrollbar.gameObject.SetActive(CurrentStyleSheet.horizontalScrollbarActive);
                 horizontalScrollbar.Style = CurrentStyleSheet.HorizontalScrollbarStyle;
             }

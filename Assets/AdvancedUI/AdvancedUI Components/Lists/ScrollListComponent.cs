@@ -10,28 +10,6 @@ using UnityEngine.Events;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Scroll List Content
-    [Serializable]
-    public class ScrollListContent
-    {
-        public float socketSize = 100;
-        public float spaceBetweenSockets = 10;
-        [Space]
-        public bool useScroll = true;
-        [ShowIf(nameof(useScroll))][AllowNesting] public float scrollSensitivity = 100;
-        [Space]
-        public bool useDisplay = true;
-        [ShowIf(nameof(useDisplay))][AllowNesting] public float displayHeight = 80;
-        [Space]
-        public bool useButtons = false;
-        [ShowIf(nameof(useButtons))][AllowNesting] public float buttonsHeight = 80;
-        [Space]
-        public bool useAnim = false;
-        [ShowIf(nameof(useAnim))][AllowNesting] public float animLerp = 0.5f;
-        [ShowIf(nameof(useAnim))][AllowNesting] public float animDelay = 0.02f;
-    }
-    #endregion
-
     public class ScrollListComponent : AdvancedComponent
     {
         #region Enums
@@ -40,6 +18,28 @@ namespace Dhs5.AdvancedUI
         
         [System.Serializable]
         private enum ListFormat { Infinite, Simple }
+        #endregion
+
+        #region Scroll List Content
+        [Serializable]
+        public class ScrollListContent
+        {
+            public float socketSize = 100;
+            public float spaceBetweenSockets = 10;
+            [Space]
+            public bool useScroll = true;
+            [ShowIf(nameof(useScroll))][AllowNesting] public float scrollSensitivity = 100;
+            [Space]
+            public bool useDisplay = true;
+            [ShowIf(nameof(useDisplay))][AllowNesting] public float displayHeight = 80;
+            [Space]
+            public bool useButtons = false;
+            [ShowIf(nameof(useButtons))][AllowNesting] public float buttonsHeight = 80;
+            [Space]
+            public bool useAnim = false;
+            [ShowIf(nameof(useAnim))][AllowNesting] public float animLerp = 0.5f;
+            [ShowIf(nameof(useAnim))][AllowNesting] public float animDelay = 0.02f;
+        }
         #endregion
 
         [Header("Parameters")]

@@ -16,9 +16,10 @@ namespace Dhs5.AdvancedUI
         }
 
         [Header("Image Type")]
-        public ImageType type;
-        public StylePicker imageStylePicker;
-        public bool selectable;
+        [SerializeField] private ImageType type;
+        [SerializeField] private StylePicker imageStylePicker;
+        public StylePicker Style { get => imageStylePicker; set { imageStylePicker.ForceSet(value); SetUpConfig(); } }
+        [SerializeField] private bool selectable;
 
         [Header("Custom Style Sheet")]
         [SerializeField] private bool custom;

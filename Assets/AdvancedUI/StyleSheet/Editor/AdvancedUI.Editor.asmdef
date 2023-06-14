@@ -2,7 +2,9 @@
     "name": "AdvancedUI.Editor",
     "rootNamespace": "Dhs5.AdvancedUI",
     "references": [
-        "GUID:7ccca83e3419dce41a25a825b8ed0f35"
+        "GUID:7ccca83e3419dce41a25a825b8ed0f35",
+        "GUID:022a898c68ffb5b43b96b7a36e864b66",
+        "GUID:b9d82824522b0364890b65b359da30c1"
     ],
     "includePlatforms": [
         "Editor"

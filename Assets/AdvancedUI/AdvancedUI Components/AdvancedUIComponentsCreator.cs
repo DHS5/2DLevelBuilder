@@ -188,6 +188,28 @@ namespace Dhs5.AdvancedUI
         }
 
         #endregion
+        
+        #region Foldout
+
+        [MenuItem("GameObject/UI/AdvancedUI/Foldout/Vertical Foldout")]
+        public static void CreateVerticalFoldout()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/VerticalFoldout.prefab");
+        }
+        
+        [MenuItem("GameObject/UI/AdvancedUI/Foldout/Horizontal Foldout")]
+        public static void CreateHorizontalFoldout()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/HorizontalFoldout.prefab");
+        }
+        
+        [MenuItem("GameObject/UI/AdvancedUI/Foldout/Grid Foldout")]
+        public static void CreateGridFoldout()
+        {
+            CreateAdvancedUIObject("Assets/AdvancedUI/AdvancedUI Prefabs/GridFoldout.prefab");
+        }
+
+        #endregion
     }
 }
 #endif

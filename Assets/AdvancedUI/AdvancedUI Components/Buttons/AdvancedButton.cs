@@ -8,31 +8,26 @@ using System;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Button Content
-
-    [System.Serializable]
-    public struct ButtonContent
-    {
-        public ButtonContent(string _text = "")//, Sprite backround = null, Sprite icon = null, float scale = 1)
-        {
-            text = _text;
-            //backgroundSprite = backround;
-            //iconSprite = icon;
-            //iconScale = scale;
-        }
-
-        // ### Properties ###
-        //public Sprite backgroundSprite;
-        //public Sprite iconSprite;
-        //[SerializeField] private float iconScale; public float IconScale { get { return iconScale > 0 ? iconScale : 1; } set { iconScale = value; } }
-        //[Space]
-        public string text;
-    }
-
-    #endregion
+    
 
     public class AdvancedButton : AdvancedComponent
     {
+        #region Button Content
+
+        [System.Serializable]
+        public class ButtonContent
+        {
+            public ButtonContent(string _text = "")
+            {
+                text = _text;
+            }
+
+            // ### Properties ###
+            public string text;
+        }
+
+        #endregion
+
         [Header("Button Type")]
         [SerializeField] private StylePicker buttonStylePicker;
         public StylePicker Style { get => buttonStylePicker; set { buttonStylePicker.ForceSet(value); SetUpConfig(); } }

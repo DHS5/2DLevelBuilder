@@ -6,58 +6,59 @@ using NaughtyAttributes;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Mask Content
-    [System.Serializable]
-    public class MaskContent
+    public class UIMask : AdvancedComponent
     {
-        public Sprite maskSprite;
-        public bool showImage;
-        [ShowIf(nameof(showImage))][AllowNesting] public Sprite imageSprite;
-        public bool showRawImage;
-        [ShowIf(nameof(showRawImage))][AllowNesting] public Texture rawImageTexture;
-    }
-    #endregion
+        [Header("Mask type")]
+        [SerializeField] private StylePicker maskStylePicker;
+        public StylePicker Style { get => maskStylePicker; set { maskStylePicker.ForceSet(value); SetUpConfig(); } }
 
-    public class UIMask : MonoBehaviour
-    {
-        [Header("Content")]
-        [SerializeField] private MaskContent maskContent;
-        public MaskContent Content { get { return maskContent; } set { maskContent = value; } }
+        public override bool Interactable { get => maskImage.enabled; set => maskImage.enabled = value; }
+
+        [Header("Custom Style Sheet")]
+        [SerializeField] private bool custom;
+        [SerializeField] private ImageStyleSheet customStyleSheet;
+
+        [Header("Overrides")]
+        [SerializeField] private bool overrideMask;
+        [SerializeField] private ImageOverrideSheet maskOverrideSheet;
+
+        private ImageStyleSheet CurrentStyleSheet
+        { get { return custom ? customStyleSheet : styleSheetContainer ? maskStylePicker.StyleSheet as ImageStyleSheet : null; } }
 
         [Header("UI Components")]
-        [SerializeField] private Image mask;
-        [Space]
-        [SerializeField] private Image image;
-        [SerializeField] private RawImage rawImage;
+        [SerializeField] private Image maskImage;
+        [SerializeField] private SoftMask mask;
 
+        #region Events
+        protected override void LinkEvents() { }
+        protected override void UnlinkEvents() { }
+        #endregion
 
-        private void Awake()
+        #region Configs
+        protected override void SetUpConfig()
         {
-            SetUp();
-        }
+            if (styleSheetContainer == null) return;
 
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            SetUp();   
-        }
-#endif
+            maskStylePicker.SetUp(styleSheetContainer, StyleSheetType.BACKGROUND_IMAGE, "Mask Style");
 
-        private void SetUp()
-        {
-            if (mask) mask.sprite = Content.maskSprite;
+            if (CurrentStyleSheet == null) return;
 
-            if (image)
+            if (maskImage)
             {
-                image.enabled = Content.showImage;
-                image.sprite = Content.imageSprite;
+                if (!overrideMask)
+                {
+                    maskImage.SetUpMask(CurrentStyleSheet);
+                }
+                else
+                {
+                    maskImage.SetUpMask(CurrentStyleSheet, maskOverrideSheet);
+                }
             }
-            
-            if (rawImage)
-            {
-                rawImage.enabled = Content.showRawImage;
-                rawImage.texture = Content.rawImageTexture;
-            }
+
+            if (mask) mask.FixChildren();
         }
+
+        protected override void SetUpGraphics() { }
+        #endregion
     }
 }

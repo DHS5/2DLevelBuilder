@@ -192,7 +192,7 @@ MonoBehaviour:
   inputFieldStylePicker:
     container: {fileID: 11400000, guid: b47546c30472f5c4e8e233922de332c4, type: 2}
     type: 7
-    styleSheetUID: 0
+    styleSheetUID: 9734
     name: InputField type
   inputfieldContent:
     hintText: Enter Text...
@@ -309,7 +309,7 @@ MonoBehaviour:
       m_Calls: []
   m_CaretColor: {r: 0, g: 0, b: 0, a: 1}
   m_CustomCaretColor: 1
-  m_SelectionColor: {r: 0.50352436, g: 0.8201042, b: 0.9811321, a: 0.5882353}
+  m_SelectionColor: {r: 0.4481132, g: 1, b: 0.9520409, a: 1}
   m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 2
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.5
 --- !u!1 &2659539752434636588
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,8 +436,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4288322202
-  m_fontColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
+    rgba: 4286874756
+  m_fontColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -460,7 +460,7 @@ MonoBehaviour:
   m_enableAutoSizing: 1
   m_fontSizeMin: 10
   m_fontSizeMax: 72
-  m_fontStyle: 2
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535

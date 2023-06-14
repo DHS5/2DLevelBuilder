@@ -12,13 +12,13 @@ namespace Dhs5.AdvancedUI
     {
         [Header("Button")]
         [SerializeField] private StylePicker buttonStylePicker;
-        [SerializeField] private ButtonContent buttonContent;
-        public ButtonContent ButtonContent { get { return buttonContent; } set { buttonContent = value; } }
+        [SerializeField] private AdvancedButton.ButtonContent buttonContent;
+        public AdvancedButton.ButtonContent ButtonContent { get { return buttonContent; } set { buttonContent = value; } }
 
         [Header("Popup")]
         [SerializeField] private StylePicker popupStylePicker;
-        [SerializeField] private PopupContent popupContent;
-        public PopupContent PopupContent { get { return popupContent; } set { popupContent = value; } }
+        [SerializeField] private AdvancedPopup.PopupContent popupContent;
+        public AdvancedPopup.PopupContent PopupContent { get { return popupContent; } set { popupContent = value; } }
 
         public override bool Interactable { get => button.Interactable; set => button.Interactable = value; }
 
@@ -91,11 +91,13 @@ namespace Dhs5.AdvancedUI
 
             if (button)
             {
+                button.SetContainer(styleSheetContainer);
                 button.Style = buttonStylePicker;
                 button.Content = buttonContent;
             }
             if (popup)
             {
+                popup.SetContainer(styleSheetContainer);
                 popup.Style = popupStylePicker;
                 popup.Content = popupContent;
             }

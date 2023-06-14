@@ -8,24 +8,24 @@ using TMPro;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Slider Content
-    [Serializable]
-    public struct SliderContent
-    {
-
-        // ### Properties ###
-        [Header("Slider base properties")]
-        public int minValue;
-        public int maxValue;
-        public bool wholeNumbers;
-
-        [Header("Text")]
-        public string text;
-    }
-    #endregion
-
     public class AdvancedSlider : AdvancedComponent
     {
+        #region Slider Content
+        [Serializable]
+        public class SliderContent
+        {
+
+            // ### Properties ###
+            [Header("Slider base properties")]
+            public int minValue;
+            public int maxValue;
+            public bool wholeNumbers;
+
+            [Header("Text")]
+            public string text;
+        }
+        #endregion
+
         [Header("Slider Type")]
         [SerializeField] private StylePicker sliderStylePicker;
         public StylePicker Style { get => sliderStylePicker; set { sliderStylePicker.ForceSet(value); SetUpConfig(); } }

@@ -80,6 +80,7 @@ namespace Dhs5.AdvancedUI
 
         private Image backgroundImage;
         private ImageStyleSheet backgroundStyleSheet;
+        private ImageStyleSheet trueBackgroundStyleSheet;
 
         private Image checkmarkImage;
         private ImageStyleSheet checkmarkIStyleSheet;
@@ -96,7 +97,7 @@ namespace Dhs5.AdvancedUI
 
         private bool gotGraphics = false;
 
-        public void GetGraphics(Image background, ImageStyleSheet _backgroundStyleSheet,
+        public void GetGraphics(Image background, ImageStyleSheet _backgroundStyleSheet, ImageStyleSheet _trueBackgroundStyleSheet,
             Image checkmarkI, ImageStyleSheet _checkmarkIStyleSheet, TextMeshProUGUI checkmarkT, TextStyleSheet _checkmarkTStyleSheet,
             Image uncheckmarkI, ImageStyleSheet _uncheckmarkIStyleSheet, TextMeshProUGUI uncheckmarkT, TextStyleSheet _uncheckmarkTStyleSheet,
             TextMeshProUGUI text, TextStyleSheet _textStyleSheet)
@@ -105,6 +106,7 @@ namespace Dhs5.AdvancedUI
 
             backgroundImage = background;
             backgroundStyleSheet = _backgroundStyleSheet;
+            trueBackgroundStyleSheet = _trueBackgroundStyleSheet;
 
             checkmarkImage = checkmarkI;
             checkmarkIStyleSheet = _checkmarkIStyleSheet;
@@ -131,6 +133,7 @@ namespace Dhs5.AdvancedUI
 
             backgroundImage = background;
             backgroundStyleSheet = _backgroundStyleSheet;
+            trueBackgroundStyleSheet = null;
 
             checkmarkImage = checkmark;
             checkmarkIStyleSheet = _checkmarkStyleSheet;
@@ -156,7 +159,17 @@ namespace Dhs5.AdvancedUI
                 return;
             }
 
-            if (backgroundImage && backgroundImage.enabled) backgroundImage.TransitionImage((int)state, instant, backgroundStyleSheet);
+            if (backgroundImage && backgroundImage.enabled)
+            {
+                if (trueBackgroundStyleSheet != null && isOn)
+                {
+                    backgroundImage.TransitionImage((int)state, instant, trueBackgroundStyleSheet);
+                }
+                else
+                {
+                    backgroundImage.TransitionImage((int)state, instant, backgroundStyleSheet);
+                }
+            }
 
             if (checkmarkImage && checkmarkImage.enabled) checkmarkImage.TransitionImage((int)state, instant, checkmarkIStyleSheet);
             if (checkmarkText && checkmarkText.enabled) checkmarkText.TransitionText((int)state, instant, checkmarkTStyleSheet);

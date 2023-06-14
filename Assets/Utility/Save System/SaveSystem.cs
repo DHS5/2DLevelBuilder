@@ -55,7 +55,7 @@ namespace Dhs5.Utility.SaveSystem
         /// Saves a Texture2D as a PNG at the given path
         /// </summary>
         /// <param name="texture">Texture2D to save</param>
-        /// <param name="filename">Name of the file</param>
+        /// <param name="filename">Name of the file (without the extension)</param>
         /// <param name="path">Path of the file, starting from persistent data path if overridePath = false, must start and end with "/" either way</param>
         /// <param name="overridePath">Whether to override the path or start from persistent data path</param>
         public static void SaveTexture2D(Texture2D texture, string filename, string path = "/", bool overridePath = false)

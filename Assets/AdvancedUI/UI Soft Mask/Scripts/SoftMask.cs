@@ -4,6 +4,7 @@ using UnityEngine.Profiling;
 using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using System.Linq;
 using Object = UnityEngine.Object;
 
 namespace Dhs5.AdvancedUI
@@ -261,6 +262,20 @@ namespace Dhs5.AdvancedUI
             get { return _mesh ? _mesh : _mesh = new Mesh() {hideFlags = HideFlags.HideAndDontSave}; }
         }
 
+        private static readonly List<Graphic> s_Graphics = new List<Graphic>();
+        public void FixChildren()
+        {
+            GetComponentsInChildren<Graphic>(true, s_Graphics);
+            var fixTargets = s_Graphics
+                .Where(x => x.gameObject != gameObject)
+                .Where(x => !x.GetComponent<SoftMaskable>() && (!x.GetComponent<Mask>() || x.GetComponent<Mask>().showMaskGraphic))
+                .ToList();
+
+            foreach (var p in fixTargets)
+            {
+                p.gameObject.AddComponent<SoftMaskable>();
+            }
+        }
 
         /// <summary>
         /// Perform material modification in this function.

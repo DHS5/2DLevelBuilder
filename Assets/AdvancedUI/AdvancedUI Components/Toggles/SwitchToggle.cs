@@ -8,21 +8,21 @@ using TMPro;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Switch Toggle Content
-    [Serializable]
-    public struct SwitchToggleContent
-    {
-
-        // ### Properties ###
-        public bool onClickMode;
-        [Space]
-        public string leftText;
-        public string rightText;
-    }
-    #endregion
-
     public class SwitchToggle : AdvancedComponent
     {
+        #region Switch Toggle Content
+        [Serializable]
+        public class SwitchToggleContent
+        {
+
+            // ### Properties ###
+            public bool onClickMode;
+            [Space]
+            public string leftText;
+            public string rightText;
+        }
+        #endregion
+
         [Header("Switch Toggle Type")]
         [SerializeField] private StylePicker switchStylePicker;
         public StylePicker Style { get => switchStylePicker; set { switchStylePicker.ForceSet(value); SetUpConfig(); } }
@@ -38,8 +38,12 @@ namespace Dhs5.AdvancedUI
 
         [Header("Events")]
         [SerializeField] private UnityEvent<bool> onValueChanged;
+        [SerializeField] private UnityEvent onTrue;
+        [SerializeField] private UnityEvent onFalse;
 
         public event Action<bool> OnValueChanged;
+        public event Action OnTrue;
+        public event Action OnFalse;
 
 
         [Header("Custom Style Sheet")]
@@ -81,6 +85,23 @@ namespace Dhs5.AdvancedUI
 
             background.enabled = !boolValue;
             foreground.enabled = boolValue;
+
+            True();
+            False();
+        }
+        private void True()
+        {
+            if (!Value) return;
+
+            onTrue?.Invoke();
+            OnTrue?.Invoke();
+        }
+        private void False()
+        {
+            if (Value) return;
+
+            onFalse?.Invoke();
+            OnFalse?.Invoke();
         }
         private void ForceValueChange()
         {

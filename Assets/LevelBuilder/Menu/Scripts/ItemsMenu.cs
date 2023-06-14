@@ -193,7 +193,6 @@ namespace LevelBuilder2D
         }
 
         #region --- Menu Creation ---
-        // ### Menu Creation ###
 
         /// <summary>
         /// Create all the category buttons and item toggles containers

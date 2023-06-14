@@ -8,37 +8,44 @@ using System;
 
 namespace Dhs5.AdvancedUI
 {
-    #region Popup Content
-
-    [System.Serializable]
-    public struct PopupContent
-    {
-        // ### Constructor ###
-        public PopupContent(string text, int _fontSize = 25, int width = 200, string confirmation = "Yes", string cancel = "No", int _buttonsHeight = 50)
-        {
-            popupText = text;
-            fontSize = _fontSize;
-            popupWidth = width;
-            confirmationText = confirmation;
-            cancelText = cancel;
-            buttonsHeight = _buttonsHeight;
-        }
-
-
-        // ### Properties ###
-        [TextArea] public string popupText;
-        [SerializeField] private int fontSize; public int FontSize { get { return fontSize > 0 ? fontSize : 25; } }
-        [SerializeField] private int popupWidth; public int PopupWidth { get { return popupWidth > 0 ? popupWidth : 200; } }
-        [Space]
-        [SerializeField] private string confirmationText; public string ConfirmationText { get { return !string.IsNullOrWhiteSpace(confirmationText) ? confirmationText : "Yes"; } }
-        [SerializeField] private string cancelText; public string CancelText { get { return !string.IsNullOrWhiteSpace(cancelText) ? cancelText : "No"; } }
-        [SerializeField] private int buttonsHeight; public int ButtonsHeight { get { return buttonsHeight > 0 ? buttonsHeight : 50; } }
-    }
-
-    #endregion
+    
 
     public class AdvancedPopup : AdvancedComponent
     {
+        #region Popup Content
+
+        [System.Serializable]
+        public class PopupContent
+        {
+            // ### Constructor ###
+            public PopupContent(string text, int _fontSize = 25, int width = 200, string confirmation = "Yes", string cancel = "No", int _buttonsHeight = 50)
+            {
+                popupText = text;
+                fontSize = _fontSize;
+                popupWidth = width;
+                confirmationText = confirmation;
+                cancelText = cancel;
+                buttonsHeight = _buttonsHeight;
+            }
+
+
+            // ### Properties ###
+            [TextArea] public string popupText;
+            [SerializeField] private int fontSize;
+            public int FontSize { get { return fontSize > 0 ? fontSize : 25; } set => fontSize = value; }
+            [SerializeField] private int popupWidth;
+            public int PopupWidth { get { return popupWidth > 0 ? popupWidth : 200; } set => popupWidth = value; }
+            [Space]
+            [SerializeField] private string confirmationText;
+            public string ConfirmationText { get { return !string.IsNullOrWhiteSpace(confirmationText) ? confirmationText : "Yes"; } set => confirmationText = value; }
+            [SerializeField] private string cancelText;
+            public string CancelText { get { return !string.IsNullOrWhiteSpace(cancelText) ? cancelText : "No"; } set => cancelText = value; }
+            [SerializeField] private int buttonsHeight;
+            public int ButtonsHeight { get { return buttonsHeight > 0 ? buttonsHeight : 50; } set => buttonsHeight = value; }
+        }
+
+        #endregion
+
         [Header("Popup Type")]
         [SerializeField] private StylePicker popupStylePicker;
         public StylePicker Style { get => popupStylePicker; set { popupStylePicker.ForceSet(value); SetUpConfig(); } }
@@ -109,7 +116,6 @@ namespace Dhs5.AdvancedUI
         #endregion
 
         #region Configs
-        // ### Configs ###
 
         protected override void SetUpConfig()
         {
@@ -154,18 +160,21 @@ namespace Dhs5.AdvancedUI
             }
             if (confirmButton)
             {
+                confirmButton.SetContainer(styleSheetContainer);
                 confirmButton.gameObject.SetActive(CurrentStyleSheet.confirmButtonActive);
                 confirmButton.Style = CurrentStyleSheet.ConfirmationButtonStyle;
-                confirmButton.Content = new ButtonContent(Content.ConfirmationText);
+                confirmButton.Content.text = Content.ConfirmationText;
             }
             if (cancelButton)
             {
+                confirmButton.SetContainer(styleSheetContainer);
                 cancelButton.gameObject.SetActive(CurrentStyleSheet.cancelButtonActive);
                 cancelButton.Style = CurrentStyleSheet.CancelButtonStyle;
-                cancelButton.Content = new ButtonContent(Content.CancelText);
+                cancelButton.Content.text = Content.CancelText;
             }
             if (quitButton)
             {
+                confirmButton.SetContainer(styleSheetContainer);
                 quitButton.gameObject.SetActive(CurrentStyleSheet.quitButtonActive);
                 quitButton.Style = CurrentStyleSheet.QuitButtonStyle;
             }

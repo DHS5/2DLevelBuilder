@@ -47,5 +47,10 @@ namespace Dhs5.AdvancedUI
 
         [Header("Style Sheet Container")]
         [SerializeField] protected StyleSheetContainer styleSheetContainer;
+
+        public void SetContainer(StyleSheetContainer _styleSheetContainer)
+        {
+            styleSheetContainer = _styleSheetContainer;
+        }
     }
 }
